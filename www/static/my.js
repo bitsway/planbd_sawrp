@@ -164,7 +164,7 @@ $(document).ready(function(){
 	
 });
 
-function syncBasic(){					
+function syncBasic(){
 	var mobile=$("#mobile").val() ;
 	var password=$("#password").val() ;
 	
@@ -174,7 +174,7 @@ function syncBasic(){
 		$('#syncBasic').hide();			 
 		$(".errorMsg").html("Sync in progress. Please wait...");
 		if(localStorage.sync_code==undefined || localStorage.sync_code==""){
-			localStorage.sync_code=0
+			localStorage.sync_code=0;
 		}
 	
 		//alert(apipath+'passwordCheck?mobile='+mobile+'&password='+encodeURIComponent(password)+'&sync_code='+localStorage.sync_code);
@@ -631,6 +631,7 @@ function getAchivementImage1() {
 	navigator.camera.getPicture(onSuccessA, onFailA, { quality: 50,
 	targetWidth: 300,
 	destinationType: Camera.DestinationType.FILE_URI,correctOrientation: true });	
+}
 
 function onSuccessA(imageURI) {		
     var image = document.getElementById('myImageA');
