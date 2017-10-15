@@ -626,11 +626,11 @@ function dataSubmit(){
 }
 
 //------------------------------------image 1
-function getAchivementImage1() {
-	navigator.camera.getPicture(onSuccesstA, onFailA, { quality: 50,
+
+function getAchivementImage1() { 
+	navigator.camera.getPicture(onSuccessA, onFailA, { quality: 50,
 	targetWidth: 300,
-	destinationType: Camera.DestinationType.FILE_URI,correctOrientation: true});		
-}
+	destinationType: Camera.DestinationType.FILE_URI,correctOrientation: true });	
 
 function onSuccessA(imageURI) {		
     var image = document.getElementById('myImageA');
@@ -659,7 +659,7 @@ function uploadPhotoAch(imageURI, imageName) {
     options.params = params;
 
     var ft = new FileTransfer();
-	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd/upload_image/"),winAchInfo,onfail,options);
+	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winAchInfo,onfail,options);
 }
 
 function winAchInfo(r) {	
@@ -716,7 +716,7 @@ function uploadPhoto2Ach(imageURI, imageName2) { // second step
     options.params = params;
 
     var ft = new FileTransfer();
-	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd/upload_image/"),winComInfo2,onfail,options);
+	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winComInfo2,onfail,options);
 }
 
 function winComInfo2(r) {
@@ -1180,7 +1180,7 @@ function uploadPhotoAch_ben(imageURI, imageName_ben) {
     options.params = params;
 
     var ft = new FileTransfer();
-	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd/upload_image/"),winAchInfo_ben,onfail_ben,options);
+	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winAchInfo_ben,onfail_ben,options);
 }
 
 function winAchInfo_ben(r) {	
@@ -1237,7 +1237,7 @@ function uploadPhoto2Ach_ben(imageURI, imageName2_ben) { // second step
     options.params = params;
 
     var ft = new FileTransfer();
-	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd/upload_image/"),winComInfo2_ben,onfail_ben,options);
+	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winComInfo2_ben,onfail_ben,options);
 }
 
 function winComInfo2_ben(r) {
@@ -1292,7 +1292,7 @@ function syncDataBen(){
 	});//end ajax
 }
 
-<!--===========Sanitation=================-->
+//===========Sanitation=================
 var san_ward;
 var clsId;
 var clsName;
@@ -1546,7 +1546,7 @@ function uploadPhotoAch_san(imageURI, imageName_san) {
     options.params = params;
 
     var ft = new FileTransfer();
-	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd/upload_image/"),winAchInfo_san,onfail_san,options);
+	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winAchInfo_san,onfail_san,options);
 }
 
 function winAchInfo_san(r) {	
@@ -1603,7 +1603,7 @@ function uploadPhoto2Ach_san(imageURI, imageName2_san) { // second step
     options.params = params;
 
     var ft = new FileTransfer();
-	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd/upload_image/"),winComInfo2_san,onfail_san,options);
+	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winComInfo2_san,onfail_san,options);
 }
 
 function winComInfo2_san(r) {
@@ -1645,7 +1645,7 @@ function syncDataSan(){
 }
 
 
-<!--===========WWF================-->
+//===========WWF================
 function wwf(wwf){
 	hhIdName=$("#hhSerail").val();
 	sanHHserial=hhIdName.split("-");
@@ -1758,7 +1758,7 @@ function uploadPhotoAch_wwf(imageURI, imageName_wwf) {
     options.params = params;
 
     var ft = new FileTransfer();
-	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd/upload_image/"),winAchInfo_wwf,onfail_wwf,options);
+	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winAchInfo_wwf,onfail_wwf,options);
 }
 
 function winAchInfo_wwf(r) {	
@@ -1815,7 +1815,7 @@ function uploadPhoto2Ach_wwf(imageURI, imageName2_wwf) { // second step
     options.params = params;
 
     var ft = new FileTransfer();
-	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd/upload_image/"),winComInfo2_wwf,onfail_wwf,options);
+	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winComInfo2_wwf,onfail_wwf,options);
 }
 
 function winComInfo2_wwf(r) {
@@ -1857,7 +1857,7 @@ function syncDataHwf(){
 }
 
 
-<!--===========WP================-->
+//===========WP================-->
 var wp_technology;
 var wp_tub_pre;
 var wp_subsidized;
@@ -1981,7 +1981,7 @@ function uploadPhotoAch_wp(imageURI, imageName_wp) {
     options.params = params;
 
     var ft = new FileTransfer();
-	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd/upload_image/"),winAchInfo_wp,onfail_wp,options);
+	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winAchInfo_wp,onfail_wp,options);
 }
 
 function winAchInfo_wp(r) {	
@@ -2038,7 +2038,7 @@ function uploadPhoto2Ach_wp(imageURI, imageName2_wp) { // second step
     options.params = params;
 
     var ft = new FileTransfer();
-	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd/upload_image/"),winComInfo2_wp,onfail_wp,options);
+	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winComInfo2_wp,onfail_wp,options);
 }
 
 function winComInfo2_wp(r) {
