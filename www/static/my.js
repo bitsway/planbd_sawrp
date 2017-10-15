@@ -656,8 +656,8 @@ function uploadPhotoAch(imageURI, imageName) {
     var params = {};
     params.value1 = "test";
     params.value2 = "param";
-
     options.params = params;
+	options.chunkedMode = false;	
 
     var ft = new FileTransfer();
 	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winAchInfo,onfail,options);
@@ -715,7 +715,8 @@ function uploadPhoto2Ach(imageURI, imageName2) { // second step
     params.value2 = "param";
 	
     options.params = params;
-
+	options.chunkedMode = false;
+	
     var ft = new FileTransfer();
 	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winComInfo2,onfail,options);
 }
@@ -1179,7 +1180,8 @@ function uploadPhotoAch_ben(imageURI, imageName_ben) {
     params.value2 = "param";
 
     options.params = params;
-
+	options.chunkedMode = false;
+	
     var ft = new FileTransfer();
 	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winAchInfo_ben,onfail_ben,options);
 }
@@ -1236,7 +1238,8 @@ function uploadPhoto2Ach_ben(imageURI, imageName2_ben) { // second step
     params.value2 = "param";
 	
     options.params = params;
-
+	options.chunkedMode = false;
+	
     var ft = new FileTransfer();
 	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winComInfo2_ben,onfail_ben,options);
 }
@@ -1545,7 +1548,8 @@ function uploadPhotoAch_san(imageURI, imageName_san) {
     params.value2 = "param";
 
     options.params = params;
-
+	options.chunkedMode = false;
+	
     var ft = new FileTransfer();
 	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winAchInfo_san,onfail_san,options);
 }
@@ -1602,7 +1606,8 @@ function uploadPhoto2Ach_san(imageURI, imageName2_san) { // second step
     params.value2 = "param";
 	
     options.params = params;
-
+	options.chunkedMode = false;
+	
     var ft = new FileTransfer();
 	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winComInfo2_san,onfail_san,options);
 }
@@ -1757,7 +1762,8 @@ function uploadPhotoAch_wwf(imageURI, imageName_wwf) {
     params.value2 = "param";
 
     options.params = params;
-
+	options.chunkedMode = false;
+	
     var ft = new FileTransfer();
 	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winAchInfo_wwf,onfail_wwf,options);
 }
@@ -1814,6 +1820,7 @@ function uploadPhoto2Ach_wwf(imageURI, imageName2_wwf) { // second step
     params.value2 = "param";
 	
     options.params = params;
+	options.chunkedMode = false;
 
     var ft = new FileTransfer();
 	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winComInfo2_wwf,onfail_wwf,options);
@@ -1980,6 +1987,7 @@ function uploadPhotoAch_wp(imageURI, imageName_wp) {
     params.value2 = "param";
 
     options.params = params;
+	options.chunkedMode = false;
 
     var ft = new FileTransfer();
 	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winAchInfo_wp,onfail_wp,options);
@@ -2037,6 +2045,7 @@ function uploadPhoto2Ach_wp(imageURI, imageName2_wp) { // second step
     params.value2 = "param";
 	
     options.params = params;
+	options.chunkedMode = false;
 
     var ft = new FileTransfer();
 	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winComInfo2_wp,onfail_wp,options);
