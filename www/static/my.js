@@ -146,7 +146,6 @@ function onError_wp(error) {
    $(".errorChk").html("Failed to Confirmed Location.");
 }
 //---- online
-//var apipath="http://i001.yeapps.com/planbd_sawrp/syncmobile/";
 var apipath="http://w02.yeapps.com/planbd_sawrp/syncmobile/";
 
 //--- local
@@ -156,10 +155,11 @@ url ="";
 
 $(document).ready(function(){
 	if (localStorage.synced!='YES'){
-		url = "#pagesync";						
-	}else{			
-		url = "#homePage";
-	}
+			 url = "#pagesync";						
+		}else{
+				
+			url = "#homePage";
+		}
 	$.mobile.navigate(url);
 	
 });
@@ -582,7 +582,7 @@ function dataSubmit(){
 	$("#btn_submit").hide();
 	
 	var d = new Date();	
-	var get_time_pmt=d.getTime();	
+	var get_time=d.getTime();	
 	
 	latitude=$("#ach_lat").val();
 	longitude=$("#ach_long").val();
@@ -721,7 +721,7 @@ function uploadPhoto2Ach(imageURI, imageName2) { // second step
 
 function winComInfo2(r) {
 	$(".errorChk").text('Image 2 upload successfull. Syncing Data ...');
-	//syncData();
+	syncData();
 }
 
 function syncData(){				
@@ -788,7 +788,7 @@ function syncData(){
 				$(".errorChk").text("");
 				$("#btn_submit").show();						
 			}else{
-				$(".errorChk").text('Unauthorized Access');																	
+				$(".errorChk").text('Submission Failed.');																	
 				$("#btn_submit").show();
 			}
 			
@@ -1103,7 +1103,7 @@ function benDataSubmit(){
 	$("#btn_ben_submit").hide();
 	
 	var d = new Date();	
-	var get_time_pmt=d.getTime();	
+	var get_time=d.getTime();	
 	
 	ben_latitude=$("#ach_lat_ben").val();
 	ben_longitude=$("#ach_long_ben").val();
@@ -1242,7 +1242,7 @@ function uploadPhoto2Ach_ben(imageURI, imageName2_ben) { // second step
 
 function winComInfo2_ben(r) {
 	$(".errorChk").text('Image 2 upload successfull. Syncing Data ...');
-	//syncDataBen();
+	syncDataBen();
 }
 
 function syncDataBen(){				
@@ -1275,16 +1275,16 @@ function syncDataBen(){
 				$("#disF_18_plus").val("");
 				$("#disM_18_plus").val("");				
 				//--------------
-				$("#ach_lat").val(0);
-				$("#ach_long").val(0);
-				$("#achPhoto").val("");										
-				$("#achPhoto_2").val("");
+				$("#ach_lat_ben").val(0);
+				$("#ach_long_ben").val(0);
+				$("#achPhoto_ben").val("");										
+				$("#achPhoto_2_ben").val("");
 								
 				$(".sucChk").text('Successfully Submitted');
 				$(".errorChk").text("");
 				$("#btn_ben_submit").show();						
 			}else{
-				$(".errorChk").text('Unauthorized Access');																	
+				$(".errorChk").text('Submission Failed.');																	
 				$("#btn_ben_submit").show();
 			}
 			
@@ -1468,7 +1468,7 @@ function sanDataSubmit(){
 	$("#btn_san_submit").hide();
 	
 	var d = new Date();	
-	var get_time_pmt=d.getTime();	
+	var get_time=d.getTime();	
 	
 	san_latitude=$("#ach_lat_san").val();
 	san_longitude=$("#ach_long_san").val();
@@ -1495,8 +1495,8 @@ function sanDataSubmit(){
 			//	$(".errorChk").text("Please confirm your location ");
 			//	$("#btn_san_submit").show();
 			//}else{				
-				//imagePathA_ben="test"					
-				if (imagePathA_ben!=""){							
+				//imagePathA_san="test"					
+				if (imagePathA_san!=""){							
 					$(".errorChk").text("Syncing photo 1..");
 					imageName_san = localStorage.mobile_no+"_"+get_time+".jpg";										
 					uploadPhotoAch_san(imagePathA_san, imageName_san);	
@@ -1555,7 +1555,7 @@ function winAchInfo_san(r) {
 	var d = new Date();	
 	var get_time=d.getTime();
 		
-	//imagePath2A_ben="test2"
+	//imagePath2A_san="test2"
 	if (imagePath2A_san!=""){							
 		$(".errorChk").text("Syncing photo 2..");
 		imageName2_san = localStorage.mobile_no+"_"+get_time+".jpg";
@@ -1608,7 +1608,7 @@ function uploadPhoto2Ach_san(imageURI, imageName2_san) { // second step
 
 function winComInfo2_san(r) {
 	$(".errorChk").text('Image 2 upload successfull. Syncing Data ...');
-	//syncDataSan();
+	syncDataSan();
 }
 
 function syncDataSan(){		
@@ -1627,16 +1627,16 @@ function syncDataSan(){
 				$("#socialMapID").val("");
 											
 				//--------------
-				$("#ach_lat").val(0);
-				$("#ach_long").val(0);
-				$("#achPhoto").val("");										
-				$("#achPhoto_2").val("");
+				$("#ach_lat_san").val(0);
+				$("#ach_long_san").val(0);
+				$("#achPhoto_san").val("");										
+				$("#achPhoto_2_san").val("");
 								
 				$(".sucChk").text('Successfully Submitted');
 				$(".errorChk").text("");
 				$("#btn_san_submit").show();						
 			}else{
-				$(".errorChk").text('Unauthorized Access');																	
+				$(".errorChk").text('Submission Failed.');																	
 				$("#btn_san_submit").show();
 			}
 			
@@ -1680,7 +1680,7 @@ function wwfDataSubmit(){
 	$("#btn_wwf_submit").hide();
 	
 	var d = new Date();	
-	var get_time_pmt=d.getTime();	
+	var get_time=d.getTime();	
 	
 	wwf_latitude=$("#ach_lat_wwf").val();
 	wwf_longitude=$("#ach_long_wwf").val();
@@ -1758,7 +1758,7 @@ function uploadPhotoAch_wwf(imageURI, imageName_wwf) {
     options.params = params;
 
     var ft = new FileTransfer();
-	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd/upload_image/"),winAchInfo_san,onfail_san,options);
+	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd/upload_image/"),winAchInfo_wwf,onfail_wwf,options);
 }
 
 function winAchInfo_wwf(r) {	
@@ -1767,7 +1767,7 @@ function winAchInfo_wwf(r) {
 	var d = new Date();	
 	var get_time=d.getTime();
 		
-	//imagePath2A_ben="test2"
+	//imagePath2A_wwf="test2"
 	if (imagePath2A_wwf!=""){							
 		$(".errorChk").text("Syncing photo 2..");
 		imageName2_wwf = localStorage.mobile_no+"_"+get_time+".jpg";
@@ -1820,7 +1820,7 @@ function uploadPhoto2Ach_wwf(imageURI, imageName2_wwf) { // second step
 
 function winComInfo2_wwf(r) {
 	$(".errorChk").text('Image 2 upload successfull. Syncing Data ...');
-	//syncDataHwf();
+	syncDataHwf();
 }
 
 function syncDataHwf(){		
@@ -1839,16 +1839,16 @@ function syncDataHwf(){
 				$("#socialMapID").val("");
 											
 				//--------------
-				$("#ach_lat").val(0);
-				$("#ach_long").val(0);
-				$("#achPhoto").val("");										
-				$("#achPhoto_2").val("");
+				$("#ach_lat_wwf").val(0);
+				$("#ach_long_wwf").val(0);
+				$("#achPhoto_wwf").val("");										
+				$("#achPhoto_2_wwf").val("");
 								
 				$(".sucChk").text('Successfully Submitted');
 				$(".errorChk").text("");
 				$("#btn_wwf_submit").show();						
 			}else{
-				$(".errorChk").text('Unauthorized Access');																	
+				$(".errorChk").text('Submission Failed.');																	
 				$("#btn_wwf_submit").show();
 			}
 			
@@ -1903,7 +1903,7 @@ function wpDataSubmit(){
 	$("#btn_wp_submit").hide();
 	
 	var d = new Date();	
-	var get_time_pmt=d.getTime();	
+	var get_time=d.getTime();	
 	
 	wp_latitude=$("#ach_lat_wp").val();
 	wp_longitude=$("#ach_long_wp").val();
@@ -1934,7 +1934,7 @@ function wpDataSubmit(){
 				if (imagePathA_wp!=""){							
 					$(".errorChk").text("Syncing photo 1..");
 					imageName_wp = localStorage.mobile_no+"_"+get_time+".jpg";										
-					uploadPhotoAch_wpf(imagePathA_wp, imageName_wp);	
+					uploadPhotoAch_wp(imagePathA_wp, imageName_wp);	
 					//$("#btn_wp_submit").show();					
 				}
 									
@@ -2043,7 +2043,7 @@ function uploadPhoto2Ach_wp(imageURI, imageName2_wp) { // second step
 
 function winComInfo2_wp(r) {
 	$(".errorChk").text('Image 2 upload successfull. Syncing Data ...');
-	//syncDataWp();
+	syncDataWp();
 }
 
 
@@ -2055,26 +2055,18 @@ function syncDataWp(){
 																																																										
 		success: function(result) {			
 			if(result=='Success'){
-				/*$("#divName").val("");
-				$("#divCode").val("");
-				$("#disName").val("");
-				$("#disCode").val("");
-				$("#upName").val("");
-				$("#upCode").val("");
-				$("#unName").val("");
-				$("#unCode").val("");*/
 				
-				$("#ward").val("");
+				/*$("#ward").val("");
 				$("#village").val("");
 				$("#clusID").val("");
 				$("#clusName").val("");
-				$("#socialMapID").val("");
+				$("#socialMapID").val("");*/
 											
 				//--------------
-				$("#ach_lat").val(0);
-				$("#ach_long").val(0);
-				$("#achPhoto").val("");										
-				$("#achPhoto_2").val("");
+				$("#ach_lat_wp").val(0);
+				$("#ach_long_wp").val(0);
+				$("#achPhoto_wp").val("");										
+				$("#achPhoto_2_wp").val("");
 								
 				$(".sucChk").text('Successfully Submitted');
 				$(".errorChk").text("");
