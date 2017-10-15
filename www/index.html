@@ -1,0 +1,1143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PLAN BD</title>
+    <link rel="stylesheet" href="static/c.min.css" />
+    <link rel="stylesheet" href="static/jquery.mobile-1.4.0.min.css" /> 
+   
+    <script src="static/jquery-1.10.2.min.js">   </script>
+    <script src="static/jquery.mobile-1.4.0.min.js">   </script>		
+    
+	<script src="static/my.js">   </script>
+	
+	<script>
+		$(document).ready(function(){
+					
+				
+		});
+	
+		function syncPage(){
+			$(".errorChk").text("");
+			$.mobile.navigate("#pagesync");
+		}		
+		
+	</script>
+	       
+    <style>	
+        .reqField{ color:#FF0000;}
+        .errorChk{ color:#FF0000; text-shadow:none;}
+		.errorMsg{ color:#FF0000; text-shadow:none;}
+    	.auto_break{
+			word-wrap:break-word!important;
+			white-space:normal!important;
+		}
+		
+		.tbl_bro_color{border:1px solid #B8DCDC;}
+    </style>	
+</head>
+
+<body >
+
+
+<!-- MAIN MENU ----------------------------------------------------------------------------- -->
+<div data-theme="c" data-role="page" id="homePage" style="overflow:scroll;">
+    <div data-theme="c" data-role="header" data-position="fixed" >
+        <a data-role="button" href="#leftpanel" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets" ><img src="menu.png" /></a>
+        
+        <a data-role="button" onClick="exit();" ><img src="exit.png" /></a>
+        <h3>PLAN BD</h3>
+    </div>
+    <div data-role="content">
+    
+            <div class="errorChk"></div>
+            <ul data-role="listview" data-inset="true" data-theme="c">
+            <li class="ui-field-contain">
+            <table width="100%"  cellspacing="0" cellpadding="0">              
+              <tr>
+                <td>Division Name</td>
+                <td>:</td>
+                <td>
+                	<input type="text" name="divName" id="divName" readonly="readonly" style="background-color:#F9F9F9">
+                	<input type="hidden" id="divCode" name="divCode" onblur="social_map_id()" />
+                </td>
+              </tr>
+              <tr>
+                <td>District Name </td>
+                <td>:</td>
+                <td>
+                	<input type="text" name="disName" id="disName" readonly="readonly" style="background-color:#F9F9F9">
+                    <input type="hidden" id="disCode" name="disCode" onblur="social_map_id()"/>
+                </td>
+              </tr>
+              <tr>
+                <td>Upazila Name </td>
+                <td>:</td>
+                <td>
+                	<input type="text" name="upName" id="upName" readonly="readonly" style="background-color:#F9F9F9">
+                    <input type="hidden" id="upCode" name="upCode" onblur="social_map_id()"/>
+                </td>
+              </tr>
+              <tr>
+                <td>Union Name </td>
+                <td>:</td>
+                <td>
+                	<input type="text" name="unName" id="unName" readonly="readonly" style="background-color:#F9F9F9">
+                    <input type="hidden" id="unCode" name="unCode" onblur="social_map_id()"/>
+                </td>
+              </tr>
+            </table>
+		</li>
+        </ul>
+            
+            
+            <ul data-role="listview" data-inset="true">
+                <li><a href="#" onClick="social_mapping('social');" data-transition="slide">Social Mapping</a></li>
+            </ul>
+            <ul data-role="listview" data-inset="true">
+                <li><a href="#" onClick="beneficiary('beneficiary')" data-transition="slide">Beneficiary</a></li>
+            </ul>
+            <ul data-role="listview" data-inset="true">
+            	<li><a href="#" onclick="sanitaion('sanitaion')" data-transition="slide">Sanitaion/HWF/WP</a></li>
+            </ul>
+    </div>
+    
+    <div data-theme="c" data-role="footer" data-position="fixed" style="font-size:12px;background-color:#CCC;" align="center" >m-Reporting 20171010</div><!------/footer 20150401-20150309 -->
+    
+    <div data-role="panel" id="leftpanel" data-position="left" data-display="overlay" data-theme="c">
+        <div align="center"></div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <ul data-role="listview" >
+          <li><a data-role="button" class="ui-btn" onclick="syncPage();"><center><img src="sync.png" /></center></a></li>		  
+        </ul>
+        <br/>
+        <br/>
+        <br/>
+        <div align="center"><img src="logo_gp.png" /></div>
+    </div>
+</div>
+
+
+
+<!-- ------------------- sync page---------------------------------------------------------------------------------------- -->
+<div data-theme="c" data-role="page" id="pagesync" >
+    <div data-theme="c" data-role="header" data-position="fixed" >
+        <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
+        <h3>Sync</h3>
+    </div>
+    <div data-role="content">
+        <div class="errorMsg"></div>
+        <ul data-role="listview" data-inset="true" data-theme="c">
+            <li class="ui-field-contain">
+                <label for="mobile"> Mobile No</label>
+                <input name="mobile" id="mobile" placeholder="" value="" type="number">
+            </li>
+            <li class="ui-field-contain">
+                <label for="password">Password </label>
+                <input type="password" name="password" id="password" placeholder="" value="" >
+            </li>
+        </ul>
+        <a data-role="button" href="#" id="syncBasic" onclick="syncBasic()"  data-theme="c" data-transition="slide" >Sync</a>
+		<div id="#syncData"></div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+    </div>
+</div>
+
+<!-- --------------------PLAN BD page1------------------------------------------------- -->
+<div data-role="page" data-theme="c" id="first_page" style="overflow:scroll;">
+    <div data-theme="c" data-role="header" data-position="fixed" >
+        <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
+        <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
+        <h3>SOCIAL MAPPING</h3>
+    </div>
+    
+    <div data-role="content" >             
+        <ul data-role="listview" data-inset="true">            
+            <table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" style="cell-spacing:0px; font-size:10px"  data-role="table" data-theme="d"  data-mode="display:none">
+                <tr style="background-color:#E9E9E9">
+                    <td >Division :</td>
+                    <td ><div id="divi_soc"></div></td>
+                    <td >District :</td>
+                    <td ><div id="dis_soc"></div></td>
+                </tr>
+                <tr style="background-color:#E9E9E9">
+                    <td >Upazila :</td>
+                    <td ><div id="upaz_soc"></div></td>
+                    <td >Union :</td>
+                    <td ><div id="uni_soc"></div></td>
+                </tr>
+            </table>
+         
+            <li class="ui-field-contain">
+                <label for="ward">Ward</label>               
+                <select name="ward" id="ward" data-native-menu="false" onblur="social_map_id()">
+                    <option value="">Ward No</option>
+                    <option value="01">01</option>
+                    <option value="02">02</option>
+                    <option value="03">03</option>
+                    <option value="04">04</option>
+                    <option value="05">05</option>
+                    <option value="06">06</option>
+                    <option value="07">07</option>
+                    <option value="08">08</option>
+                    <option value="09">09</option>	 
+                </select>	
+            </li>
+            <li class="ui-field-contain" >
+                <label for="village">Village</label>                	
+                    <input type="text" id="village" name="village" maxlength="50"/>
+            </li>
+            <li class="ui-field-contain" >
+                <label for="clusID">Cluster ID</label>                	
+                    <input type="number" id="clusID" name="clusID" onblur="social_map_id()"/>
+            </li>
+            <li class="ui-field-contain" >
+                <label for="clusName">Cluster Name</label>
+                    <input type="text" id="clusName" name="clusName" />
+            </li>
+            <li class="ui-field-contain" >
+                <label for="socialMapID">Social Map ID</label>
+                    <input type="text" id="socialMapID" name="socialMapID"  readonly="readonly" style="background-color:#F9F9F9"/>
+            </li>
+            
+		</ul>
+                 
+    <a data-role="button" onclick="planbdData1Next()" href="#" data-transition="slide" >Next</a>
+        <div class="errorChk"></div>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    </div>
+</div>
+                
+                 
+                 
+<div data-role="page" data-theme="c" id="second_page" style="overflow:scroll;">
+    <div data-theme="c" data-role="header" data-position="fixed" >
+        <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
+        <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
+        <h3>Social Mapping</h3>
+    </div>
+    
+    <div data-role="content" >             
+        <ul data-role="listview" data-inset="true">
+            <li class="ui-field-contain" >
+            	<table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" id="beneficiaryCount" style="cell-spacing:0px;"  data-role="table" data-theme="d"  data-mode="display:none">
+                    <tr valign="middle">
+                    	<td colspan="3" ><strong>Number of HHs by Economic Status</strong></td>
+                    </tr>
+            		<tr>
+                        <td width="70%" style="vertical-align:middle;">Rich</td>
+                        <td width="30%"><input type="number" id="rich" name="rich" /></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Middle</td>
+                        <td width="30%"><input type="number" id="middle" name="middle" /></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Poor</td>
+                        <td width="30%"><input type="number" id="poor" name="poor" /></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Extreme Poor</td>
+                        <td width="30%"><input type="number" id="exPoor" name="exPoor" /></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                </table>                    
+            </li> 
+            
+            <li class="ui-field-contain" >
+            	<table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" id="beneficiaryCount" style="cell-spacing:0px;"  data-role="table" data-theme="d"  data-mode="display:none">
+                    <tr valign="middle">
+                    	<td colspan="3" ><strong>Sanitation information</strong></td>
+                    </tr>
+            		<tr>
+                        <td width="70%" style="vertical-align:middle;">Hygienic Latrine </td>
+                        <td width="30%"><input type="number" id="hyLatrine" name="hyLatrine" /></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Unhygienic Latrine</td>
+                        <td width="30%"><input type="number" id="unhyLatrine" name="unhyLatrine" /></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">No Latrine</td>
+                        <td width="30%"><input type="number" id="noLatrine" name="noLatrine" /></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                </table>                    
+            </li> 
+            
+            <li class="ui-field-contain" >
+            	<table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" id="beneficiaryCount" style="cell-spacing:0px;"  data-role="table" data-theme="d"  data-mode="display:none">
+                    <tr valign="middle">
+                    	<td colspan="3" ><strong>Water Point information</strong></td>
+                    </tr>
+            		<tr>
+                        <td width="70%" style="vertical-align:middle;">Hygienic Tubewell </td>
+                        <td width="30%"><input type="number" id="hyTub" name="hyTub" /></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Unhygienic Tubewell </td>
+                        <td width="30%"><input type="number" id="unhyTub" name="unhyTub" /></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">No Tubewell</td>
+                        <td width="30%"><input type="number" id="noTub" name="noTub" /></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                </table>                    
+            </li>
+            
+            <li class="ui-field-contain" >
+            	<table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" id="beneficiaryCount" style="cell-spacing:0px;"  data-role="table" data-theme="d"  data-mode="display:none">
+                    <tr valign="middle">
+                    	<td colspan="3" ><strong>Handwashing Facility Infomrationn</strong></td>
+                    </tr>
+            		<tr>
+                        <td width="70%" style="vertical-align:middle;">Handwashing Facility Yes</td>
+                        <td width="30%"><input type="number" id="hwYes" name="hwYes" /></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Handwashing Facility No</td>
+                        <td width="30%"><input type="number" id="hwNo" name="hwNo" /></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                </table>                    
+            </li>
+                        
+            <li class="ui-field-contain" >
+            	<table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" id="beneficiaryCount" style="cell-spacing:0px;"  data-role="table" data-theme="d"  data-mode="display:none">
+                    <tr valign="middle">
+                    	<td colspan="3" ><strong>ODF information</strong></td>
+                    </tr>
+            		<tr>
+                        <td width="70%" style="vertical-align:middle;">ODF Status of Community</td>
+                        <td width="30%">
+                            <select id="odfStatus" name="odfStatus" data-native-menu="false">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                </table>                    
+            </li> 
+            
+            <li class="ui-field-contain" >
+            	<table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" id="beneficiaryCount" style="cell-spacing:0px;"  data-role="table" data-theme="d"  data-mode="display:none">
+                    <tr valign="middle">
+                    	<td colspan="3" ><strong>WASH Committee information</strong></td>
+                    </tr>
+            		<tr>
+                        <td width="70%" style="vertical-align:middle;">WASH Committee Exits</td>
+                        <td width="30%">
+                            <select id="commExit" name="commExit" data-native-menu="false">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">WASH Committee Functional</td>
+                        <td width="30%">
+                            <select id="commFunc" name="commFunc" data-native-menu="false">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                </table>                    
+            </li>           
+            
+            <li class="ui-field-contain" >
+            	<table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" id="beneficiaryCount" style="cell-spacing:0px;"  data-role="table" data-theme="d"  data-mode="display:none">
+                    <tr valign="middle">
+                    	<td colspan="3" ><strong>WASH Committee member</strong></td>
+                    </tr>
+            		<tr>
+                        <td width="70%" style="vertical-align:middle;">Female</td>
+                        <td width="30%"><input type="number" id="commFemale" name="commFemale" /></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Male</td>
+                        <td width="30%"><input type="number" id="commMale" name="commMale" /></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                </table>                    
+            </li>
+            
+            <li class="ui-field-contain" >
+                <table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" id="beneficiaryCount" style="cell-spacing:0px;"  data-role="table" data-theme="d"  data-mode="display:none">
+                    <tr valign="middle">
+                    	<td colspan="3" ><strong>Beneficiaries Count</strong></td>
+                    </tr>
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Girl (<=5)</td>
+                        <td width="30%"><input name="benG_5" id="benG_5" placeholder="" onBlur="totalBeneficiary();" value="" type="number"></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Boy (<=5)</td>
+                        <td width="30%"><input name="benB_5" id="benB_5" placeholder="" onBlur="totalBeneficiary();" value="" type="number"></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                     <tr>
+                        <td width="70%" style="vertical-align:middle;">Girl (5+ to <=18)</td>
+                        <td width="30%"><input name="benG_5_18" id="benG_5_18" placeholder="" onBlur="totalBeneficiary();" min="0" type="number"></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Boy (5+ to <=18)</td>
+                        <td width="30%"><input name="benB_5_18" id="benB_5_18" placeholder="" min="0" onBlur="totalBeneficiary();" type="number"></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>                          
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Female (18+)</td>
+                        <td width="30%"><input name="benF_18_plus" id="benF_18_plus" placeholder="" onBlur="totalBeneficiary();" value="" type="number"></td>
+                        <td width="5" align="left"></td>
+                    </tr>                
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Male (18+)</td>
+                        <td width="30%"><input name="benM_18_plus" id="benM_18_plus" onBlur="totalBeneficiary();" placeholder="" value="" type="number"></td>
+                        <td width="5" align="left"></td>
+                    </tr>
+                    <tr >
+                        <td width="70%" style="vertical-align:middle;">Total No. of HH Beneficiaries</td>
+                        <td width="30%"><input name="benTotal" id="benTotal"  placeholder="" value="" type="number" readonly="readonly" style="background-color:#EEEEEE;"></td>
+                        <td width="5" align="left"></td>
+                    </tr>
+                </table>
+            </li> 
+            <li class="ui-field-contain" >
+                <table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" id="beneficiaryCount" style="cell-spacing:0px;"  data-role="table" data-theme="d"  data-mode="display:none">
+                    <tr valign="middle">
+                    	<td colspan="3" ><strong>Ethnic</strong></td>
+                    </tr>           
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Ethnic Female </td>
+                        <td width="30%"><input name="EthF" id="EthF" placeholder="" value=""  type="number"></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Ethnic Male </td>
+                        <td width="30%"><input name="EthM" id="EthM" placeholder="" value=""  type="number"></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                </table>
+            </li>
+            <li class="ui-field-contain" >
+                <table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" id="beneficiaryCount" style="cell-spacing:0px;"  data-role="table" data-theme="d"  data-mode="display:none">
+                    <tr valign="middle">
+                    	<td colspan="3" ><strong>Disabilities Count</strong></td>
+                    </tr>        
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Disabilities Girl (<=5)</td>
+                        <td width="30%"><input name="disG_5" id="disG_5" placeholder="" onBlur="totalDisabilities();" value="" type="number"></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Disabilities Boy (<=5)</td>
+                        <td width="30%"><input name="disB_5" id="disB_5" placeholder="" onBlur="totalDisabilities();" value="" type="number"></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                     <tr>
+                        <td width="70%" style="vertical-align:middle;">Disabilities Girl (5+ to <=18)</td>
+                        <td width="30%"><input name="disG_5_18" id="disG_5_18" placeholder="" value="" onBlur="totalDisabilities();" min="0" type="number"></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Disabilities Boy (5+ to <=18)</td>
+                        <td width="30%"><input name="disB_5_18" id="disB_5_18" placeholder="" value="" min="0" onBlur="totalDisabilities();" type="number"></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>                          
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Disabilities Female (18+)</td>
+                        <td width="30%">
+                        	<input name="disF_18_plus" id="disF_18_plus" placeholder="" onBlur="totalDisabilities();" value="" type="number"></td>
+                        <td width="5" align="left"></td>
+                    </tr>                
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Disabilities Male (18+)</td>
+                        <td width="30%"><input name="disM_18_plus" id="disM_18_plus" onBlur="totalDisabilities();" placeholder="" value="" type="number"></td>
+                        <td width="5" align="left"></td>
+                    </tr>    
+                </table>
+            </li>            
+		</ul>
+        
+        <a data-role="button" onclick="planbdData2Next()" href="#" data-transition="slide" >Next</a>
+        <div class="errorChk"></div>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    </div>
+</div>
+
+
+<div data-role="page" data-theme="c" id="inPhoto" style="overflow:scroll" >
+    <div data-theme="c" data-role="header" data-position="fixed" >
+    <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
+        <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
+        <h3>SOCIAL MAPPING</h3>
+  </div>
+    <div data-role="content">       
+       
+        <a data-role="button" id="btn_1_take_pic" onClick="getAchivementImage1();" class="ui-btn" >Take Picture 1</a>       
+        <img src="" width="128" height="128" alt="Image1" id="myImageA" />        
+        <input name="achPhoto" id="achPhoto" value=""  type="hidden">
+        
+        <a data-role="button" id="btn_2_take_pic" onClick="getAchivementImage2();" class="ui-btn" >Take Picture 2</a>       
+        <img src="" width="128" height="128" alt="Image2" id="myImage2A" />
+        <input name="achPhoto_2" id="achPhoto_2" value=""  type="hidden">
+        
+        <input name="ach_lat" id="ach_lat" value=""  type="hidden">
+        <input name="ach_long" id="ach_long" value=""  type="hidden">
+        <a data-role="button" id="btn_ach_lat_long" onClick="getLocationInfoAch();" class="ui-btn" >Confirm Location</a>
+        
+		<div class="errorChk" style="color:#F00;"></div>
+        <div class="sucChk" style="color:#00CA00;"></div>
+        <br/>
+		<br/>
+        <a data-role="button" id="btn_submit" onClick="dataSubmit();" class="ui-btn" >Submit</a> 
+		<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        
+    </div>
+  </div>
+  
+
+<!--=============== Beneficiary ========================--->
+<div data-role="page" data-theme="c" id="ben_first_page" style="overflow:scroll;">
+    <div data-theme="c" data-role="header" data-position="fixed" >
+        <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
+        <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
+        <h3>BENEFICIARY</h3>
+    </div>
+    
+    <div data-role="content" >             
+        <ul data-role="listview" data-inset="true">
+            <table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" style="cell-spacing:0px; font-size:10px"  data-role="table" data-theme="d"  data-mode="display:none">
+                <tr style="background-color:#E9E9E9">
+                    <td >Division :</td>
+                    <td ><div id="divi_ben"></div></td>
+                    <td >District :</td>
+                    <td ><div id="dis_ben"></div></td>
+                </tr>
+                <tr style="background-color:#E9E9E9">
+                    <td >Upazila :</td>
+                    <td ><div id="upaz_ben"></div></td>
+                    <td >Union :</td>
+                    <td ><div id="uni_ben"></div></td>
+                </tr>
+            </table>
+            
+            <li class="ui-field-contain">
+                <label for="ben_ward">Ward</label>
+                <select name="ben_ward" id="ben_ward" data-native-menu="false"  onblur="social_map_id()" onchange="cluster('bene')" >
+                    <option value="0">Ward No</option>
+                </select>           
+            </li>
+            <!--<li class="ui-field-contain" >
+                <label for="ben_village">Village</label>                	
+                    <input type="text" id="ben_village" name="ben_village" maxlength="50"/>
+            </li>-->
+            <li class="ui-field-contain" >
+                <label for="ben_clusID">Cluster ID</label>
+                <select name="ben_clusID" id="ben_clusID" data-native-menu="false" onblur="social_map_id()">
+                    <option value="0">Select Cluster</option>
+                </select>                	
+            </li>
+            <!--<li class="ui-field-contain" >
+                <label for="ben_clusName">Cluster Name</label>
+                    <input type="text" id="ben_clusName" name="ben_clusName" />
+            </li>
+            <li class="ui-field-contain" >
+                <label for="ben_socialMapID">Social Map ID</label>
+                    <input type="number" id="ben_socialMapID" name="ben_socialMapID" onblur="joinSocialID()"/>
+            </li>-->
+            <li class="ui-field-contain" >
+                <label for="ben_hh_serial">HH Serial</label>
+                    <input type="number" id="ben_hh_serial" name="ben_hh_serial" onblur="social_map_id()"/>
+            </li>            
+		</ul>
+                 
+    <a data-role="button" onclick="ben_planbdData1Next()" href="#" data-transition="slide" >Next</a>
+        <div class="errorChk"></div>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    </div>
+</div>
+
+<div data-role="page" data-theme="c" id="ben_second_page" style="overflow:scroll;">
+    <div data-theme="c" data-role="header" data-position="fixed" >
+        <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
+        <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
+        <h3>BENEFICIARY</h3>
+    </div>
+    
+    <div data-role="content" >             
+        <ul data-role="listview" data-inset="true">
+            <li style="background-color:#F2F2F2;" class="auto_break"><strong></strong> </li>  
+            <li class="ui-field-contain" >
+                <label for="ben_hh_id">HH ID</label>
+                    <input type="text" id="ben_hh_id" name="ben_hh_id" readonly="readonly" style="background-color:#F9F9F9"/>
+            </li>          
+            <li class="ui-field-contain" >
+                <label for="ben_hh_head_name">HH Head Name</label>                	
+                    <input type="text" id="ben_hh_head_name" name="ben_hh_head_name" maxlength="50"/>
+            </li>
+            <li class="ui-field-contain" >
+                <label for="ben_hh_head_gender">HH Head Gender</label>                	
+                    <select id="ben_hh_head_gender" name="ben_hh_head_gender" data-native-menu="false">
+                    	<option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+            </li>
+            <li class="ui-field-contain" >
+                <label for="ben_eco_condition">Economic Condition</label>                	
+                    <select id="ben_eco_condition" name="ben_eco_condition" data-native-menu="false">
+                    	<option value="Rich">A: Rich</option>
+                        <option value="Middle">B: Middle Class</option>
+                        <option value="Poor">C: Poor</option>
+                        <option value="Exterme Poor">D: Exterme Poor</option>
+                    </select>
+            </li>
+            <li class="ui-field-contain" >
+                <table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" id="beneficiaryCount" style="cell-spacing:0px;"  data-role="table" data-theme="d"  data-mode="display:none">
+                    <tr valign="middle">
+                    	<td colspan="3" ><strong>Beneficiaries Count</strong></td>
+                    </tr>
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Girl (<=5)</td>
+                        <td width="30%"><input name="ben_benG_5" id="ben_benG_5" placeholder="" onBlur="benTotalBeneficiary();" value="" type="number"></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Boy (<=5)</td>
+                        <td width="30%"><input name="ben_benB_5" id="ben_benB_5" placeholder="" onBlur="benTotalBeneficiary();" value="" type="number"></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                     <tr>
+                        <td width="70%" style="vertical-align:middle;">Girl (5+ to <=18)</td>
+                        <td width="30%"><input name="ben_benG_5_18" id="ben_benG_5_18" placeholder="" onBlur="benTotalBeneficiary();" min="0" type="number"></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Boy (5+ to <=18)</td>
+                        <td width="30%"><input name="ben_benB_5_18" id="ben_benB_5_18" placeholder="" min="0" onBlur="benTotalBeneficiary();" type="number"></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>                          
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Female (18+)</td>
+                        <td width="30%"><input name="ben_benF_18_plus" id="ben_benF_18_plus" placeholder="" onBlur="benTotalBeneficiary();" value="" type="number"></td>
+                        <td width="5" align="left"></td>
+                    </tr>                
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Male (18+)</td>
+                        <td width="30%"><input name="ben_benM_18_plus" id="ben_benM_18_plus" onBlur="benTotalBeneficiary();" placeholder="" value="" type="number"></td>
+                        <td width="5" align="left"></td>
+                    </tr>
+                    <!--<tr >
+                        <td width="70%" style="vertical-align:middle;">Total No. of HH Beneficiaries<sup class="reqField">*</sup></td>
+                        <td width="30%"><input name="benBen_Total" id="benBen_Total"  placeholder="" type="number" readonly="readonly" style="background-color:#EEEEEE;"></td>
+                        <td width="5" align="left"></td>
+                    </tr>-->
+                </table>
+            </li>
+            <li class="ui-field-contain" >
+                <table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" id="beneficiaryCount" style="cell-spacing:0px;"  data-role="table" data-theme="d"  data-mode="display:none">
+                    <tr valign="middle">
+                    	<td colspan="3" ><strong>Ethnic</strong></td>
+                    </tr>           
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Ethnic Female </td>
+                        <td width="30%"><input name="ben_EthF" id="ben_EthF" placeholder="" value=""  type="number"></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Ethnic Male </td>
+                        <td width="30%"><input name="ben_EthM" id="ben_EthM" placeholder="" value=""  type="number"></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                </table>
+            </li>
+            <li class="ui-field-contain" >
+                <table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" id="beneficiaryCount" style="cell-spacing:0px;"  data-role="table" data-theme="d"  data-mode="display:none">
+                    <tr valign="middle">
+                    	<td colspan="3" ><strong>Disabilities Count</strong></td>
+                    </tr>        
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Disabilities Girl (<=5)</td>
+                        <td width="30%"><input name="ben_disG_5" id="ben_disG_5" placeholder="" onBlur="totalDisabilities();" value="" type="number"></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Disabilities Boy (<=5)</td>
+                        <td width="30%"><input name="ben_disB_5" id="ben_disB_5" placeholder="" onBlur="totalDisabilities();" value="" type="number"></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                     <tr>
+                        <td width="70%" style="vertical-align:middle;">Disabilities Girl (5+ to <=18)</td>
+                        <td width="30%"><input name="ben_disG_5_18" id="ben_disG_5_18" placeholder="" value="" onBlur="totalDisabilities();" min="0" type="number"></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Disabilities Boy (5+ to <=18)</td>
+                        <td width="30%"><input name="ben_disB_5_18" id="ben_disB_5_18" placeholder="" value="" min="0" onBlur="totalDisabilities();" type="number"></td>
+                        <td width="5" align="left">&nbsp;</td>
+                    </tr>                          
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Disabilities Female (18+)</td>
+                        <td width="30%">
+                        	<input name="ben_disF_18_plus" id="ben_disF_18_plus" placeholder="" onBlur="totalDisabilities();" value="" type="number"></td>
+                        <td width="5" align="left"></td>
+                    </tr>                
+                    <tr>
+                        <td width="70%" style="vertical-align:middle;">Disabilities Male (18+)</td>
+                        <td width="30%"><input name="ben_disM_18_plus" id="ben_disM_18_plus" onBlur="totalDisabilities();" placeholder="" value="" type="number"></td>
+                        <td width="5" align="left"></td>
+                    </tr>    
+                </table>
+            </li>
+            <!--<li class="ui-field-contain" >
+            	<label for="sponsorShip_family">Sponsorshop Family</label>
+                	<select id="ben_sponsorShip_family" name="ben_sponsorShip_family" data-native-menu="false">
+                    	<option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+            </li>
+            <li class="ui-field-contain" >
+            	<label for="ben_water">Water</label>
+                	<select id="ben_water" name="ben_water" data-native-menu="false">
+                    	<option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+            </li>
+            <li class="ui-field-contain" >
+            	<label for="ben_sanitaion">Sanitaion</label>
+                	<select id="ben_sanitaion" name="ben_sanitaion" data-native-menu="false">
+                    	<option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+            </li>
+            <li class="ui-field-contain" >
+            	<label for="ben_hwf">HWF</label>
+                	<select id="ben_swf" name="ben_swf" data-native-menu="false">
+                    	<option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+            </li>-->
+		</ul>
+                 
+    <a data-role="button" onclick="ben_planbdData2Next()" href="#" data-transition="slide" >Next</a>
+        <div class="errorChk"></div>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    </div>
+</div>
+
+
+<div data-role="page" data-theme="c" id="ben_inPhoto" style="overflow:scroll" >
+    <div data-theme="c" data-role="header" data-position="fixed" >
+    <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
+        <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
+        <h3>BENEFICIARY</h3>
+  </div>
+    <div data-role="content">       
+       
+        <a data-role="button" id="btn_1_take_pic_ben" onClick="getAchivementImage1_ben();" class="ui-btn" >Take Picture 1</a>       
+        <img src="" width="128" height="128" alt="Image1" id="myImageA_ben" />        
+        <input name="achPhoto_ben" id="achPhoto_ben" value=""  type="hidden">
+        
+        <a data-role="button" id="btn_2_take_pic" onClick="getAchivementImage2_ben();" class="ui-btn" >Take Picture 2</a>       
+        <img src="" width="128" height="128" alt="Image2" id="myImage2A_ben" />
+        <input name="achPhoto_2_ben" id="achPhoto_2_ben" value=""  type="hidden">
+        
+        <input name="ach_lat_ben" id="ach_lat_ben" value=""  type="hidden">
+        <input name="ach_long_ben" id="ach_long_ben" value=""  type="hidden">
+        <a data-role="button" id="btn_ach_lat_long_ben" onClick="getLocationInfoAch_ben();" class="ui-btn" >Confirm Location</a>
+        
+		<div class="errorChk" style="color:#F00;"></div>
+        <div class="sucChk" style="color:#00CA00;"></div>
+        <br/>
+		<br/>
+        <a data-role="button" id="btn_ben_submit" onClick="benDataSubmit();" class="ui-btn" >Submit</a> 
+		<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        
+    </div>
+  </div>
+<!----===========-- end-----==============--->
+
+<!--=============Sanitation================-->
+<div data-role="page" data-theme="c" id="san_first_page" style="overflow:scroll;">
+    <div data-theme="c" data-role="header" data-position="fixed" >
+        <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
+        <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
+        <h3>SANITATION/HWF/WP</h3>
+    </div>
+    
+    <div data-role="content" >             
+        <ul data-role="listview" data-inset="true">
+        	<table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" style="cell-spacing:0px; font-size:10px"  data-role="table" data-theme="d"  data-mode="display:none">
+                <tr style="background-color:#E9E9E9">
+                    <td >Division :</td>
+                    <td ><div id="divi_san"></div></td>
+                    <td >District :</td>
+                    <td ><div id="dis_san"></div></td>
+                </tr>
+                <tr style="background-color:#E9E9E9">
+                    <td >Upazila :</td>
+                    <td ><div id="upaz_san"></div></td>
+                    <td >Union :</td>
+                    <td ><div id="uni_san"></div></td>
+                </tr>
+            </table>
+            <li class="ui-field-contain">
+                <label for="san_ward">Select Ward</label>               
+                <select name="san_ward" id="san_ward" data-native-menu="false">
+                    <option value="">Ward No</option> 
+                </select>	
+            </li>            
+		</ul>
+                 
+    <a data-role="button" onclick="san_planbdData1Next()" href="#" data-transition="slide" >Next</a>
+        <div class="errorChk"></div>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    </div>
+</div>
+
+
+<div data-role="page" data-theme="c" id="san_second_page" style="overflow:scroll;">
+    <div data-theme="c" data-role="header" data-position="fixed" >
+        <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
+        <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
+        <h3>SANITATION/HWF/WP</h3>
+    </div>
+    
+    <div data-role="content" >             
+        <ul data-role="listview" data-inset="true">
+            <li class="ui-field-contain" >
+                <label for="clusterIDName">Cluster</label>
+                <select name="clusterIDName" id="clusterIDName" data-native-menu="false">
+                    <option value="0">Select Cluster</option>
+                </select>                	
+        	</li>       
+		</ul>
+        <a data-role="button" onclick="clusterData()" href="#" data-transition="slide" >Next</a>
+        <div class="errorChk"></div>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    </div>
+</div>
+
+
+<div data-role="page" data-theme="c" id="san_three_page" style="overflow:scroll;">
+    <div data-theme="c" data-role="header" data-position="fixed" >
+        <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
+        <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
+        <h3>SANITATION/HWF/WP</h3>
+    </div>
+    
+    <div data-role="content" >       
+        <ul data-role="listview" data-inset="true">
+            <li class="ui-field-contain" >
+                <label for="hhSerail">HH Name</label>
+                <select name="hhSerail" id="hhSerail" data-native-menu="false">
+                    <option value="0">Select HH</option>
+                </select>                	
+        	</li>       
+		</ul>
+        <br /><br /><br />
+        <ul data-role="listview" data-inset="true">
+            <li><a href="#" onclick="san('san')" data-transition="slide">Sanitaion</a></li>
+        </ul>    
+        <ul data-role="listview" data-inset="true">
+            <li><a href="#" onclick="wwf('wwf')" data-transition="slide">HWF</a></li>
+        </ul>
+        <ul data-role="listview" data-inset="true">
+            <li><a href="#" onclick="wp('wp')" data-transition="slide">WP</a></li>
+        </ul>     
+    
+        <div class="errorChk"></div>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    </div>
+</div>
+
+
+
+
+<div data-role="page" data-theme="c" id="san_four_page" style="overflow:scroll;">
+    <div data-theme="c" data-role="header" data-position="fixed" >
+        <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
+        <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
+        <h3>SANITATION</h3>
+    </div>
+    
+    <div data-role="content" >             
+         <ul data-role="listview" data-inset="true">
+            <li style="background-color:#F2F2F2;" class="auto_break"><strong>Sanitation Point Details</strong> </li>
+            <li class="ui-field-contain">
+                <label for="san_lat_type">Type of Latrine Provided</label>               
+                <select name="san_lat_type" id="san_lat_type" data-native-menu="false">
+                    <option value="0">Select</option>
+                    <option value="Offset Pit">Offset Pit</option>
+                    <option value="Water Sealed Pit">Water Sealed Pit</option>
+                    <option value="Pit Latrine with Sato Pan">Pit Latrine with Sato Pan</option>
+                    <option value="Shared">Shared</option>
+                </select>	
+            </li>
+            <li class="ui-field-contain">
+                <label for="san_act_type">Type of Activity</label>               
+                <select name="san_act_type" id="san_act_type" data-native-menu="false">
+                    <option value="New">New</option>
+                    <option value="Renovation">Renovation</option>
+                </select>	
+            </li>
+            <li class="ui-field-contain">
+                <label for="san_subsidized">Subsidized</label>               
+                <select name="san_subsidized" id="san_subsidized" data-native-menu="false">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>	
+            </li>
+            <li class="ui-field-contain">
+            	<label for="san_com_date">Date of Completion</label>
+                <input type="date" id="san_com_date" name="san_com_date"/>
+            </li>
+            <li style="background-color:#F2F2F2;" class="auto_break"><strong>Overlapping Status</strong> </li>
+            <li class="ui-field-contain">
+                <label for="san_overlap_status">Orientation on Hygiene given</label>               
+                <select name="san_overlap_status" id="san_overlap_status" data-native-menu="false">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>	
+            </li>                      
+		</ul>
+    <a data-role="button" onclick="san_planbdData2Next()" href="#" data-transition="slide" >Next</a>
+        <div class="errorChk"></div>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    </div>
+</div>
+
+
+<div data-role="page" data-theme="c" id="san_inPhoto" style="overflow:scroll" >
+    <div data-theme="c" data-role="header" data-position="fixed" >
+    <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
+        <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
+        <h3>SANITATION</h3>
+  </div>
+    <div data-role="content">       
+       
+        <a data-role="button" id="btn_1_take_pic_ben" onClick="getAchivementImage1_san();" class="ui-btn" >Take Picture 1</a>       
+        <img src="" width="128" height="128" alt="Image1" id="myImageA_san" />        
+        <input name="achPhoto_san" id="achPhoto_san" value=""  type="hidden">
+        
+        <a data-role="button" id="btn_2_take_pic" onClick="getAchivementImage2_san();" class="ui-btn" >Take Picture 2</a>       
+        <img src="" width="128" height="128" alt="Image2" id="myImage2A_san" />
+        <input name="achPhoto_2_san" id="achPhoto_2_san" value=""  type="hidden">
+        
+        <input name="ach_lat_san" id="ach_lat_san" value=""  type="hidden">
+        <input name="ach_long_san" id="ach_long_san" value=""  type="hidden">
+        <a data-role="button" id="btn_ach_lat_long_san" onClick="getLocationInfoAch_san();" class="ui-btn" >Confirm Location</a>
+        
+		<div class="errorChk" style="color:#F00;"></div>
+        <div class="sucChk" style="color:#00CA00;"></div>
+        <br/>
+		<br/>
+        <a data-role="button" id="btn_san_submit" onClick="sanDataSubmit();" class="ui-btn" >Submit</a> 
+		<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        
+    </div>
+  </div>
+
+<!--============WWF==================-->
+<div data-role="page" data-theme="c" id="wwf_four_page" style="overflow:scroll;">
+    <div data-theme="c" data-role="header" data-position="fixed" >
+        <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
+        <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
+        <h3>HWF</h3>
+    </div>
+    
+    <div data-role="content" >             
+         <ul data-role="listview" data-inset="true">
+            <li style="background-color:#F2F2F2;" class="auto_break"><strong>Handwashing Facility Details</strong> </li>
+            <li class="ui-field-contain">
+                <label for="hw_type">Type of Handwash Facilities</label>               
+                <select name="hw_type" id="hw_type" data-native-menu="false">
+                    <option value="0">Select</option>
+                    <option value="1">Water tank with tap</option>
+                    <option value="2">Barrel / Drum with pipe line  to Spout / Tap</option>
+                    <option value="3">Bucket with Tap</option>
+                    <option value="4">30L - 50L Barrel with Tap </option>
+                    <option value="5">Pitcher with Tap</option>
+                    <option value="6">Jerkin/Container with Tap</option>
+                    <option value="7">Tippy Tap</option>
+                    <option value="8">Tube Well on Premises</option>
+                    <option value="9">Sink with tap water</option>
+                    <option value="10">Basins</option>
+                    <option value="11">Overhead Tank</option>
+                    <option value="12">Jugs </option>
+                    <option value="13">Bucket with mug </option>
+                </select>	
+            </li>
+            <li class="ui-field-contain">
+            	<label for="hw_com_date">Date of Completion </label>
+                <input type="date" id="hw_com_date" name="hw_com_date"/>
+            </li>
+            <li style="background-color:#F2F2F2;" class="auto_break"><strong>Overlapping Status</strong> </li>
+            <li class="ui-field-contain">
+                <label for="hw_overlap_status">Orientation on Hygiene given</label>               
+                <select name="hw_overlap_status" id="hw_overlap_status" data-native-menu="false">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>	
+            </li>
+		</ul>
+    <a data-role="button" onclick="wwf_planbdData2Next()" href="#" data-transition="slide" >Next</a>
+        <div class="errorChk"></div>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    </div>
+</div>
+
+
+<div data-role="page" data-theme="c" id="wwf_inPhoto" style="overflow:scroll" >
+    <div data-theme="c" data-role="header" data-position="fixed" >
+    <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
+        <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
+        <h3>HWF</h3>
+  </div>
+    <div data-role="content">       
+       
+        <a data-role="button" id="btn_1_take_pic_wwf" onClick="getAchivementImage1_wwf();" class="ui-btn" >Take Picture 1</a>       
+        <img src="" width="128" height="128" alt="Image1" id="myImageA_wwf" />        
+        <input name="achPhoto_wwf" id="achPhoto_wwf" value=""  type="hidden">
+        
+        <a data-role="button" id="btn_2_take_pic" onClick="getAchivementImage2_wwf();" class="ui-btn" >Take Picture 2</a>       
+        <img src="" width="128" height="128" alt="Image2" id="myImage2A_wwf" />
+        <input name="achPhoto_2_wwf" id="achPhoto_2_wwf" value=""  type="hidden">
+        
+        <input name="ach_lat_wwf" id="ach_lat_wwf" value=""  type="hidden">
+        <input name="ach_long_wwf" id="ach_long_wwf" value=""  type="hidden">
+        <a data-role="button" id="btn_ach_lat_long_wwf" onClick="getLocationInfoAch_wwf();" class="ui-btn" >Confirm Location</a>
+        
+		<div class="errorChk" style="color:#F00;"></div>
+        <div class="sucChk" style="color:#00CA00;"></div>
+        <br/>
+		<br/>
+        <a data-role="button" id="btn_wwf_submit" onClick="wwfDataSubmit();" class="ui-btn" >Submit</a> 
+		<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        
+    </div>
+  </div>
+  
+<!--============WP=============-->  
+<div data-role="page" data-theme="c" id="wp_four_page" style="overflow:scroll;">
+    <div data-theme="c" data-role="header" data-position="fixed" >
+        <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
+        <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
+        <h3>WP</h3>
+    </div>
+    
+    <div data-role="content" >             
+         <ul data-role="listview" data-inset="true">
+            <li style="background-color:#F2F2F2;" class="auto_break"><strong>Water Point Details</strong> </li>
+            <li class="ui-field-contain">
+                <label for="wp_technology">Water Point Technology </label>               
+                <select name="wp_technology" id="wp_technology" data-native-menu="false">
+                    <option value="0">Select</option>
+                    <option value="1">Deep Hand Tubewell</option>
+                    <option value="2">Deep Set Pump</option>
+                    <option value="3">Shallow Tubewell</option>
+                    <option value="4">Semi-Deep Tubewell</option>
+                    <option value="5">Rain Water Harvesting</option>
+                </select>	
+            </li>
+            <li class="ui-field-contain">
+                <label for="wp_tub_pre">Tubewell Located on Premises</label>               
+                <select name="wp_tub_pre" id="wp_tub_pre" data-native-menu="false">
+                    <option value="0">Select</option>
+                    <option value="1">Tubewell located on Premises</option>
+                    <option value="2">Require less than 30 min to fetch water from distant Tubewell</option>
+                    <option value="3">Require more than 30 min to fetch water from distant Tubewell</option>
+                </select>	
+            </li>
+            <li class="ui-field-contain">
+                <label for="wp_subsidized">Subsidized</label>               
+                <select name="wp_subsidized" id="wp_subsidized" data-native-menu="false">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>	
+            </li>
+            <li class="ui-field-contain">
+            	<label for="wp_com_date">Date of Completion </label>
+                <input type="date" id="wp_com_date" name="wp_com_date"/>
+            </li>  
+            <li style="background-color:#F2F2F2;" class="auto_break"><strong>Overlapping Status</strong> </li>
+            <li class="ui-field-contain">
+                <label for="wp_overlap_status">Orientation on Hygiene given</label>               
+                <select name="wp_overlap_status" id="wp_overlap_status" data-native-menu="false">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>	
+            </li>
+		</ul>
+    <a data-role="button" onclick="wp_planbdData2Next()" href="#" data-transition="slide" >Next</a>
+        <div class="errorChk"></div>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    </div>
+</div>
+
+
+<div data-role="page" data-theme="c" id="wp_inPhoto" style="overflow:scroll" >
+    <div data-theme="c" data-role="header" data-position="fixed" >
+    <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
+        <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
+        <h3>WP</h3>
+  </div>
+    <div data-role="content">       
+       
+        <a data-role="button" id="btn_1_take_pic_wp" onClick="getAchivementImage1_wp();" class="ui-btn" >Take Picture 1</a>       
+        <img src="" width="128" height="128" alt="Image1" id="myImageA_wp" />        
+        <input name="achPhoto_wp" id="achPhoto_wp" value=""  type="hidden">
+        
+        <a data-role="button" id="btn_2_take_pic" onClick="getAchivementImage2_wp();" class="ui-btn" >Take Picture 2</a>       
+        <img src="" width="128" height="128" alt="Image2" id="myImage2A_wp" />
+        <input name="achPhoto_2_wp" id="achPhoto_2_wp" value=""  type="hidden">
+        
+        <input name="ach_lat_wp" id="ach_lat_wp" value=""  type="hidden">
+        <input name="ach_long_wp" id="ach_long_wp" value=""  type="hidden">
+        <a data-role="button" id="btn_ach_lat_long_wp" onClick="getLocationInfoAch_wp();" class="ui-btn" >Confirm Location</a>
+        
+		<div class="errorChk" style="color:#F00;"></div>
+        <div class="sucChk" style="color:#00CA00;"></div>
+        <br/>
+		<br/>
+        <a data-role="button" id="btn_wp_submit" onClick="wpDataSubmit();" class="ui-btn" >Submit</a> 
+		<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        
+    </div>
+  </div> 
+  
+  
+  
+  
+<!--========================-->
+<script type="text/javascript" src="phonegap.js"></script>
+
+
+</body>
+</html>
