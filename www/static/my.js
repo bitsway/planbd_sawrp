@@ -146,7 +146,8 @@ function onError_wp(error) {
    $(".errorChk").html("Failed to Confirmed Location.");
 }
 //---- online
-var apipath="http://i001.yeapps.com/planbd_sawrp/syncmobile/";
+//var apipath="http://i001.yeapps.com/planbd_sawrp/syncmobile/";
+var apipath="http://w02.yeapps.com/planbd_sawrp/syncmobile/";
 
 //--- local
 //var apipath="http://127.0.0.1:8000/planbd_sawrp/syncmobile/";
