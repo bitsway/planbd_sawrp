@@ -9,7 +9,7 @@ var latitude="";
 var longitude="";
 
 //----benficiary----
-var achPhoto_ben="";
+/*var achPhoto_ben="";
 var achPhoto_2_ben="";
 var imageName_ben = "";
 var imageName2_ben = "";
@@ -17,15 +17,12 @@ var imagePathA_ben="";
 var imagePath2A_ben="";
 
 var ben_latitude="";
-var ben_longitude="";
+var ben_longitude="";*/
 
 //-----san--------
 var achPhoto_san="";
-var achPhoto_2_san="";
 var imageName_san = "";
-var imageName2_san = "";
 var imagePathA_san="";
-var imagePath2A_san="";
 
 var san_latitude="";
 var san_longitude="";
@@ -43,11 +40,8 @@ var wwf_longitude="";
 
 //-----wp--------
 var achPhoto_wp="";
-var achPhoto_2_wp="";
 var imageName_wp = "";
-var imageName2_wp = "";
 var imagePathA_wp="";
-var imagePath2A_wp="";
 
 var wp_latitude="";
 var wp_longitude="";
@@ -71,7 +65,7 @@ function onError(error) {
 }
 
 //=======Beneficiary======
-function getLocationInfoAch_ben() {	
+/*function getLocationInfoAch_ben() {	
 	var options = { enableHighAccuracy: false};	
 	navigator.geolocation.getCurrentPosition(onSuccess_ben, onError_ben, options);				
 	$(".errorChk").html("Confirming location. Please wait.");
@@ -87,7 +81,7 @@ function onError_ben(error) {
    $("#ach_lat_ben").val(0);
    $("#ach_long_ben").val(0);
    $(".errorChk").html("Failed to Confirmed Location.");
-}
+}*/
 
 //=======Sanitaiton======
 function getLocationInfoAch_san() {	
@@ -156,8 +150,7 @@ url ="";
 $(document).ready(function(){
 	if (localStorage.synced!='YES'){
 			 url = "#pagesync";						
-		}else{
-				
+		}else{	
 			url = "#homePage";
 		}
 	$.mobile.navigate(url);
@@ -954,9 +947,7 @@ function ben_planbdData1Next(){
 	}else{
 		
 		//"&ben_ward="+ben_ward+&ben_village="+ben_village"+&ben_clusID="+ben_clusID+"&ben_clusName="+ben_clusName+"&ben_socialMapID="+ben_socialMapID+"&ben_hh_serial="+ben_hh_serial
-		/*$(".errorChk").text("");			
-		url="#ben_second_page";					
-		$.mobile.navigate(url);*/
+		
 		//alert(apipath+"search_benData?div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_hh_serial="+ben_hh_serial);
 		$.ajax({
 			type:'POST',
@@ -966,22 +957,7 @@ function ben_planbdData1Next(){
 				var searchResultArray = searchResult.split('||');
 					resultSearch=searchResultArray[0];
 					
-					if (resultSearch=='Success'){							
-						/*div_name=searchResultArray[1];
-						div_code=searchResultArray[2];	
-						dis_name=searchResultArray[3];	
-						dis_code=searchResultArray[4];	
-						up_name=searchResultArray[5];	
-						up_code=searchResultArray[6];		
-						un_name=searchResultArray[7];	
-						un_code=searchResultArray[8];
-						ben_ward=searchResultArray[9];
-						ben_village=searchResultArray[10];
-						ben_clusID=searchResultArray[11];
-						ben_clusName=searchResultArray[12];
-						ben_socialMapID=searchResultArray[13];
-						ben_hh_serial=searchResultArray[14];
-						ben_hh_id=searchResultArray[15];*/
+					if (resultSearch=='Success'){	
 						ben_hh_head_name=searchResultArray[1];
 						ben_hh_head_gender=searchResultArray[2];	
 						ben_eco_condition=searchResultArray[3];	
@@ -1406,12 +1382,12 @@ function sanDataSubmit(){
 
 //------------------------------------image 1
 function getAchivementImage1_san() {
-	navigator.camera.getPicture(onSuccesstA_san, onFailA_san, { quality: 50,
+	navigator.camera.getPicture(onSuccessA_san, onFailA_san, { quality: 50,
 	targetWidth: 300,
 	destinationType: Camera.DestinationType.FILE_URI,correctOrientation: true});		
 }
 
-function onSuccesstA_san(imageURI) {		
+function onSuccessA_san(imageURI) {		
     var image = document.getElementById('myImageA_san');
     image.src = imageURI;
 	imagePathA_san = imageURI;	
@@ -1449,11 +1425,10 @@ function winAchInfo_san(r) {
 
 
 function syncDataSan(){		
-	//alert(apipath+"submitData_san?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_san+"&latitude="+san_latitude+"&longitude="+san_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+clsName+"&sanHHserial="+sanHHID+"&sanHHName="+sanHHName+"&san_lat_type="+san_lat_type+"&san_act_type="+san_act_type+"&san_subsidized="+san_subsidized+"&san_com_date="+san_com_date);
+	//alert(apipath+"submitData_san?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_san+"&latitude="+san_latitude+"&longitude="+san_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&sanHHserial="+sanHHID+"&sanHHName="+encodeURIComponent(sanHHName)+"&san_lat_type="+san_lat_type+"&san_act_type="+san_act_type+"&san_subsidized="+san_subsidized+"&san_com_date="+san_com_date);
 	$.ajax({
 		type:'POST',
-		url:apipath+"submitData_san?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_san+"&latitude="+san_latitude+"&longitude="+san_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+clsName+"&sanHHserial="+sanHHID+"&sanHHName="+sanHHName+"&san_lat_type="+san_lat_type+"&san_act_type="+san_act_type+"&san_subsidized="+san_subsidized+"&san_com_date="+san_com_date,
-																																																										
+		url:apipath+"submitData_san?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_san+"&latitude="+san_latitude+"&longitude="+san_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&sanHHserial="+sanHHID+"&sanHHName="+encodeURIComponent(sanHHName)+"&san_lat_type="+san_lat_type+"&san_act_type="+san_act_type+"&san_subsidized="+san_subsidized+"&san_com_date="+san_com_date,
 		success: function(result) {			
 			if(result=='Success'){
 				
@@ -1595,8 +1570,9 @@ function uploadPhotoAch_wwf(imageURI, imageName_wwf) {
     var params = {};
     params.value1 = "test";
     params.value2 = "param";
-
     options.params = params;
+	
+	options.chunkedMode = false;
 
     var ft = new FileTransfer();
 	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winAchInfo_wwf,onfail_wwf,options);
@@ -1871,12 +1847,12 @@ function wpDataSubmit(){
 
 //------------------------------------image 1
 function getAchivementImage1_wp() {
-	navigator.camera.getPicture(onSuccesstA_wp, onFailA_wp, { quality: 50,
+	navigator.camera.getPicture(onSuccessA_wp, onFailA_wp, { quality: 50,
 	targetWidth: 300,
 	destinationType: Camera.DestinationType.FILE_URI,correctOrientation: true});		
 }
 
-function onSuccesstA_wp(imageURI) {		
+function onSuccessA_wp(imageURI) {		
     var image = document.getElementById('myImageA_wp');
     image.src = imageURI;
 	imagePathA_wp = imageURI;	
