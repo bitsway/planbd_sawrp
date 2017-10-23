@@ -182,26 +182,31 @@ function syncBasic(){
 		  url:apipath+'passwordCheck?mobile='+mobile+'&password='+encodeURIComponent(password)+'&sync_code='+localStorage.sync_code,
 		  success: function(result) {
 			syncResult=result
-			//alert(syncResult);
 			var syncResultArray = syncResult.split('rdrd');
 				localStorage.synced=syncResultArray[0];
 				if (localStorage.synced=='YES'){	
-					localStorage.sync_code=syncResultArray[1];						
-					localStorage.div_name=syncResultArray[2];
-					localStorage.div_code=syncResultArray[3];	
-					localStorage.dis_name=syncResultArray[4];	
-					localStorage.dis_code=syncResultArray[5];	
-					localStorage.up_name=syncResultArray[6];	
-					localStorage.up_code=syncResultArray[7];		
-					localStorage.un_name=syncResultArray[8];	
-					localStorage.un_code=syncResultArray[9];
-					localStorage.unCodeUnique=syncResultArray[10];
-					localStorage.ffID=syncResultArray[11];					
-					localStorage.ffName=syncResultArray[12];
-					localStorage.ffMobile=syncResultArray[13];
-					localStorage.pnGO=syncResultArray[14];
-											
+					localStorage.sync_code=syncResultArray[1];										
+					localStorage.ffID=syncResultArray[2];					
+					localStorage.ffName=syncResultArray[3];
+					localStorage.mobile_no=syncResultArray[4];
+					localStorage.pnGO=syncResultArray[5];
+					localStorage.listAll=syncResultArray[6];					
 					
+					$("#totalList").val(localStorage.listAll);					
+					
+					localStorage.listStr=$("#totalList").val();
+					
+					var totalLi=localStorage.listStr.split(',');
+					
+					localStorage.div_name=totalLi[0]
+					localStorage.div_code=totalLi[1]
+					localStorage.dis_name=totalLi[2]
+					localStorage.dis_code=totalLi[3]
+					localStorage.up_name=totalLi[4]
+					localStorage.up_code=totalLi[5]
+					localStorage.un_name=totalLi[6]
+					localStorage.un_code=totalLi[7]					
+										
 					$("#divName").val(localStorage.div_name);
 					$("#divCode").val(localStorage.div_code);
 					$("#disName").val(localStorage.dis_name);
@@ -210,7 +215,7 @@ function syncBasic(){
 					$("#upCode").val(localStorage.up_code);
 					$("#unName").val(localStorage.un_name);						
 					$("#unCode").val(localStorage.un_code);
-					
+										
 					$(".errorMsg").html("Sync Successful");
 					$('#syncBasic').show();
 											
@@ -450,6 +455,17 @@ function planbdData1Next(){
 	}
 }
 
+function washCommitt(){
+	commExit=$("#commExit").val();	
+	if(commExit=='No'){
+		$("#commFemale").attr('readonly','readonly').css("background-color","#F9F9F9");
+		$("#commMale").attr('readonly','readonly').css("background-color","#F9F9F9");
+	}else{
+		$("#commFemale").removeAttr('readonly');
+		$("#commMale").removeAttr('readonly');
+	}
+}
+
 function planbdData2Next(){
 	rich=$("#rich").val();
 	middle=$("#middle").val();
@@ -523,9 +539,9 @@ function planbdData2Next(){
 		$(".errorChk").text("Required Handwashing Facility Yes");
 	}else if(hwNo==''){
 		$(".errorChk").text("Required Handwashing Facility No");
-	}else if(commFemale==''){	
+	}else if(commFemale=='' && commExit=='Yes'){	
 		$(".errorChk").text("Required Female ");
-	}else if(commMale==''){
+	}else if(commMale=='' && commExit=='Yes'){
 		$(".errorChk").text("Required Male");
 	}else if(benG_5==''){
 		$(".errorChk").text("Required Girl (<=5)");
@@ -546,9 +562,9 @@ function planbdData2Next(){
 	}else if(benTotal<(eval(EthF)+eval(EthM))){
 		$(".errorChk").text("Invalid Total number of HH ");
 		
-	}else if(ecoStatus != sanTotal){
-		$(".errorChk").text("Number of HHs by Economic Status Not Match Sanitation Information");
-	}else if(ecoStatus != wpTotal){
+	}else if(ecoStatus < sanTotal){
+		$(".errorChk").text("Number of HHs by Economic Status Less than or Equal Sanitation Information");
+	}else if(ecoStatus < wpTotal){
 		$(".errorChk").text("Number of HHs by Economic Status Not Match Water Point Information");
 	}else if(ecoStatus != hwTotal){
 		$(".errorChk").text("Number of HHs by Economic Status Not Match Handwashing Facility Infomrationn");
@@ -657,7 +673,8 @@ function uploadPhotoAch(imageURI, imageName) {
     params.value1 = "test";
     params.value2 = "param";
     options.params = params;
-	options.chunkedMode = false;	
+	
+	options.chunkedMode = false;
 
     var ft = new FileTransfer();
 	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winAchInfo,onfail,options);
@@ -712,9 +729,9 @@ function uploadPhoto2Ach(imageURI, imageName2) { // second step
 	
     var params = {};
     params.value1 = "test";
-    params.value2 = "param";
-	
+    params.value2 = "param";	
     options.params = params;
+	
 	options.chunkedMode = false;
 	
     var ft = new FileTransfer();
@@ -727,10 +744,10 @@ function winComInfo2(r) {
 }
 
 function syncData(){				
-	//alert(apipath+"submitData?&syncCode="+localStorage.sync_code+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName+"&achPhoto2="+imageName2+"&latitude="+latitude+"&longitude="+longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ward="+ward+"&village="+village+"&clusID="+clusID+"&clusName="+clusName+"&socialMapID="+socialMapID+"&rich="+rich+"&middle="+middle+"&poor="+poor+"&exPoor="+exPoor+"&hyLatrine="+hyLatrine+"&unhyLatrine="+unhyLatrine+"&noLatrine="+noLatrine+"&hyTub="+hyTub+"&unhyTub="+unhyTub+"&noTub="+noTub+"&hwYes="+hwYes+"&hwNo="+hwNo+"&odfStatus="+odfStatus+"&commExit="+commExit+"&commFunc="+commFunc+"&commFemale="+commFemale+"&commMale="+commMale+"&benTotal="+benTotal+"&benG_5="+benG_5+"&benB_5="+benB_5+"&benG_5_18="+benG_5_18+"&benB_5_18="+benB_5_18+"&benF_18_plus="+benF_18_plus+"&benM_18_plus="+benM_18_plus+"&EthF="+EthF+"&EthM="+EthM+"&disG_5="+disG_5+"&disB_5="+disB_5+"&disG_5_18="+disG_5_18+"&disB_5_18="+disB_5_18+"&disF_18_plus="+disF_18_plus+"&disM_18_plus="+disM_18_plus);
+	//alert(apipath+"submitData?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName+"&achPhoto2="+imageName2+"&latitude="+latitude+"&longitude="+longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ward="+ward+"&village="+village+"&clusID="+clusID+"&clusName="+clusName+"&socialMapID="+socialMapID+"&rich="+rich+"&middle="+middle+"&poor="+poor+"&exPoor="+exPoor+"&hyLatrine="+hyLatrine+"&unhyLatrine="+unhyLatrine+"&noLatrine="+noLatrine+"&hyTub="+hyTub+"&unhyTub="+unhyTub+"&noTub="+noTub+"&hwYes="+hwYes+"&hwNo="+hwNo+"&odfStatus="+odfStatus+"&commExit="+commExit+"&commFunc="+commFunc+"&commFemale="+commFemale+"&commMale="+commMale+"&benTotal="+benTotal+"&benG_5="+benG_5+"&benB_5="+benB_5+"&benG_5_18="+benG_5_18+"&benB_5_18="+benB_5_18+"&benF_18_plus="+benF_18_plus+"&benM_18_plus="+benM_18_plus+"&EthF="+EthF+"&EthM="+EthM+"&disG_5="+disG_5+"&disB_5="+disB_5+"&disG_5_18="+disG_5_18+"&disB_5_18="+disB_5_18+"&disF_18_plus="+disF_18_plus+"&disM_18_plus="+disM_18_plus);
 	$.ajax({
 		type: 'POST',
-		url:apipath+"submitData?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.ffMobile+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName+"&achPhoto2="+imageName2+"&latitude="+latitude+"&longitude="+longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ward="+ward+"&village="+village+"&clusID="+clusID+"&clusName="+clusName+"&socialMapID="+socialMapID+"&rich="+rich+"&middle="+middle+"&poor="+poor+"&exPoor="+exPoor+"&hyLatrine="+hyLatrine+"&unhyLatrine="+unhyLatrine+"&noLatrine="+noLatrine+"&hyTub="+hyTub+"&unhyTub="+unhyTub+"&noTub="+noTub+"&hwYes="+hwYes+"&hwNo="+hwNo+"&odfStatus="+odfStatus+"&commExit="+commExit+"&commFunc="+commFunc+"&commFemale="+commFemale+"&commMale="+commMale+"&benTotal="+benTotal+"&benG_5="+benG_5+"&benB_5="+benB_5+"&benG_5_18="+benG_5_18+"&benB_5_18="+benB_5_18+"&benF_18_plus="+benF_18_plus+"&benM_18_plus="+benM_18_plus+"&EthF="+EthF+"&EthM="+EthM+"&disG_5="+disG_5+"&disB_5="+disB_5+"&disG_5_18="+disG_5_18+"&disB_5_18="+disB_5_18+"&disF_18_plus="+disF_18_plus+"&disM_18_plus="+disM_18_plus,
+		url:apipath+"submitData?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName+"&achPhoto2="+imageName2+"&latitude="+latitude+"&longitude="+longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ward="+ward+"&village="+village+"&clusID="+clusID+"&clusName="+clusName+"&socialMapID="+socialMapID+"&rich="+rich+"&middle="+middle+"&poor="+poor+"&exPoor="+exPoor+"&hyLatrine="+hyLatrine+"&unhyLatrine="+unhyLatrine+"&noLatrine="+noLatrine+"&hyTub="+hyTub+"&unhyTub="+unhyTub+"&noTub="+noTub+"&hwYes="+hwYes+"&hwNo="+hwNo+"&odfStatus="+odfStatus+"&commExit="+commExit+"&commFunc="+commFunc+"&commFemale="+commFemale+"&commMale="+commMale+"&benTotal="+benTotal+"&benG_5="+benG_5+"&benB_5="+benB_5+"&benG_5_18="+benG_5_18+"&benB_5_18="+benB_5_18+"&benF_18_plus="+benF_18_plus+"&benM_18_plus="+benM_18_plus+"&EthF="+EthF+"&EthM="+EthM+"&disG_5="+disG_5+"&disB_5="+disB_5+"&disG_5_18="+disG_5_18+"&disB_5_18="+disB_5_18+"&disF_18_plus="+disF_18_plus+"&disM_18_plus="+disM_18_plus,
 																																																												
 		success: function(result) {			
 			if(result=='Success'){
@@ -940,10 +957,10 @@ function ben_planbdData1Next(){
 		/*$(".errorChk").text("");			
 		url="#ben_second_page";					
 		$.mobile.navigate(url);*/
-		//alert(apipath+"search_benData?&ben_hh_serial="+ben_hh_serial);
+		//alert(apipath+"search_benData?div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_hh_serial="+ben_hh_serial);
 		$.ajax({
 			type:'POST',
-			url:apipath+"search_benData?&ben_hh_serial="+ben_hh_serial,
+			url:apipath+"search_benData?div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_hh_serial="+ben_hh_serial,
 			success: function(result){				
 				searchResult=result;			
 				var searchResultArray = searchResult.split('||');
@@ -1023,7 +1040,10 @@ function joinSocialID(){
 	$("#ben_hh_id").val(benSocialHH);
 }
 
-function ben_planbdData2Next(){
+function benDataSubmit(){
+	$(".errorChk").text("");
+	$(".sucChk").text("");	
+		
 	ben_hh_id=$("#ben_hh_id").val();
 	ben_hh_head_name=$("#ben_hh_head_name").val();
 	ben_hh_head_gender=$("#ben_hh_head_gender").val();
@@ -1086,204 +1106,39 @@ function ben_planbdData2Next(){
 	}else if(ben_benM_18_plus<ben_disM_18_plus){
 		$(".errorChk").text("Disabilities < Beneficiaries  Male (18+)");
 	}else{
-		/*"&ben_hh_id="+ben_hh_id+"&ben_hh_head_name="+ben_hh_head_name+"&ben_hh_head_gender="+ben_hh_head_gender+"
-		&ben_eco_condition="+ben_eco_condition+"&ben_benG_5="+ben_benG_5+"&ben_benB_5="+ben_benB_5+"
-		&ben_benG_5_18="+ben_benG_5_18+"&ben_benB_5_18="+ben_benB_5_18+"&ben_benF_18_plus="+ben_benF_18_plus+"
-		&ben_benM_18_plus="+ben_benM_18_plus+"&benBen_Total="+benBen_Total+"&ben_EthF="+ben_EthF+"&ben_EthM="+ben_EthM+"
-		&ben_disG_5="+ben_disG_5+"&ben_disB_5="+ben_disB_5+"&ben_disG_5_18="+ben_disG_5_18+"&ben_disB_5_18="+ben_disB_5_18+"
-		&ben_disF_18_plus="+ben_disF_18_plus+"&ben_disM_18_plus="+ben_disM_18_plus*/
-	
-		$(".errorChk").text("");			
-		url="#ben_inPhoto";					
-		$.mobile.navigate(url);	
-	}
-}
-
-
-
-function benDataSubmit(){
-	$("#btn_ben_submit").hide();
-	
-	var d = new Date();	
-	var get_time=d.getTime();	
-	
-	ben_latitude=$("#ach_lat_ben").val();
-	ben_longitude=$("#ach_long_ben").val();
-	
-	achPhoto_ben=$("#achPhoto_ben").val();
-	achPhoto_2_ben=$("#achPhoto_2_ben").val();
-	
-	if (ben_latitude==undefined || ben_latitude==''){
-		ben_latitude=0;
-	}
-	if (ben_longitude==undefined || ben_longitude==''){
-		ben_longitude=0;
-	}
-	if (achPhoto_ben=='' || achPhoto_ben==undefined){
-		$(".errorChk").text("Please confirm Photo 1 ");
-		$("#btn_ben_submit").show();
-	}else{
-		if (achPhoto_2_ben=='' || achPhoto_2_ben==undefined){
-			$(".errorChk").text("Please confirm Photo 2 ");
-			$("#btn_ben_submit").show();
-		}else{		
-			//if(latitude==0 || latitude==0){
-			//	$(".errorChk").text("Please confirm your location ");
-			//	$("#btn_ben_submit").show();
-			//}else{				
-				//imagePathA_ben="test"					
-				if (imagePathA_ben!=""){							
-					$(".errorChk").text("Syncing photo 1..");
-					imageName_ben = localStorage.mobile_no+"_"+get_time+".jpg";										
-					uploadPhotoAch_ben(imagePathA_ben, imageName_ben);	
-					//$("#btn_ben_submit").show();					
-				}
-									
-			//} //-end check location
 			
-		}//Photo 2
-	}//chk photo
-	
-//syncDataBen();
-	
-}
-
-//------------------------------------image 1
-function getAchivementImage1_ben() {
-	navigator.camera.getPicture(onSuccesstA_ben, onFailA_ben, { quality: 50,
-	targetWidth: 300,
-	destinationType: Camera.DestinationType.FILE_URI,correctOrientation: true});		
-}
-
-function onSuccesstA_ben(imageURI) {		
-    var image = document.getElementById('myImageA_ben');
-    image.src = imageURI;
-	imagePathA_ben = imageURI;	
-	$("#achPhoto_ben").val(imagePathA_ben);
-	
-}
-
-function onFailA_ben(message) {
-	imagePathA_ben="";
-    alert('Failed because: ' + message);
-}
-
-function uploadPhotoAch_ben(imageURI, imageName_ben) { 	
-	//winAchInfo();
-	var options = new FileUploadOptions();
-    options.fileKey="upload";
-    options.fileName=imageName_ben;
-    options.mimeType="image/jpeg";
-
-    var params = {};
-    params.value1 = "test";
-    params.value2 = "param";
-
-    options.params = params;
-	options.chunkedMode = false;
-	
-    var ft = new FileTransfer();
-	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winAchInfo_ben,onfail_ben,options);
-}
-
-function winAchInfo_ben(r) {	
-	$(".errorChk").text('Image 1 upload Successful. Syncing image 2...');
-	
-	var d = new Date();	
-	var get_time=d.getTime();
-		
-	//imagePath2A_ben="test2"
-	if (imagePath2A_ben!=""){							
-		$(".errorChk").text("Syncing photo 2..");
-		imageName2_ben = localStorage.mobile_no+"_"+get_time+".jpg";
-				
-		uploadPhoto2Ach_ben(imagePath2A_ben, imageName2_ben);
-		//$("#btn_ben_submit").show();		
-	}
-}
-
-function onfail_ben(r) {
-	$(".errorChk").text('File upload Failed. Please check internet connection.');
-	$("#btn_ben_submit").show();
-}
-
-//-----------------------image 2
-function getAchivementImage2_ben() { //unused
-	navigator.camera.getPicture(onSuccess2A_ben, onFail2A_ben, { quality: 50,
-	targetWidth: 300,
-	destinationType: Camera.DestinationType.FILE_URI,correctOrientation: true });		
-}
-
-function onSuccess2A_ben(imageURI) {	//unused	
-    var image = document.getElementById('myImage2A_ben');
-    image.src = imageURI;
-	imagePath2A_ben = imageURI;	
-	$("#achPhoto_2_ben").val(imagePath2A_ben);
-}
-
-function onFail2A_ben(message) { //unused
-	imagePath2A_ben="";
-    alert('Failed because: ' + message);
-}
-
-function uploadPhoto2Ach_ben(imageURI, imageName2_ben) { // second step	
-	//winComInfo2();
-	var options = new FileUploadOptions();
-    options.fileKey="upload";
-    options.fileName=imageName2_ben;
-    options.mimeType="image/jpeg";
-	
-    var params = {};
-    params.value1 = "test";
-    params.value2 = "param";
-	
-    options.params = params;
-	options.chunkedMode = false;
-	
-    var ft = new FileTransfer();
-	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winComInfo2_ben,onfail_ben,options);
-}
-
-function winComInfo2_ben(r) {
-	$(".errorChk").text('Image 2 upload successfull. Syncing Data ...');
-	syncDataBen();
-}
-
-function syncDataBen(){				
-	//alert(apipath+"submitData_ben?&syncCode="+localStorage.sync_code+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_ben+"&achPhoto2="+imageName2_ben+"&latitude="+ben_latitude+"&longitude="+ben_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_clusName="+ben_clusName+"&ben_hh_serial="+ben_hh_serial+"&ben_hh_id="+ben_hh_id+"&ben_hh_head_name="+ben_hh_head_name+"&ben_hh_head_gender="+ben_hh_head_gender+"&ben_eco_condition="+ben_eco_condition+"&ben_benG_5="+ben_benG_5+"&ben_benB_5="+ben_benB_5+"&ben_benG_5_18="+ben_benG_5_18+"&ben_benB_5_18="+ben_benB_5_18+"&ben_benF_18_plus="+ben_benF_18_plus+"&ben_benM_18_plus="+ben_benM_18_plus+"&ben_EthF="+ben_EthF+"&ben_EthM="+ben_EthM+"&ben_disG_5="+ben_disG_5+"&ben_disB_5="+ben_disB_5+"&ben_disG_5_18="+ben_disG_5_18+"&ben_disB_5_18="+ben_disB_5_18+"&ben_disF_18_plus="+ben_disF_18_plus+"&ben_disM_18_plus="+ben_disM_18_plus);
-	$.ajax({
+		//alert(apipath+"submitData_ben?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_clusName="+ben_clusName+"&ben_hh_serial="+ben_hh_serial+"&ben_hh_id="+ben_hh_id+"&ben_hh_head_name="+ben_hh_head_name+"&ben_hh_head_gender="+ben_hh_head_gender+"&ben_eco_condition="+ben_eco_condition+"&ben_benG_5="+ben_benG_5+"&ben_benB_5="+ben_benB_5+"&ben_benG_5_18="+ben_benG_5_18+"&ben_benB_5_18="+ben_benB_5_18+"&ben_benF_18_plus="+ben_benF_18_plus+"&ben_benM_18_plus="+ben_benM_18_plus+"&ben_EthF="+ben_EthF+"&ben_EthM="+ben_EthM+"&ben_disG_5="+ben_disG_5+"&ben_disB_5="+ben_disB_5+"&ben_disG_5_18="+ben_disG_5_18+"&ben_disB_5_18="+ben_disB_5_18+"&ben_disF_18_plus="+ben_disF_18_plus+"&ben_disM_18_plus="+ben_disM_18_plus);
+		$.ajax({
 		type: 'POST',
-		url:apipath+"submitData_ben?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.ffMobile+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_ben+"&achPhoto2="+imageName2_ben+"&latitude="+ben_latitude+"&longitude="+ben_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_clusName="+ben_clusName+"&ben_hh_serial="+ben_hh_serial+"&ben_hh_id="+ben_hh_id+"&ben_hh_head_name="+ben_hh_head_name+"&ben_hh_head_gender="+ben_hh_head_gender+"&ben_eco_condition="+ben_eco_condition+"&ben_benG_5="+ben_benG_5+"&ben_benB_5="+ben_benB_5+"&ben_benG_5_18="+ben_benG_5_18+"&ben_benB_5_18="+ben_benB_5_18+"&ben_benF_18_plus="+ben_benF_18_plus+"&ben_benM_18_plus="+ben_benM_18_plus+"&ben_EthF="+ben_EthF+"&ben_EthM="+ben_EthM+"&ben_disG_5="+ben_disG_5+"&ben_disB_5="+ben_disB_5+"&ben_disG_5_18="+ben_disG_5_18+"&ben_disB_5_18="+ben_disB_5_18+"&ben_disF_18_plus="+ben_disF_18_plus+"&ben_disM_18_plus="+ben_disM_18_plus,
+		url:apipath+"submitData_ben?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_clusName="+ben_clusName+"&ben_hh_serial="+ben_hh_serial+"&ben_hh_id="+ben_hh_id+"&ben_hh_head_name="+ben_hh_head_name+"&ben_hh_head_gender="+ben_hh_head_gender+"&ben_eco_condition="+ben_eco_condition+"&ben_benG_5="+ben_benG_5+"&ben_benB_5="+ben_benB_5+"&ben_benG_5_18="+ben_benG_5_18+"&ben_benB_5_18="+ben_benB_5_18+"&ben_benF_18_plus="+ben_benF_18_plus+"&ben_benM_18_plus="+ben_benM_18_plus+"&ben_EthF="+ben_EthF+"&ben_EthM="+ben_EthM+"&ben_disG_5="+ben_disG_5+"&ben_disB_5="+ben_disB_5+"&ben_disG_5_18="+ben_disG_5_18+"&ben_disB_5_18="+ben_disB_5_18+"&ben_disF_18_plus="+ben_disF_18_plus+"&ben_disM_18_plus="+ben_disM_18_plus,
 																																																											
 		success: function(result) {			
 			if(result=='Success'){
 				
-				$("#ward").val("");
-				$("#village").val("");
-				$("#clusID").val("");
-				$("#ben_hh_serial").val("");
+				$("#ben_ward").val("");
+				$("#ben_clusID").val("");
+				$("#ben_hh_serial").val("");								
+				
 				$("#ben_hh_id").val("");
-								
-				$("#benG_5").val("");
-				$("#benB_5").val("");
-				$("#benG_5_18").val("");
-				$("#benB_5_18").val("");
-				$("#benF_18_plus").val("");
-				$("#benM_18_plus").val("");
-				$("#EthF").val("");
-				$("#EthM").val("");
-				$("#disG_5").val("");
-				$("#disB_5").val("");
-				$("#disG_5_18").val("");
-				$("#disB_5_18").val("");
-				$("#disF_18_plus").val("");
-				$("#disM_18_plus").val("");				
-				//--------------
-				$("#ach_lat_ben").val(0);
-				$("#ach_long_ben").val(0);
-				$("#achPhoto_ben").val("");										
-				$("#achPhoto_2_ben").val("");
-								
+				$("#ben_hh_head_name").val("");
+				$("#ben_hh_head_gender").val("");
+				$("#ben_eco_condition").val("");
+				$("#ben_benG_5").val("");
+				$("#ben_benB_5").val("");
+				$("#ben_benG_5_18").val("");
+				$("#ben_benB_5_18").val("");
+				$("#ben_benF_18_plus").val("");
+				$("#ben_benM_18_plus").val("");
+				$("#benBen_Total").val("");
+				$("#ben_EthF").val("");
+				$("#ben_EthM").val("");
+				$("#ben_disG_5").val("");
+				$("#ben_disB_5").val("");
+				$("#ben_disG_5_18").val("");
+				$("#ben_disB_5_18").val("");
+				$("#ben_disF_18_plus").val("");
+				$("#ben_disM_18_plus").val("");
+														
 				$(".sucChk").text('Successfully Submitted');
 				$(".errorChk").text("");
 				$("#btn_ben_submit").show();						
@@ -1294,7 +1149,11 @@ function syncDataBen(){
 			
 		}//end result
 	});//end ajax
+		
+	}
 }
+
+
 
 //===========Sanitation=================
 var san_ward;
@@ -1306,11 +1165,9 @@ var san_lat_type;
 var san_act_type;
 var san_subsidized;
 var san_com_date;
-var san_overlap_status;
 //------
 var hw_type;
 var hw_com_date;
-var hw_overlap_status;
 
 function sanitaion(sanitaion){
 	if(localStorage.sync_code==undefined || localStorage.sync_code==""){
@@ -1392,6 +1249,12 @@ function san_planbdData1Next(){
 				rpt_rep_ob.selectmenu("refresh");
 		}
 	})
+	$("#divi_san_w").text(localStorage.div_name);
+	$("#dis_san_w").text(localStorage.dis_name);
+	$("#upaz_san_w").text(localStorage.up_name);
+	$("#uni_san_w").text(localStorage.un_name);
+	$("#ward_san_w").text(san_ward);
+	
 	$(".errorChk").text("");
 	url="#san_second_page";
 	$.mobile.navigate(url);
@@ -1426,19 +1289,46 @@ function clusterData(){
 				
 		}
 	})
+	
+	$("#divi_san_c").text(localStorage.div_name);
+	$("#dis_san_c").text(localStorage.dis_name);
+	$("#upaz_san_c").text(localStorage.up_name);
+	$("#uni_san_c").text(localStorage.un_name);
+	$("#ward_san_c").text(san_ward);
+	$("#cluster_san_c").text(clsId+"-"+(clsName).replace(/%20/g," "));
+	
 	$(".errorChk").text("");
 	url="#san_three_page";
 	$.mobile.navigate(url);			
 }
 
+function wpList(){
+	clusIDName=$("#clusterIDName").val();
+	
+	clsIdName=clusIDName.split("-");
+	clsId=clsIdName[0];
+	clsName=clsIdName[1];
+	
+	$("#divi_en").text(localStorage.div_name);
+	$("#dis_en").text(localStorage.dis_name);
+	$("#upaz_en").text(localStorage.up_name);
+	$("#uni_en").text(localStorage.un_name);
+	$("#ward_en").text(san_ward);
+	$("#cluster_en").text(clsId+"-"+(clsName).replace(/%20/g," "));
+	
+	$(".errorChk").text("");
+	url="#wp_enlistment";
+	$.mobile.navigate(url);		
+}
 
 function san(){
 	hhIdName=$("#hhSerail").val();
 	
 	sanHHserial=hhIdName.split("-");
 	 sanHHID=sanHHserial[0]
-	 sanHHName=sanHHserial[1]
+	 sanHHName=sanHHserial[1]	
 	
+	$("#hh_id_san_san").text(sanHHID+"-"+(sanHHName).replace(/%20/g," "));
 	$(".errorChk").text("");
 	url="#san_four_page";
 	$.mobile.navigate(url);	
@@ -1448,8 +1338,11 @@ function san_planbdData2Next(){
 	san_lat_type=$("#san_lat_type").val();
 	san_act_type=$("#san_act_type").val();
 	san_subsidized=$("#san_subsidized").val();
-	san_com_date=$("#san_com_date").val();	
-	san_overlap_status=$("#san_overlap_status").val();
+	san_com_date=$("#san_com_date").val();
+	
+	san_com_date_chk=san_com_date.split('/');
+	san_com_dateS=new Date(san_com_date_chk[1]+"/"+ san_com_date_chk[0]+"/"+san_com_date_chk[2]);
+	today = new Date()
 	
 	if(san_lat_type=='' || san_lat_type==0){
 		$(".errorChk").text("Required Type of Latrine Provided");  
@@ -1459,8 +1352,8 @@ function san_planbdData2Next(){
 		$(".errorChk").text("Required Subsidized"); 
 	}else if(san_com_date==''){
 		$(".errorChk").text("Required Date of Completion");
-	}else if(san_overlap_status==''){
-		$(".errorChk").text("Required Orientation on Hygiene given");
+	}else if(san_com_dateS > today){
+		$(".errorChk").text("Invalid Completion Date");
 	}else{
 		$(".errorChk").text("");
 		url="#san_inPhoto";
@@ -1478,7 +1371,6 @@ function sanDataSubmit(){
 	san_longitude=$("#ach_long_san").val();
 	
 	achPhoto_san=$("#achPhoto_san").val();
-	achPhoto_2_san=$("#achPhoto_2_san").val();
 	
 	if (san_latitude==undefined || san_latitude==''){
 		san_latitude=0;
@@ -1490,26 +1382,22 @@ function sanDataSubmit(){
 	if (achPhoto_san=='' || achPhoto_san==undefined){
 		$(".errorChk").text("Please confirm Photo 1 ");
 		$("#btn_san_submit").show();
-	}else{
-		if (achPhoto_2_san=='' || achPhoto_2_san==undefined){
-			$(".errorChk").text("Please confirm Photo 2 ");
-			$("#btn_san_submit").show();
-		}else{		
-			//if(latitude==0 || latitude==0){
-			//	$(".errorChk").text("Please confirm your location ");
-			//	$("#btn_san_submit").show();
-			//}else{				
-				//imagePathA_san="test"					
-				if (imagePathA_san!=""){							
-					$(".errorChk").text("Syncing photo 1..");
-					imageName_san = localStorage.mobile_no+"_"+get_time+".jpg";										
-					uploadPhotoAch_san(imagePathA_san, imageName_san);	
-					//$("#btn_san_submit").show();					
-				}
-									
-			//} //-end check location
-			
-		}//Photo 2
+	
+	}else{		
+		//if(latitude==0 || latitude==0){
+		//	$(".errorChk").text("Please confirm your location ");
+		//	$("#btn_san_submit").show();
+		//}else{				
+			//imagePathA_san="test"					
+			if (imagePathA_san!=""){							
+				$(".errorChk").text("Syncing photo 1..");
+				imageName_san = localStorage.mobile_no+"_"+get_time+".jpg";										
+				uploadPhotoAch_san(imagePathA_san, imageName_san);	
+				//$("#btn_san_submit").show();					
+			}
+								
+		//} //-end check location
+		
 	}//chk photo
 	
 //syncDataSan();
@@ -1546,82 +1434,25 @@ function uploadPhotoAch_san(imageURI, imageName_san) {
     var params = {};
     params.value1 = "test";
     params.value2 = "param";
-
     options.params = params;
-	options.chunkedMode = false;
 	
+	options.chunkedMode = false;
+
     var ft = new FileTransfer();
 	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winAchInfo_san,onfail_san,options);
 }
 
 function winAchInfo_san(r) {	
-	$(".errorChk").text('Image 1 upload Successful. Syncing image 2...');
-	
-	var d = new Date();	
-	var get_time=d.getTime();
-		
-	//imagePath2A_san="test2"
-	if (imagePath2A_san!=""){							
-		$(".errorChk").text("Syncing photo 2..");
-		imageName2_san = localStorage.mobile_no+"_"+get_time+".jpg";
-				
-		uploadPhoto2Ach_san(imagePath2A_san, imageName2_san);
-		//$("#btn_san_submit").show();		
-	}
+	$(".errorChk").text('Image upload Successful. Syncing Data...');
+	syncDataSan();	
 }
 
-function onfail_san(r) {
-	$(".errorChk").text('File upload Failed. Please check internet connection.');
-	$("#btn_san_submit").show();
-}
-
-//-----------------------image 2
-function getAchivementImage2_san() { //unused
-	navigator.camera.getPicture(onSuccess2A_san, onFail2A_san, { quality: 50,
-	targetWidth: 300,
-	destinationType: Camera.DestinationType.FILE_URI,correctOrientation: true });		
-}
-
-function onSuccess2A_san(imageURI) {	//unused	
-    var image = document.getElementById('myImage2A_san');
-    image.src = imageURI;
-	imagePath2A_san = imageURI;	
-	$("#achPhoto_2_san").val(imagePath2A_san);
-}
-
-function onFail2A_san(message) { //unused
-	imagePath2A_san="";
-    alert('Failed because: ' + message);
-}
-
-function uploadPhoto2Ach_san(imageURI, imageName2_san) { // second step	
-	//winComInfo2();
-	var options = new FileUploadOptions();
-    options.fileKey="upload";
-    options.fileName=imageName2_san;
-    options.mimeType="image/jpeg";
-	
-    var params = {};
-    params.value1 = "test";
-    params.value2 = "param";
-	
-    options.params = params;
-	options.chunkedMode = false;
-	
-    var ft = new FileTransfer();
-	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winComInfo2_san,onfail_san,options);
-}
-
-function winComInfo2_san(r) {
-	$(".errorChk").text('Image 2 upload successfull. Syncing Data ...');
-	syncDataSan();
-}
 
 function syncDataSan(){		
-	//alert(apipath+"submitData_san?&syncCode="+localStorage.sync_code+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_san+"&achPhoto2="+imageName2_san+"&latitude="+san_latitude+"&longitude="+san_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+clsName+"&sanHHserial="+sanHHID+"&sanHHName="+sanHHName+"&san_lat_type="+san_lat_type+"&san_act_type="+san_act_type+"&san_subsidized="+san_subsidized+"&san_com_date="+san_com_date+"&san_overlap_status="+san_overlap_status);
+	//alert(apipath+"submitData_san?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_san+"&latitude="+san_latitude+"&longitude="+san_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+clsName+"&sanHHserial="+sanHHID+"&sanHHName="+sanHHName+"&san_lat_type="+san_lat_type+"&san_act_type="+san_act_type+"&san_subsidized="+san_subsidized+"&san_com_date="+san_com_date);
 	$.ajax({
 		type:'POST',
-		url:apipath+"submitData_san?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.ffMobile+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_san+"&achPhoto2="+imageName2_san+"&latitude="+san_latitude+"&longitude="+san_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+clsName+"&sanHHserial="+sanHHID+"&sanHHName="+sanHHName+"&san_lat_type="+san_lat_type+"&san_act_type="+san_act_type+"&san_subsidized="+san_subsidized+"&san_com_date="+san_com_date+"&san_overlap_status="+san_overlap_status,
+		url:apipath+"submitData_san?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_san+"&latitude="+san_latitude+"&longitude="+san_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+clsName+"&sanHHserial="+sanHHID+"&sanHHName="+sanHHName+"&san_lat_type="+san_lat_type+"&san_act_type="+san_act_type+"&san_subsidized="+san_subsidized+"&san_com_date="+san_com_date,
 																																																										
 		success: function(result) {			
 			if(result=='Success'){
@@ -1635,8 +1466,7 @@ function syncDataSan(){
 				//--------------
 				$("#ach_lat_san").val(0);
 				$("#ach_long_san").val(0);
-				$("#achPhoto_san").val("");										
-				$("#achPhoto_2_san").val("");
+				$("#achPhoto_san").val("");		
 								
 				$(".sucChk").text('Successfully Submitted');
 				$(".errorChk").text("");
@@ -1658,6 +1488,8 @@ function wwf(wwf){
 	 sanHHID=sanHHserial[0]
 	 sanHHName=sanHHserial[1]
 	
+	$("#hh_id_san_wwf").text(sanHHID+"-"+(sanHHName).replace(/%20/g," "));
+	
 	$(".errorChk").text("");
 	url="#wwf_four_page";
 	$.mobile.navigate(url);		
@@ -1665,15 +1497,18 @@ function wwf(wwf){
 
 function wwf_planbdData2Next(){
 	hw_type=$("#hw_type").val();
-	hw_com_date=$("#hw_com_date").val();
-	hw_overlap_status=$("#hw_overlap_status").val();	
+	hw_com_date=$("#hw_com_date").val();	
+	
+	hw_com_date_chk=hw_com_date.split('/');
+	hw_com_dateS=new Date(hw_com_date_chk[1]+"/"+ hw_com_date_chk[0]+"/"+hw_com_date_chk[2]);
+	today = new Date()
 	
 	if(hw_type=='' || hw_type==0){
 		$(".errorChk").text('Required Type of Handwash Facilities');		
 	}else if(hw_com_date==''){
 		$(".errorChk").text('Required Date of Completion');	
-	}else if(hw_overlap_status==''){
-		$(".errorChk").text('Orientation on Hygiene given');	
+	}else if(hw_com_dateS > today){
+		$(".errorChk").text("Invalid Completion Date");	
 	}else{
 		$(".errorChk").text("");
 		url="#wwf_inPhoto";
@@ -1762,8 +1597,7 @@ function uploadPhotoAch_wwf(imageURI, imageName_wwf) {
     params.value2 = "param";
 
     options.params = params;
-	options.chunkedMode = false;
-	
+
     var ft = new FileTransfer();
 	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winAchInfo_wwf,onfail_wwf,options);
 }
@@ -1817,9 +1651,9 @@ function uploadPhoto2Ach_wwf(imageURI, imageName2_wwf) { // second step
 	
     var params = {};
     params.value1 = "test";
-    params.value2 = "param";
-	
+    params.value2 = "param";	
     options.params = params;
+	
 	options.chunkedMode = false;
 
     var ft = new FileTransfer();
@@ -1832,10 +1666,10 @@ function winComInfo2_wwf(r) {
 }
 
 function syncDataHwf(){		
-	//alert(apipath+"submitData_hwf?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.ffMobile+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wwf+"&achPhoto2="+imageName2_wwf+"&latitude="+wwf_latitude+"&longitude="+wwf_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+clsName+"&sanHHserial="+sanHHID+"&sanHHName="+sanHHName+"&hw_type="+hw_type+"&hw_com_date="+hw_com_date+"&hw_overlap_status="+hw_overlap_status);
+	//alert(apipath+"submitData_hwf?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wwf+"&achPhoto2="+imageName2_wwf+"&latitude="+wwf_latitude+"&longitude="+wwf_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+clsName+"&sanHHserial="+sanHHID+"&sanHHName="+sanHHName+"&hw_type="+hw_type+"&hw_com_date="+hw_com_date);
 	$.ajax({
 		type:'POST',
-		url:apipath+"submitData_hwf?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.ffMobile+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wwf+"&achPhoto2="+imageName2_wwf+"&latitude="+wwf_latitude+"&longitude="+wwf_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+clsName+"&sanHHserial="+sanHHID+"&sanHHName="+sanHHName+"&hw_type="+hw_type+"&hw_com_date="+hw_com_date+"&hw_overlap_status="+hw_overlap_status,
+		url:apipath+"submitData_hwf?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wwf+"&achPhoto2="+imageName2_wwf+"&latitude="+wwf_latitude+"&longitude="+wwf_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+clsName+"&sanHHserial="+sanHHID+"&sanHHName="+sanHHName+"&hw_type="+hw_type+"&hw_com_date="+hw_com_date,
 																																																										
 		success: function(result) {			
 			if(result=='Success'){
@@ -1866,11 +1700,16 @@ function syncDataHwf(){
 
 
 //===========WP================-->
+var wp_serial;
+var wp_org_id;
+var wp_act_type;
 var wp_technology;
 var wp_tub_pre;
 var wp_subsidized;
 var wp_com_date;
-var wp_overlap_status;
+var wp_wq;
+var wp_wq_date;
+var wp_wq_result;
 
 function wp(wp){
 	hhIdName=$("#hhSerail").val();
@@ -1878,28 +1717,109 @@ function wp(wp){
 	 sanHHID=sanHHserial[0]
 	 sanHHName=sanHHserial[1]
 	
+	/*$("#divi_san_h").text(localStorage.div_name);
+	$("#dis_san_h").text(localStorage.dis_name);
+	$("#upaz_san_h").text(localStorage.up_name);
+	$("#uni_san_h").text(localStorage.un_name);
+	$("#ward_san_h").text(san_ward);
+	$("#cluster_san_h").text(clsId);*/
+	$("#hh_id_san_wp").text(sanHHID+"-"+(sanHHName).replace(/%20/g," "));
+	
+	//alert(apipath+"search_wp_serial_enlist?div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code);
+	$.ajax({
+			type:'POST',
+			url:apipath+"search_wp_serial_enlist?div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId,
+			success: function(result){			
+				wpSerialList=result.split('fdfd')
+				
+				var wplistStr="";
+				for(i=0; i<wpSerialList.length; i++){
+					wplist=wpSerialList[i].split(',');
+					wplistStr+="<option value="+encodeURIComponent(wplist)+">"+wplist+"</option>";
+				}
+								
+				var rpt_rep_ob=$("#wp_serial_enlist");					
+				rpt_rep_ob.empty();					
+				rpt_rep_ob.append(wplistStr);					
+				rpt_rep_ob.selectmenu("refresh");
+			}
+		})
 	$(".errorChk").text("");
 	url="#wp_four_page";
 	$.mobile.navigate(url);		
 }
 
+var wp_serial_enlist;
+var sps_family;
+function wpEnlistDataSubmit(){
+	$(".errorChk").text("");
+	wp_serial_enlist=$("#wp_serial_enlist").val();
+	sps_family=$("#sps_family").val();
+	//alert(apipath+"submitData_wp?&wp_serial_enlist="+wp_serial_enlist+"&sanHHserial="+sanHHID+"&sanHHName="+encodeURIComponent(sanHHName));
+	$.ajax({
+		type:'POST',
+		url:apipath+"submitData_wp?&wp_serial_enlist="+wp_serial_enlist+"&sanHHserial="+sanHHID+"&sanHHName="+encodeURIComponent(sanHHName)+"&sps_family="+sps_family,
+		success: function(result) {			
+			if(result=='Success'){
+				$("#wp_serial_enlist").val("");								
+				$(".sucChk").text('Successfully Submitted');
+				$(".errorChk").text("");
+				$("#btn_wp_enlist_submit").hide();						
+			}else{
+				$(".errorChk").text('Submission Failed.');																	
+				$("#btn_wp_enlist_submit").show();
+			}
+			
+		}//end result
+	});//end ajax
+		
+}
+
 function wp_planbdData2Next(){
+	wp_serial=$("#wp_serial").val();
+	wp_org_id=$("#wp_org_id").val();
+	wp_act_type=$("#wp_act_type").val();
 	wp_technology=$("#wp_technology").val();
 	wp_tub_pre=$("#wp_tub_pre").val();
 	wp_subsidized=$("#wp_subsidized").val();
 	wp_com_date=$("#wp_com_date").val();
-	wp_overlap_status=$("#wp_overlap_status").val();
 	
-	if(wp_technology=='' || wp_technology==0){
+	wp_wq=$("#wp_wq").val();
+	wp_wq_date=$("#wp_wq_date").val();
+	wp_wq_result=$("#wp_wq_result").val();
+	
+	wp_com_date_chk=wp_com_date.split('/');	
+	wp_com_dateS=new Date(wp_com_date_chk[1]+"/"+ wp_com_date_chk[0]+"/"+wp_com_date_chk[2]);	
+	today = new Date()
+	
+	wp_wq_date_chk=wp_wq_date.split('/');
+	wp_wq_dateS=new Date(wp_wq_date_chk[1]+"/"+ wp_wq_date_chk[0]+"/"+wp_wq_date_chk[2]);
+	currentDate = new Date()
+	
+	if(wp_serial==''){
+		$(".errorChk").text('Required wp Serial');	
+	}else if(wp_serial.length !=3){
+		$(".errorChk").text('Maximum 3 Digit WP Serial');
+	}else if(wp_org_id==''){
+		$(".errorChk").text('Required Organization ID');	
+	}else if(wp_org_id.length !=10){
+		$(".errorChk").text('Maximum 10 Digit Organization ID');		
+	}else if(wp_act_type==''){
+		$(".errorChk").text("Required Type of Activity"); 
+	}else if(wp_technology=='' || wp_technology==0){
 		$(".errorChk").text('Required Water Point Technology');			
 	}else if(wp_tub_pre=='' || wp_tub_pre==0){
 		$(".errorChk").text('Required Tubewell Located on Premises');
 	}else if(wp_subsidized==''){
 		$(".errorChk").text('Required Subsidized');		
 	}else if(wp_com_date==''){
-		$(".errorChk").text('Required Date of Completion');		
-	}else if(wp_overlap_status==''){
-		$(".errorChk").text('Required Orientation on Hygiene given');		
+		$(".errorChk").text('Required Date of Completion');	
+	}else if(wp_com_dateS > today){
+		$(".errorChk").text("Invalid Completion Date");	
+	}else if(wp_wq_date==''){
+		$(".errorChk").text('Required Date of Water Quality Test');	
+	}else if(wp_wq_dateS > currentDate){
+		$(".errorChk").text("Invalid Date of Water Quality Test");		
 	}else{
 		$(".errorChk").text("");
 		url="#wp_inPhoto";
@@ -1917,7 +1837,6 @@ function wpDataSubmit(){
 	wp_longitude=$("#ach_long_wp").val();
 	
 	achPhoto_wp=$("#achPhoto_wp").val();
-	achPhoto_2_wp=$("#achPhoto_2_wp").val();
 	
 	if (wp_latitude==undefined || wp_latitude==''){
 		wp_latitude=0;
@@ -1929,26 +1848,21 @@ function wpDataSubmit(){
 	if (achPhoto_wp=='' || achPhoto_wp==undefined){
 		$(".errorChk").text("Please confirm Photo 1 ");
 		$("#btn_wp_submit").show();
-	}else{
-		if (achPhoto_2_wp=='' || achPhoto_2_wp==undefined){
-			$(".errorChk").text("Please confirm Photo 2 ");
-			$("#btn_wp_submit").show();
-		}else{		
-			//if(latitude==0 || latitude==0){
-			//	$(".errorChk").text("Please confirm your location ");
-			//	$("#btn_wp_submit").show();
-			//}else{				
-				//imagePathA_wp="test"					
-				if (imagePathA_wp!=""){							
-					$(".errorChk").text("Syncing photo 1..");
-					imageName_wp = localStorage.mobile_no+"_"+get_time+".jpg";										
-					uploadPhotoAch_wp(imagePathA_wp, imageName_wp);	
-					//$("#btn_wp_submit").show();					
-				}
-									
-			//} //-end check location
-			
-		}//Photo 2
+	}else{		
+		//if(latitude==0 || latitude==0){
+		//	$(".errorChk").text("Please confirm your location ");
+		//	$("#btn_wp_submit").show();
+		//}else{				
+			//imagePathA_wp="test"					
+			if (imagePathA_wp!=""){							
+				$(".errorChk").text("Syncing photo 1..");
+				imageName_wp = localStorage.mobile_no+"_"+get_time+".jpg";										
+				uploadPhotoAch_wp(imagePathA_wp, imageName_wp);	
+				//$("#btn_wp_submit").show();					
+			}
+								
+		//} //-end check location
+		
 	}//chk photo
 	
 //syncDataWp();
@@ -1985,8 +1899,8 @@ function uploadPhotoAch_wp(imageURI, imageName_wp) {
     var params = {};
     params.value1 = "test";
     params.value2 = "param";
-
     options.params = params;
+	
 	options.chunkedMode = false;
 
     var ft = new FileTransfer();
@@ -1994,19 +1908,8 @@ function uploadPhotoAch_wp(imageURI, imageName_wp) {
 }
 
 function winAchInfo_wp(r) {	
-	$(".errorChk").text('Image 1 upload Successful. Syncing image 2...');
-	
-	var d = new Date();	
-	var get_time=d.getTime();
-		
-	//imagePath2A_wp="test2"
-	if (imagePath2A_wp!=""){							
-		$(".errorChk").text("Syncing photo 2..");
-		imageName2_wp = localStorage.mobile_no+"_"+get_time+".jpg";
-				
-		uploadPhoto2Ach_wp(imagePath2A_wp, imageName2_wp);
-		//$("#btn_wp_submit").show();		
-	}
+	$(".errorChk").text('Image upload Successful. Syncing Data...');
+	syncDataWp();	
 }
 
 function onfail_wp(r) {
@@ -2014,75 +1917,38 @@ function onfail_wp(r) {
 	$("#btn_wp_submit").show();
 }
 
-//-----------------------image 2
-function getAchivementImage2_wp() { //unused
-	navigator.camera.getPicture(onSuccess2A_wp, onFail2A_wp, { quality: 50,
-	targetWidth: 300,
-	destinationType: Camera.DestinationType.FILE_URI,correctOrientation: true });		
-}
-
-function onSuccess2A_wp(imageURI) {	//unused	
-    var image = document.getElementById('myImage2A_wp');
-    image.src = imageURI;
-	imagePath2A_wp = imageURI;	
-	$("#achPhoto_2_wp").val(imagePath2A_wp);
-}
-
-function onFail2A_wp(message) { //unused
-	imagePath2A_wp="";
-    alert('Failed because: ' + message);
-}
-
-function uploadPhoto2Ach_wp(imageURI, imageName2_wp) { // second step	
-	//winComInfo2();
-	var options = new FileUploadOptions();
-    options.fileKey="upload";
-    options.fileName=imageName2_wp;
-    options.mimeType="image/jpeg";
-	
-    var params = {};
-    params.value1 = "test";
-    params.value2 = "param";
-	
-    options.params = params;
-	options.chunkedMode = false;
-
-    var ft = new FileTransfer();
-	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winComInfo2_wp,onfail_wp,options);
-}
-
-function winComInfo2_wp(r) {
-	$(".errorChk").text('Image 2 upload successfull. Syncing Data ...');
-	syncDataWp();
-}
-
-
-function syncDataWp(){		
-	//alert(apipath+"submitData_wp?&syncCode="+localStorage.sync_code+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wp+"&achPhoto2="+imageName2_wp+"&latitude="+wp_latitude+"&longitude="+wp_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+clsName+"&sanHHserial="+sanHHID+"&sanHHName="+sanHHName+"&wp_technology="+wp_technology+"&wp_tub_pre="+wp_tub_pre+"&wp_subsidized="+wp_subsidized+"&wp_com_date="+wp_com_date+"&wp_overlap_status="+wp_overlap_status);
+//&sanHHserial="+sanHHID+"&sanHHName="+sanHHName+"
+function syncDataWp(){	
+	$(".errorChk").text("");
+	$(".sucChk").text("");	
+	//alert(apipath+"submitData_wp_enlist?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wp+"&latitude="+wp_latitude+"&longitude="+wp_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&wp_serial="+wp_serial+"&wp_org_id="+wp_org_id+"&wp_act_type="+wp_act_type+"&wp_technology="+wp_technology+"&wp_tub_pre="+wp_tub_pre+"&wp_subsidized="+wp_subsidized+"&wp_com_date="+wp_com_date+"&wp_wq="+wp_wq+"&wp_wq_date="+wp_wq_date+"&wp_wq_result="+wp_wq_result);
 	$.ajax({
 		type:'POST',
-		url:apipath+"submitData_wp?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.ffMobile+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wp+"&achPhoto2="+imageName2_wp+"&latitude="+wp_latitude+"&longitude="+wp_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+clsName+"&sanHHserial="+sanHHID+"&sanHHName="+sanHHName+"&wp_technology="+wp_technology+"&wp_tub_pre="+wp_tub_pre+"&wp_subsidized="+wp_subsidized+"&wp_com_date="+wp_com_date+"&wp_overlap_status="+wp_overlap_status,
+		url:apipath+"submitData_wp_enlist?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wp+"&latitude="+wp_latitude+"&longitude="+wp_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&wp_serial="+wp_serial+"&wp_org_id="+wp_org_id+"&wp_act_type="+wp_act_type+"&wp_technology="+wp_technology+"&wp_tub_pre="+wp_tub_pre+"&wp_subsidized="+wp_subsidized+"&wp_com_date="+wp_com_date+"&wp_wq="+wp_wq+"&wp_wq_date="+wp_wq_date+"&wp_wq_result="+wp_wq_result,
 																																																										
 		success: function(result) {			
 			if(result=='Success'){
+				$("#wp_serial").val("");
+				$("#wp_org_id").val("");
+				$("#wp_act_type").val("");
+				$("#wp_technology").val("");
+				$("#wp_tub_pre").val("");
+				$("#wp_subsidized").val("");
+				$("#wp_com_date").val("");
 				
-				/*$("#ward").val("");
-				$("#village").val("");
-				$("#clusID").val("");
-				$("#clusName").val("");
-				$("#socialMapID").val("");*/
-											
+				$("#wp_wq").val("");
+				$("#wp_wq_date").val("");
+				$("#wp_wq_result").val("");											
 				//--------------
 				$("#ach_lat_wp").val(0);
 				$("#ach_long_wp").val(0);
-				$("#achPhoto_wp").val("");										
-				$("#achPhoto_2_wp").val("");
+				$("#achPhoto_wp").val("");	
 								
 				$(".sucChk").text('Successfully Submitted');
 				$(".errorChk").text("");
 				$("#btn_wp_submit").show();						
 			}else{
-				$(".errorChk").text('Unauthorized Access');																	
+				$(".errorChk").text('Submission Failed.');																	
 				$("#btn_wp_submit").show();
 			}
 			
