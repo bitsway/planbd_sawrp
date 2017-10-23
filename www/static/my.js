@@ -1542,12 +1542,12 @@ function wwfDataSubmit(){
 
 //------------------------------------image 1
 function getAchivementImage1_wwf() {
-	navigator.camera.getPicture(onSuccesstA_wwf, onFailA_wwf, { quality: 50,
+	navigator.camera.getPicture(onSuccessA_wwf, onFailA_wwf, { quality: 50,
 	targetWidth: 300,
 	destinationType: Camera.DestinationType.FILE_URI,correctOrientation: true});		
 }
 
-function onSuccesstA_wwf(imageURI) {		
+function onSuccessA_wwf(imageURI) {		
     var image = document.getElementById('myImageA_wwf');
     image.src = imageURI;
 	imagePathA_wwf = imageURI;	
@@ -1600,20 +1600,20 @@ function onfail_wwf(r) {
 }
 
 //-----------------------image 2
-function getAchivementImage2_wwf() { //unused
+function getAchivementImage2_wwf() { 
 	navigator.camera.getPicture(onSuccess2A_wwf, onFail2A_wwf, { quality: 50,
 	targetWidth: 300,
 	destinationType: Camera.DestinationType.FILE_URI,correctOrientation: true });		
 }
 
-function onSuccess2A_wwf(imageURI) {	//unused	
+function onSuccess2A_wwf(imageURI) {		
     var image = document.getElementById('myImage2A_wwf');
     image.src = imageURI;
 	imagePath2A_wwf = imageURI;	
 	$("#achPhoto_2_wwf").val(imagePath2A_wwf);
 }
 
-function onFail2A_wwf(message) { //unused
+function onFail2A_wwf(message) { 
 	imagePath2A_wwf="";
     alert('Failed because: ' + message);
 }
@@ -1645,7 +1645,7 @@ function syncDataHwf(){
 	//alert(apipath+"submitData_hwf?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wwf+"&achPhoto2="+imageName2_wwf+"&latitude="+wwf_latitude+"&longitude="+wwf_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+clsName+"&sanHHserial="+sanHHID+"&sanHHName="+sanHHName+"&hw_type="+hw_type+"&hw_com_date="+hw_com_date);
 	$.ajax({
 		type:'POST',
-		url:apipath+"submitData_hwf?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wwf+"&achPhoto2="+imageName2_wwf+"&latitude="+wwf_latitude+"&longitude="+wwf_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+clsName+"&sanHHserial="+sanHHID+"&sanHHName="+sanHHName+"&hw_type="+hw_type+"&hw_com_date="+hw_com_date,
+		url:apipath+"submitData_hwf?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wwf+"&achPhoto2="+imageName2_wwf+"&latitude="+wwf_latitude+"&longitude="+wwf_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&sanHHserial="+sanHHID+"&sanHHName="+encodeURIComponent(sanHHName)+"&hw_type="+hw_type+"&hw_com_date="+hw_com_date,
 																																																										
 		success: function(result) {			
 			if(result=='Success'){
@@ -1778,7 +1778,7 @@ function wp_planbdData2Next(){
 		$(".errorChk").text('Maximum 3 Digit WP Serial');
 	}else if(wp_org_id==''){
 		$(".errorChk").text('Required Organization ID');	
-	}else if(wp_org_id.length !=10){
+	}else if(wp_org_id.length >15){
 		$(".errorChk").text('Maximum 10 Digit Organization ID');		
 	}else if(wp_act_type==''){
 		$(".errorChk").text("Required Type of Activity"); 
