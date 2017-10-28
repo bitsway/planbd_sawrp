@@ -8,16 +8,6 @@ var imagePath2A="";
 var latitude="";
 var longitude="";
 
-//----benficiary----
-/*var achPhoto_ben="";
-var achPhoto_2_ben="";
-var imageName_ben = "";
-var imageName2_ben = "";
-var imagePathA_ben="";
-var imagePath2A_ben="";
-
-var ben_latitude="";
-var ben_longitude="";*/
 
 //-----san--------
 var achPhoto_san="";
@@ -63,25 +53,6 @@ function onError(error) {
    $("#ach_long").val(0);
    $(".errorChk").html("Failed to Confirmed Location.");
 }
-
-//=======Beneficiary======
-/*function getLocationInfoAch_ben() {	
-	var options = { enableHighAccuracy: false};	
-	navigator.geolocation.getCurrentPosition(onSuccess_ben, onError_ben, options);				
-	$(".errorChk").html("Confirming location. Please wait.");
-}
-// onSuccess Geolocation
-function onSuccess_ben(position) {
-	$("#ach_lat_ben").val(position.coords.latitude);
-	$("#ach_long_ben").val(position.coords.longitude);
-	$(".errorChk").html("Location Confirmed");
-}
-// onError Callback receives a PositionError object
-function onError_ben(error) {
-   $("#ach_lat_ben").val(0);
-   $("#ach_long_ben").val(0);
-   $(".errorChk").html("Failed to Confirmed Location.");
-}*/
 
 //=======Sanitaiton======
 function getLocationInfoAch_san() {	
@@ -354,36 +325,6 @@ function totalBeneficiary(){
 	$("#benTotal").val(totalGB);
 }
 	
-/*function totalDisabilities(){
-	disG_5=$("#disG_5").val();
-	disB_5=$("#disB_5").val();
-	disG_5_18=$("#disG_5_18").val();
-	disB_5_18=$("#disB_5_18").val();
-	disF_18_plus=$("#disF_18_plus").val();
-	disM_18_plus=$("#disM_18_plus").val();
-	
-	if(disG_5==''){
-		disG_5=0;
-	}
-	if(disB_5==''){
-		disB_5=0;
-	}
-	if(disG_5_18==''){
-		disG_5_18=0;		
-	}
-	if(disB_5_18==''){
-		disB_5_18=0;
-	}
-	if(disF_18_plus==''){
-		disF_18_plus=0;		
-	}
-	if(disM_18_plus==''){
-		disM_18_plus=0;
-	}
-	var totalDisabilities=eval(disG_5)+eval(disB_5)+eval(disG_5_18)+eval(disB_5_18)+eval(disF_18_plus)+eval(disM_18_plus);
-	$("#").val(totalDisabilities);		
-}*/	
-
 var social;
 function social_mapping(socialMap){
 	if(localStorage.sync_code==undefined || localStorage.sync_code==""){
@@ -695,20 +636,20 @@ function onfail(r) {
 }
 
 //-----------------------image 2
-function getAchivementImage2() { //unused
+function getAchivementImage2() { 
 	navigator.camera.getPicture(onSuccess2A, onFail2A, { quality: 50,
 	targetWidth: 300,
 	destinationType: Camera.DestinationType.FILE_URI,correctOrientation: true });		
 }
 
-function onSuccess2A(imageURI) {	//unused	
+function onSuccess2A(imageURI) {	
     var image = document.getElementById('myImage2A');
     image.src = imageURI;
 	imagePath2A = imageURI;	
 	$("#achPhoto_2").val(imagePath2A);
 }
 
-function onFail2A(message) { //unused
+function onFail2A(message) { 
 	imagePath2A="";
     alert('Failed because: ' + message);
 }
@@ -1315,7 +1256,7 @@ function san_planbdData2Next(){
 	san_act_type=$("#san_act_type").val();
 	san_subsidized=$("#san_subsidized").val();
 	san_com_date=$("#san_com_date").val();
-	
+
 	san_com_date_chk=san_com_date.split('/');
 	san_com_dateS=new Date(san_com_date_chk[1]+"/"+ san_com_date_chk[0]+"/"+san_com_date_chk[2]);
 	today = new Date()
@@ -1358,22 +1299,14 @@ function sanDataSubmit(){
 	if (achPhoto_san=='' || achPhoto_san==undefined){
 		$(".errorChk").text("Please confirm Photo 1 ");
 		$("#btn_san_submit").show();
-	
-	}else{		
-		//if(latitude==0 || latitude==0){
-		//	$(".errorChk").text("Please confirm your location ");
-		//	$("#btn_san_submit").show();
-		//}else{				
-			//imagePathA_san="test"					
-			if (imagePathA_san!=""){							
-				$(".errorChk").text("Syncing photo 1..");
-				imageName_san = localStorage.mobile_no+"_"+get_time+".jpg";										
-				uploadPhotoAch_san(imagePathA_san, imageName_san);	
-				//$("#btn_san_submit").show();					
-			}
-								
-		//} //-end check location
-		
+	}else{				
+		//imagePathA_san="test"					
+		if (imagePathA_san!=""){							
+			$(".errorChk").text("Syncing photo 1..");
+			imageName_san = localStorage.mobile_no+"_"+get_time+".jpg";										
+			uploadPhotoAch_san(imagePathA_san, imageName_san);	
+			//$("#btn_san_submit").show();					
+		}		
 	}//chk photo
 	
 //syncDataSan();
@@ -1437,7 +1370,11 @@ function syncDataSan(){
 				$("#clusID").val("");
 				$("#clusName").val("");
 				$("#socialMapID").val("");
-											
+				
+				$("#san_lat_type").val("");
+				$("#san_act_type").val("");
+				$("#san_subsidized").val("");
+				$("#san_com_date").val("");							
 				//--------------
 				$("#ach_lat_san").val(0);
 				$("#ach_long_san").val(0);
@@ -1641,8 +1578,13 @@ function winComInfo2_wwf(r) {
 	syncDataHwf();
 }
 
+function onfail_wwf(r) {
+	$(".errorChk").text('File upload Failed. Please check internet connection.');
+	$("#btn_wwf_submit").show();
+}
+
 function syncDataHwf(){		
-	//alert(apipath+"submitData_hwf?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wwf+"&achPhoto2="+imageName2_wwf+"&latitude="+wwf_latitude+"&longitude="+wwf_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+clsName+"&sanHHserial="+sanHHID+"&sanHHName="+sanHHName+"&hw_type="+hw_type+"&hw_com_date="+hw_com_date);
+	//alert(apipath+"submitData_hwf?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wwf+"&achPhoto2="+imageName2_wwf+"&latitude="+wwf_latitude+"&longitude="+wwf_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&sanHHserial="+sanHHID+"&sanHHName="+encodeURIComponent(sanHHName)+"&hw_type="+hw_type+"&hw_com_date="+hw_com_date);
 	$.ajax({
 		type:'POST',
 		url:apipath+"submitData_hwf?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wwf+"&achPhoto2="+imageName2_wwf+"&latitude="+wwf_latitude+"&longitude="+wwf_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&sanHHserial="+sanHHID+"&sanHHName="+encodeURIComponent(sanHHName)+"&hw_type="+hw_type+"&hw_com_date="+hw_com_date,
@@ -1693,12 +1635,6 @@ function wp(wp){
 	 sanHHID=sanHHserial[0]
 	 sanHHName=sanHHserial[1]
 	
-	/*$("#divi_san_h").text(localStorage.div_name);
-	$("#dis_san_h").text(localStorage.dis_name);
-	$("#upaz_san_h").text(localStorage.up_name);
-	$("#uni_san_h").text(localStorage.un_name);
-	$("#ward_san_h").text(san_ward);
-	$("#cluster_san_h").text(clsId);*/
 	$("#hh_id_san_wp").text(sanHHID+"-"+(sanHHName).replace(/%20/g," "));
 	
 	//alert(apipath+"search_wp_serial_enlist?div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code);
@@ -1893,10 +1829,8 @@ function onfail_wp(r) {
 	$("#btn_wp_submit").show();
 }
 
-//&sanHHserial="+sanHHID+"&sanHHName="+sanHHName+"
-function syncDataWp(){	
-	$(".errorChk").text("");
-	$(".sucChk").text("");	
+
+function syncDataWp(){		
 	//alert(apipath+"submitData_wp_enlist?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wp+"&latitude="+wp_latitude+"&longitude="+wp_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&wp_serial="+wp_serial+"&wp_org_id="+wp_org_id+"&wp_act_type="+wp_act_type+"&wp_technology="+wp_technology+"&wp_tub_pre="+wp_tub_pre+"&wp_subsidized="+wp_subsidized+"&wp_com_date="+wp_com_date+"&wp_wq="+wp_wq+"&wp_wq_date="+wp_wq_date+"&wp_wq_result="+wp_wq_result);
 	$.ajax({
 		type:'POST',
