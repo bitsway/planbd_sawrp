@@ -1278,7 +1278,8 @@ function san_planbdData2Next(){
 	}		
 }
 
-function sanDataSubmit(){
+function sanDataSubmit() {
+   
 	$("#btn_san_submit").hide();
 	
 	var d = new Date();	
@@ -1301,15 +1302,15 @@ function sanDataSubmit(){
 		$("#btn_san_submit").show();
 	}else{				
 		//imagePathA_san="test"					
-		if (imagePathA_san!=""){							
+		if (imagePathA_san != ""){							
 			$(".errorChk").text("Syncing photo 1..");
-			imageName_san = localStorage.mobile_no+"_"+get_time+".jpg";										
-			uploadPhotoAch_san(imagePathA_san, imageName_san);	
+			imageName_san = localStorage.mobile_no + "_" + get_time + ".jpg";										
+            uploadPhotoAch_san(imagePathA_san, imageName_san);	
 			//$("#btn_san_submit").show();					
 		}		
 	}//chk photo
 	
-//syncDataSan();
+//syncDataSan();                        
 	
 }
 
@@ -1317,14 +1318,15 @@ function sanDataSubmit(){
 function getAchivementImage1_san() {
 	navigator.camera.getPicture(onSuccessA_san, onFailA_san, { quality: 50,
 	targetWidth: 300,
-	destinationType: Camera.DestinationType.FILE_URI,correctOrientation: true});		
+    destinationType: Camera.DestinationType.FILE_URI, correctOrientation: true
+    });		
 }
 
 function onSuccessA_san(imageURI) {		
     var image = document.getElementById('myImageA_san');
     image.src = imageURI;
 	imagePathA_san = imageURI;	
-	$("#achPhoto_san").val(imagePathA_san);
+    $("#achPhoto_san").val(imagePathA_san);
 	
 }
 
@@ -1337,7 +1339,7 @@ function uploadPhotoAch_san(imageURI, imageName_san) {
 	//winAchInfo();
 	var options = new FileUploadOptions();
     options.fileKey="upload";
-    options.fileName=imageName_san;
+    options.fileName = imageName_san;
     options.mimeType="image/jpeg";
 
     var params = {};
