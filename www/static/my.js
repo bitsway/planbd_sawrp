@@ -558,26 +558,17 @@ function dataSubmit(){
 	if (achPhoto=='' || achPhoto==undefined){
 		$(".errorChk").text("Please confirm Photo 1 ");
 		$("#btn_submit").show();
-	}else{
-		if (achPhoto_2=='' || achPhoto_2==undefined){
-			$(".errorChk").text("Please confirm Photo 2 ");
-			$("#btn_submit").show();
-		}else{		
-			//if(latitude==0 || latitude==0){
-			//	$(".errorChk").text("Please confirm your location ");
-			//	$("#btn_submit").show();
-			//}else{				
-				//imagePathA="test"					
-				if (imagePathA!=""){							
-					$(".errorChk").text("Syncing photo 1..");
-					imageName = localStorage.mobile_no+"_"+get_time+".jpg";										
-					uploadPhotoAch(imagePathA, imageName);	
-					//$("#btn_submit").show();					
-				}
-									
-			//} //-end check location
-			
-		}//Photo 2
+	}else if (achPhoto_2=='' || achPhoto_2==undefined){
+		$(".errorChk").text("Please confirm Photo 2 ");
+		$("#btn_submit").show();
+	}else{				
+		//imagePathA="test"					
+		if (imagePathA!=""){							
+			$(".errorChk").text("Syncing photo 1..");
+			imageName = localStorage.mobile_no+"_"+get_time+".jpg";										
+			uploadPhotoAch(imagePathA, imageName);	
+			//$("#btn_submit").show();					
+		}		
 	}//chk photo
 	
 //syncData();
@@ -2007,7 +1998,7 @@ function onfail_wp(r) {
 
 function syncDataWp() {
 
-    //alert(apipath+"submitData_wp_enlist?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wp+"&latitude="+wp_latitude+"&longitude="+wp_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&wp_serial="+wp_serial+"&wp_org_id="+wp_org_id+"&wp_act_type="+wp_act_type+"&wp_technology="+wp_technology+"&wp_subsidized="+wp_subsidized+"&wp_com_date="+wp_com_date+"&wp_wq="+wp_wq+"&wp_wq_date="+wp_wq_date+"&wp_wq_result="+wp_wq_result)
+   // alert(apipath+"submitData_wp_enlist?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wp+"&latitude="+wp_latitude+"&longitude="+wp_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&wp_serial="+wp_serial+"&wp_org_id="+wp_org_id+"&wp_act_type="+wp_act_type+"&wp_technology="+wp_technology+"&wp_subsidized="+wp_subsidized+"&wp_com_date="+wp_com_date+"&wp_wq="+wp_wq+"&wp_wq_date="+wp_wq_date+"&wp_wq_result="+wp_wq_result)
 	$.ajax({
 		type:'POST',
 		url:apipath+"submitData_wp_enlist?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wp+"&latitude="+wp_latitude+"&longitude="+wp_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&wp_serial="+wp_serial+"&wp_org_id="+wp_org_id+"&wp_act_type="+wp_act_type+"&wp_technology="+wp_technology+"&wp_subsidized="+wp_subsidized+"&wp_com_date="+wp_com_date+"&wp_wq="+wp_wq+"&wp_wq_date="+wp_wq_date+"&wp_wq_result="+wp_wq_result,
