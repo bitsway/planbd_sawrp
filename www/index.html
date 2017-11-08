@@ -13,10 +13,9 @@
 	<script src="static/my.js">   </script>
 	
 	<script>
-		$(document).ready(function(){
-					
+		/*$(document).ready(function(){
 				
-		});
+		});*/
 	
 		function syncPage(){
 			$(".errorChk").text("");
@@ -52,9 +51,9 @@
     <div data-role="content">
     		
             <div class="errorChk"></div>
-            <ul data-role="listview" data-inset="true" data-theme="c">
-            <li class="ui-field-contain">
-            <table width="100%"  cellspacing="0" cellpadding="0">              
+            <ul data-role="listview" data-inset="true" data-theme="c" >
+            <li class="ui-field-contain" style="background-color:#80ffff;">
+            <table width="100%"  cellspacing="0" cellpadding="0" style="background-color:#b3ffff;">              
               <tr>
                 <td>Division Name</td>
                 <td>:</td>
@@ -104,7 +103,7 @@
             </ul>
     </div>
     
-    <div data-theme="c" data-role="footer" data-position="fixed" style="font-size:12px;background-color:#CCC;" align="center" >mReporting 20171023</div><!------/footer 20150401-20150309 -->
+    <div data-theme="c" data-role="footer" data-position="fixed" style="font-size:12px;background-color:#CCC;" align="center" >mReporting 20171108</div><!------/footer 20150401-20150309 -->
     
     <div data-role="panel" id="leftpanel" data-position="left" data-display="overlay" data-theme="c">
         <div align="center"></div>
@@ -165,7 +164,7 @@
     
     <div data-role="content" >             
         <ul data-role="listview" data-inset="true">            
-            <table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" style="cell-spacing:0px; font-size:10px"  data-role="table" data-theme="d"  data-mode="display:none">
+            <table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" style="cell-spacing:0px; font-size:10px;"  data-role="table" data-theme="d"  data-mode="display:none">
                 <tr style="background-color:#E9E9E9">
                     <td >Division :</td>
                     <td ><div id="divi_soc"></div></td>
@@ -216,6 +215,11 @@
                  
     <a data-role="button" onclick="planbdData1Next()" href="#" data-transition="slide" >Next</a>
         <div class="errorChk"></div>
+        <br/><br/>
+    <a data-role="button" onclick="social_map_data()" href="#" data-transition="slide" >Show List</a>   
+    
+    <div id="data_show" style="font-size:13px;"></div>
+ 
             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
     </div>
 </div>
@@ -626,7 +630,7 @@
                     </tr>
                     <tr>
                         <td width="70%" style="vertical-align:middle;">Girl (<=5)</td>
-                        <td width="30%"><input name="ben_benG_5" id="ben_benG_5" placeholder="" onBlur="benTotalBeneficiary();" value="" type="number"></td>
+                        <td width="30%"><input name="ben_benG_5" id="ben_benG_5" placeholder=""  onBlur="benTotalBeneficiary();" value="" type="number"></td>
                         <td width="5" align="left">&nbsp;</td>
                     </tr>
                     <tr>
@@ -654,11 +658,11 @@
                         <td width="30%"><input name="ben_benM_18_plus" id="ben_benM_18_plus" onBlur="benTotalBeneficiary();" placeholder="" value="" type="number"></td>
                         <td width="5" align="left"></td>
                     </tr>
-                    <!--<tr >
-                        <td width="70%" style="vertical-align:middle;">Total No. of HH Beneficiaries<sup class="reqField">*</sup></td>
+                    <tr >
+                        <td width="70%" style="vertical-align:middle;">Total No. of HH Beneficiaries</td>
                         <td width="30%"><input name="benBen_Total" id="benBen_Total"  placeholder="" type="number" readonly="readonly" style="background-color:#EEEEEE;"></td>
                         <td width="5" align="left"></td>
-                    </tr>-->
+                    </tr>
                 </table>
             </li>
             <li class="ui-field-contain" >
@@ -827,16 +831,12 @@
                 </tr>
             </table>
             <li class="ui-field-contain" style="margin-bottom:15px;">
-                <label for="clusterIDName">Cluster</label>
+                <label for="clusterIDName">Select Cluster</label>
                 <select name="clusterIDName" id="clusterIDName" data-native-menu="false">
                     <option value="0">Select Cluster</option>
                 </select>                	
         	</li>  
-            <li class="ui-field-contain" >
-                <a data-role="button" onclick="wpList()" href="#" data-transition="slide" style="text-align:center;">WP List</a>
-           </li>     
 		</ul>    
-        <br/>
         <a data-role="button" onclick="clusterData()" href="#" data-transition="slide" >Service to Beneficiary</a>
         <div class="errorChk"></div>
             <br/><br/><br/><br/><br/><br/><br/><br/>
@@ -852,7 +852,7 @@
     </div>
     
     <div data-role="content" >       
-        <ul data-role="listview" data-inset="true">
+        <ul data-role="listview" data-inset="true" style="margin-bottom:30px;">
         	<table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" style="cell-spacing:0px; font-size:10px"  data-role="table" data-theme="d"  data-mode="display:none">
                 <tr style="background-color:#E9E9E9">
                     <td >Division :</td>
@@ -873,22 +873,15 @@
                     <td ><div id="cluster_san_c"></div></td>
                 </tr>
             </table>
-            <li class="ui-field-contain" >
-                <label for="hhSerail">HH Name</label>
-                <select name="hhSerail" id="hhSerail" data-native-menu="false">
-                    <option value="0">Select HH</option>
-                </select>                	
-        	</li>       
 		</ul>
-        <br /><br /><br />
-        <ul data-role="listview" data-inset="true">
-            <li><a href="#" onclick="san('san')" data-transition="slide">Sanitaion</a></li>
+        <ul data-role="listview" data-inset="true" >
+            <li><a style="background-color:#66ffb3;" href="#" onclick="san('san')" data-transition="slide">Sanitaion</a></li>
         </ul>    
         <ul data-role="listview" data-inset="true">
-            <li><a href="#" onclick="wwf('wwf')" data-transition="slide">HWF</a></li>
+            <li><a style="background-color:#00cccc;" href="#" onclick="wwf('wwf')" data-transition="slide">HWF</a></li>
         </ul>
         <ul data-role="listview" data-inset="true">
-            <li><a href="#" onclick="wp('wp')" data-transition="slide">WP</a></li>
+            <li><a style="background-color:#ff80bf;" href="#" onclick="wp('wp')" data-transition="slide">WP</a></li>
         </ul>  
               
         <div class="errorChk"></div>
@@ -906,15 +899,35 @@
         <h3>SANITATION</h3>
     </div>
     
-    <div data-role="content" >             
-         <ul data-role="listview" data-inset="true">
+    <div data-role="content" style="background-color:#66ffb3">             
+         <ul data-role="listview" data-inset="true" >
          	<table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" style="cell-spacing:0px; font-size:10px"  data-role="table" data-theme="d"  data-mode="display:none">
                 <tr style="background-color:#E9E9E9">
-                    <td >HH ID :</td>
-                    <td ><div id="hh_id_san_san"></div></td>
+                    <td >Division :</td>
+                    <td ><div id="divi_san_san"></div></td>
+                    <td >District :</td>
+                    <td ><div id="dis_san_san"></div></td>
+                </tr>
+                <tr style="background-color:#E9E9E9">
+                    <td >Upazila :</td>
+                    <td ><div id="upaz_san_san"></div></td>
+                    <td >Union :</td>
+                    <td ><div id="uni_san_san"></div></td>
+                </tr>
+                <tr style="background-color:#E9E9E9">
+                    <td >Ward:</td>
+                    <td ><div id="ward_san_san"></div></td>
+                    <td > Cluster</td>
+                    <td ><div id="cluster_san_san"></div></td>
                 </tr>
             </table>
             <li style="background-color:#F2F2F2;" class="auto_break"><strong>Sanitation Point Details</strong> </li>
+            <li class="ui-field-contain" >
+                <label for="san_hhSerail">HH Name</label>
+                <select name="san_hhSerail" id="san_hhSerail" data-native-menu="false">
+                    <option value="0">Select HH</option>
+                </select>                	
+        	</li>
             <li class="ui-field-contain">
                 <label for="san_lat_type">Type of Latrine Provided</label>               
                 <select name="san_lat_type" id="san_lat_type" data-native-menu="false">
@@ -985,15 +998,35 @@
         <h3>HWF</h3>
     </div>
     
-    <div data-role="content" >             
+    <div data-role="content" style="background-color:#00cccc;">             
          <ul data-role="listview" data-inset="true">
          	<table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" style="cell-spacing:0px; font-size:10px"  data-role="table" data-theme="d"  data-mode="display:none">
                 <tr style="background-color:#E9E9E9">
-                    <td >HH ID :</td>
-                    <td ><div id="hh_id_san_wwf"></div></td>
+                    <td >Division :</td>
+                    <td ><div id="divi_san_hwf"></div></td>
+                    <td >District :</td>
+                    <td ><div id="dis_san_hwf"></div></td>
                 </tr>
-            </table> 
+                <tr style="background-color:#E9E9E9">
+                    <td >Upazila :</td>
+                    <td ><div id="upaz_san_hwf"></div></td>
+                    <td >Union :</td>
+                    <td ><div id="uni_san_hwf"></div></td>
+                </tr>
+                <tr style="background-color:#E9E9E9">
+                    <td >Ward:</td>
+                    <td ><div id="ward_san_hwf"></div></td>
+                    <td > Cluster</td>
+                    <td ><div id="cluster_san_hwf"></div></td>
+                </tr>
+            </table>
             <li style="background-color:#F2F2F2;" class="auto_break"><strong>Handwashing Facility Details</strong> </li>
+            <li class="ui-field-contain" >
+                <label for="hwf_hhSerail">HH Name</label>
+                <select name="hwf_hhSerail" id="hwf_hhSerail" data-native-menu="false">
+                    <option value="0">Select HH</option>
+                </select>                	
+        	</li>
             <li class="ui-field-contain">
                 <label for="hw_type">Type of Handwash Facilities</label>               
                 <select name="hw_type" id="hw_type" data-native-menu="false">
@@ -1063,18 +1096,47 @@
         <h3>WP</h3>
     </div>
     
-    <div data-role="content" >             
+    <div data-role="content" style="background-color:#ff80bf" id="refresh_wp">             
          <ul data-role="listview" data-inset="true">         	
             <table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" style="cell-spacing:0px; font-size:10px"  data-role="table" data-theme="d"  data-mode="display:none">
                 <tr style="background-color:#E9E9E9">
-                    <td >HH ID :</td>
-                    <td ><div id="hh_id_san_wp"></div></td>
+                    <td >Division :</td>
+                    <td ><div id="divi_san_wp"></div></td>
+                    <td >District :</td>
+                    <td ><div id="dis_san_wp"></div></td>
                 </tr>
-            </table> 
+                <tr style="background-color:#E9E9E9">
+                    <td >Upazila :</td>
+                    <td ><div id="upaz_san_wp"></div></td>
+                    <td >Union :</td>
+                    <td ><div id="uni_san_wp"></div></td>
+                </tr>
+                <tr style="background-color:#E9E9E9">
+                    <td >Ward:</td>
+                    <td ><div id="ward_san_wp"></div></td>
+                    <td > Cluster</td>
+                    <td ><div id="cluster_san_wp"></div></td>
+                </tr>
+            </table>
+            <li class="ui-field-contain" >
+                <label for="wp_hhSerail">HH Name</label>
+                <select name="wp_hhSerail" id="wp_hhSerail" data-native-menu="false">
+                    <option value="0">Select HH</option>
+                </select>                	
+        	</li>
             <li class="ui-field-contain">
                 <label for="wp_serial_enlist">WP Serial</label>               
                 <select name="wp_serial_enlist" id="wp_serial_enlist" data-native-menu="false">
-                    <option value="">WP Serial</option> 
+                    <option value="0">WP Serial</option> 
+                </select>	
+            </li>
+            <li class="ui-field-contain">
+                <label for="wp_tub_pre">Tubewell Located on Premises</label>               
+                <select name="wp_tub_pre" id="wp_tub_pre" data-native-menu="false">
+                    <option value="0">Select</option>
+                    <option value="1">Tubewell located on Premises</option>
+                    <option value="2">Require less than 30 min to fetch water from distant Tubewell</option>
+                    <option value="3">Require more than 30 min to fetch water from distant Tubewell</option>
                 </select>	
             </li>
              <li class="ui-field-contain">
@@ -1088,6 +1150,11 @@
     <a data-role="button" id="btn_wp_enlist_submit" onClick="wpEnlistDataSubmit();" class="ui-btn" >Submit</a> 
        <div class="errorChk" style="color:#F00;"></div>
         <div class="sucChk" style="color:#00CA00;"></div>
+        <br /><br />
+        
+        <li class="ui-field-contain" >
+            <a style="background-color:#33ffcc;text-align:center;" data-role="button" onclick="wpList()" href="#" data-transition="slide" >Water Point List</a>
+        </li>
             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
     </div>
 </div>
@@ -1102,7 +1169,7 @@
     
     <div data-role="content" >             
          <ul data-role="listview" data-inset="true">  
-         	<table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" style="cell-spacing:0px; font-size:10px"  data-role="table" data-theme="d"  data-mode="display:none">
+         	<!--<table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" style="cell-spacing:0px; font-size:10px"  data-role="table" data-theme="d"  data-mode="display:none">
                 <tr style="background-color:#E9E9E9">
                     <td >Division :</td>
                     <td ><div id="divi_en"></div></td>
@@ -1121,7 +1188,7 @@
                     <td > Cluster</td>
                     <td ><div id="cluster_en"></div></td>
                 </tr>
-            </table>       	
+            </table>-->       	
             <li style="background-color:#F2F2F2;" class="auto_break"><strong>Water Point Details</strong> </li>
             <li class="ui-field-contain">
             	<label for="wp_serial">WP Serial </label>
@@ -1147,15 +1214,6 @@
                     <option value="3">Shallow Tubewell</option>
                     <option value="4">Semi-Deep Tubewell</option>
                     <option value="5">Rain Water Harvesting</option>
-                </select>	
-            </li>
-            <li class="ui-field-contain">
-                <label for="wp_tub_pre">Tubewell Located on Premises</label>               
-                <select name="wp_tub_pre" id="wp_tub_pre" data-native-menu="false">
-                    <option value="0">Select</option>
-                    <option value="1">Tubewell located on Premises</option>
-                    <option value="2">Require less than 30 min to fetch water from distant Tubewell</option>
-                    <option value="3">Require more than 30 min to fetch water from distant Tubewell</option>
                 </select>	
             </li>
             <li class="ui-field-contain">
@@ -1220,19 +1278,13 @@
         <br/>
 		<br/>
         <a data-role="button" id="btn_wp_submit" onClick="wpDataSubmit();" class="ui-btn" >Submit</a> 
-
+		<br/>
+        <a  style="background-color:#FF80BF;" data-role="button" id="" onClick="return_wp();" class="ui-btn" >Add Beneficiary to WP</a> 
         
 		<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         
     </div>
   </div> 
   
-  
-  
-  
-<!--========================-->
-<script type="text/javascript" src="phonegap.js"></script>
-
-
 </body>
 </html>

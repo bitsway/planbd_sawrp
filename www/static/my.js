@@ -121,7 +121,16 @@ url ="";
 $(document).ready(function(){
 	if (localStorage.synced!='YES'){
 			 url = "#pagesync";						
-		}else{	
+		}else{
+			$("#divName").val(localStorage.div_name);
+			$("#divCode").val(localStorage.div_code);
+			$("#disName").val(localStorage.dis_name);
+			$("#disCode").val(localStorage.dis_code);
+			$("#upName").val(localStorage.up_name);
+			$("#upCode").val(localStorage.up_code);
+			$("#unName").val(localStorage.un_name);						
+			$("#unCode").val(localStorage.un_code);
+							
 			url = "#homePage";
 		}
 	$.mobile.navigate(url);
@@ -750,6 +759,25 @@ function syncData(){
 }
 
 
+function social_map_data(){
+	
+	//alert(apipath+"social_map_data_show?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code);
+	$.ajax({
+		type:'POST',
+		url:apipath+"social_map_data_show?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code,
+		success: function(resStr){
+			socialMapList=resStr.split('fdfd');					
+			var socialListStr='<ul data-role="listview" data-inset="true" >';	        
+			for(i=0; i<socialMapList.length; i++){						
+				socialListStr+='<li style="margin-bottom:1px;">'+socialMapList[i]+'</li>';			
+			}
+			socialListStr+='</ul>';
+			
+			$('#data_show').empty();
+			$('#data_show').append(socialListStr).trigger('create');	
+		}
+	})
+}
 
 //============================Beneficiary============================
 var ben_ward;
@@ -810,7 +838,8 @@ function beneficiary(beneficiary){
 				url:apipath+"searchWord?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code,
 				success: function(resStr){					
 					wordList=resStr.split('fdfd');					
-					var woListStr="";			        
+					var woListStr="";	
+					woListStr+='<option value="">Select Ward</option>'		        
 					for(i=0; i<wordList.length; i++){						
 						woListStr+="<option value="+encodeURIComponent(wordList[i])+">"+wordList[i]+"</option>";			
 					}
@@ -863,6 +892,9 @@ function cluster(){
 }
 
 function ben_planbdData1Next(){
+	$(".errorChk").text("");
+	$(".sucChk").text("");	
+	
 	ben_ward=$("#ben_ward").val();
 	ben_village=$("#ben_village").val();
 	ben_clusIDNameList=$("#ben_clusID").val();
@@ -955,6 +987,36 @@ function joinSocialID(){
 	benSocialHH=ben_socialMapID+'-'+ben_hh_serial
 	
 	$("#ben_hh_id").val(benSocialHH);
+}
+
+function benTotalBeneficiary(){
+	ben_benG_5=$("#ben_benG_5").val();
+	ben_benB_5=$("#ben_benB_5").val();
+	ben_benG_5_18=$("#ben_benG_5_18").val();
+	ben_benB_5_18=$("#ben_benB_5_18").val();
+	ben_benF_18_plus=$("#ben_benF_18_plus").val();
+	ben_benM_18_plus=$("#ben_benM_18_plus").val();
+	
+	if(ben_benG_5==''){
+		ben_benG_5=0;
+	}
+	if(ben_benB_5==''){
+		ben_benB_5=0;
+	}	
+	if(ben_benG_5_18==''){
+		ben_benG_5_18=0;
+	}	
+	if(ben_benB_5_18==''){
+		ben_benB_5_18=0;
+	}		
+	if(ben_benF_18_plus==''){
+		ben_benF_18_plus=0;
+	}	
+	if(ben_benM_18_plus==''){
+		ben_benM_18_plus=0;
+	}			
+	var totalBenGB=eval(ben_benG_5)+eval(ben_benB_5)+eval(ben_benG_5_18)+eval(ben_benB_5_18)+eval(ben_benF_18_plus)+eval(ben_benM_18_plus);	
+	$("#benBen_Total").val(totalBenGB);	
 }
 
 function benDataSubmit(){
@@ -1076,8 +1138,6 @@ function benDataSubmit(){
 var san_ward;
 var clsId;
 var clsName;
-var sanHHID;
-var sanHHName;
 var san_lat_type;
 var san_act_type;
 var san_subsidized;
@@ -1110,8 +1170,7 @@ function sanitaion(sanitaion){
 		}else if(un_name==''){
 			$(".errorChk").text("Required Union Name");
 		}else{
-			//planData="||div_name="+div_name+"||dis_name="+dis_name+"||up_name="+up_name+"||un_name="+un_name
-			//alert(planData);
+			
 			//alert(apipath+"benSearchWord?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code);
 			$.ajax({
 				type:'POST',
@@ -1119,7 +1178,8 @@ function sanitaion(sanitaion){
 				success: function(resStr){					
 					sanWordList=resStr.split('fdfd');
 										
-					var sanWoListStr="";			        
+					var sanWoListStr="";
+					sanWoListStr+='<option value="">Select Ward</option>'					        
 					for(i=0; i<sanWordList.length; i++){						
 						sanWoListStr+="<option value="+encodeURIComponent(sanWordList[i])+">"+sanWordList[i]+"</option>";			
 					}
@@ -1129,7 +1189,7 @@ function sanitaion(sanitaion){
 					rpt_rep_ob.append(sanWoListStr);					
 					rpt_rep_ob.selectmenu("refresh");	
 				}
-			})
+			});
 			
 			$("#divi_san").text(localStorage.div_name);
 			$("#dis_san").text(localStorage.dis_name);
@@ -1140,87 +1200,94 @@ function sanitaion(sanitaion){
 			url="#san_first_page";					
 			$.mobile.navigate(url);	
 		}
+		
 	}
 }
 
 
 function san_planbdData1Next(){
-	san_ward=$("#san_ward").val();	
-	var clusterList="";
-	//alert(apipath+"searchCluster?&sanWard="+san_ward);
-	$.ajax({
-		type:'POST',
-		url:apipath+"searchCluster?&sanWard="+san_ward,
-		success: function(resStr){
-			
-			clusterList=resStr.split('fdfd')
-				var listStr="";
-				for(i=0; i<clusterList.length; i++){
-					clsList=clusterList[i].split(',');
-					listStr+="<option value="+encodeURIComponent(clsList)+">"+clsList+"</option>";
-				}
-								
-				var rpt_rep_ob=$("#clusterIDName");					
-				rpt_rep_ob.empty();					
-				rpt_rep_ob.append(listStr);					
-				rpt_rep_ob.selectmenu("refresh");
-		}
-	})
-	$("#divi_san_w").text(localStorage.div_name);
-	$("#dis_san_w").text(localStorage.dis_name);
-	$("#upaz_san_w").text(localStorage.up_name);
-	$("#uni_san_w").text(localStorage.un_name);
-	$("#ward_san_w").text(san_ward);
+	san_ward=$("#san_ward").val();
+	if (san_ward=="" || san_ward==undefined){
+		$(".errorChk").text("Required Ward");	
+	}else{
+		var clusterList="";
+		$.ajax({
+			type:'POST',
+			url:apipath+"searchCluster?&sanWard="+san_ward,
+			success: function(resStr){
+				
+				clusterList=resStr.split('fdfd')
+					var listStr="";
+					listStr+='<option value="">Select cluster</option>'
+					for(i=0; i<clusterList.length; i++){
+						clsList=clusterList[i].split(',');
+						listStr+="<option value="+encodeURIComponent(clsList)+">"+clsList+"</option>";
+					}
+									
+					var rpt_rep_ob=$("#clusterIDName");					
+					rpt_rep_ob.empty();					
+					rpt_rep_ob.append(listStr);					
+					rpt_rep_ob.selectmenu("refresh");
+			}
+		})
+		$("#divi_san_w").text(localStorage.div_name);
+		$("#dis_san_w").text(localStorage.dis_name);
+		$("#upaz_san_w").text(localStorage.up_name);
+		$("#uni_san_w").text(localStorage.un_name);
+		$("#ward_san_w").text(san_ward);
 	
 	$(".errorChk").text("");
 	url="#san_second_page";
 	$.mobile.navigate(url);
+	}
 }
 
 
 function clusterData(){	
 	clusIDName=$("#clusterIDName").val();
-
-	clsIdName=clusIDName.split("-");
-	clsId=clsIdName[0];
-	clsName=clsIdName[1];
-	
-	//alert(apipath+"seatchHH?&clsId="+clsId+"&clsName="+clsName);
-	$.ajax({
-		type:'POST',
-		url:apipath+"seatchHH?&clsId="+clsId+"&clsName="+clsName,
-		success: function(resStr){
-			
-			houseHList=resStr.split('fdfd')
-			
-				var hhListStr="";			        
-				for(i=0; i<houseHList.length; i++){
-					hhList=houseHList[i];
-					hhListStr +="<option value="+encodeURIComponent(hhList)+"><a>"+hhList+"</a></option>"
-				}
-						
-				var rpt_rep_ob=$("#hhSerail");					
-				rpt_rep_ob.empty();					
-				rpt_rep_ob.append(hhListStr);					
-				rpt_rep_ob.selectmenu("refresh");			
-				
-		}
-	})
-	
-	$("#divi_san_c").text(localStorage.div_name);
-	$("#dis_san_c").text(localStorage.dis_name);
-	$("#upaz_san_c").text(localStorage.up_name);
-	$("#uni_san_c").text(localStorage.un_name);
-	$("#ward_san_c").text(san_ward);
-	$("#cluster_san_c").text(clsId+"-"+(clsName).replace(/%20/g," "));
-	
-	$(".errorChk").text("");
-	url="#san_three_page";
-	$.mobile.navigate(url);			
+	if(clusIDName=="" || clusIDName==undefined){
+		$(".errorChk").text("Required Cluster");
+	}else{
+		clsIdName=clusIDName.split("-");
+		clsId=clsIdName[0];
+		clsName=clsIdName[1];
+		
+		$("#divi_san_c").text(localStorage.div_name);
+		$("#dis_san_c").text(localStorage.dis_name);
+		$("#upaz_san_c").text(localStorage.up_name);
+		$("#uni_san_c").text(localStorage.un_name);
+		$("#ward_san_c").text(san_ward);
+		$("#cluster_san_c").text(clsId+"-"+(clsName).replace(/%20/g," "));
+		
+		$("#divi_san_san").text(localStorage.div_name);
+		$("#dis_san_san").text(localStorage.dis_name);
+		$("#upaz_san_san").text(localStorage.up_name);
+		$("#uni_san_san").text(localStorage.un_name);
+		$("#ward_san_san").text(san_ward);
+		$("#cluster_san_san").text(clsId+"-"+(clsName).replace(/%20/g," "));
+		
+		$("#divi_san_hwf").text(localStorage.div_name);
+		$("#dis_san_hwf").text(localStorage.dis_name);
+		$("#upaz_san_hwf").text(localStorage.up_name);
+		$("#uni_san_hwf").text(localStorage.un_name);
+		$("#ward_san_hwf").text(san_ward);
+		$("#cluster_san_hwf").text(clsId+"-"+(clsName).replace(/%20/g," "));
+		
+		$("#divi_san_wp").text(localStorage.div_name);
+		$("#dis_san_wp").text(localStorage.dis_name);
+		$("#upaz_san_wp").text(localStorage.up_name);
+		$("#uni_san_wp").text(localStorage.un_name);
+		$("#ward_san_wp").text(san_ward);
+		$("#cluster_san_wp").text(clsId+"-"+(clsName).replace(/%20/g," "));
+		
+		$(".errorChk").text("");
+		url="#san_three_page";
+		$.mobile.navigate(url);	
+	}
 }
 
 function wpList(){
-	clusIDName=$("#clusterIDName").val();
+	/*clusIDName=$("#clusterIDName").val();
 	
 	clsIdName=clusIDName.split("-");
 	clsId=clsIdName[0];
@@ -1231,27 +1298,58 @@ function wpList(){
 	$("#upaz_en").text(localStorage.up_name);
 	$("#uni_en").text(localStorage.un_name);
 	$("#ward_en").text(san_ward);
-	$("#cluster_en").text(clsId+"-"+(clsName).replace(/%20/g," "));
+	$("#cluster_en").text(clsId+"-"+(clsName).replace(/%20/g," "));*/
 	
 	$(".errorChk").text("");
 	url="#wp_enlistment";
 	$.mobile.navigate(url);		
 }
 
-function san(){
-	hhIdName=$("#hhSerail").val();
-	
+/*hhIdName=$("#hhSerail").val();
 	sanHHserial=hhIdName.split("-");
 	 sanHHID=sanHHserial[0]
 	 sanHHName=sanHHserial[1]	
+	$("#hh_id_san_san").text(sanHHID+"-"+(sanHHName).replace(/%20/g," "));*/
 	
-	$("#hh_id_san_san").text(sanHHID+"-"+(sanHHName).replace(/%20/g," "));
+function san(){
+	$(".sucChk").text("");
+	$(".errorChk").text("");	
+	
+	//alert(apipath+"seatchHH?&clsId="+clsId+"&clsName="+clsName);
+	$.ajax({
+		type:'POST',
+		url:apipath+"seatchHH?&clsId="+clsId+"&clsName="+clsName,
+		success: function(resStr){
+			
+			houseHList=resStr.split('fdfd')
+			
+				var hhListStr="";
+				hhListStr +='<option value="0">Select HH Name</option>'			        
+				for(i=0; i<houseHList.length; i++){
+					hhList=houseHList[i];
+					hhListStr +="<option value="+encodeURIComponent(hhList)+"><a>"+hhList+"</a></option>"
+				}
+						
+				var rpt_rep_ob=$("#san_hhSerail");					
+				rpt_rep_ob.empty();					
+				rpt_rep_ob.append(hhListStr);					
+				rpt_rep_ob.selectmenu("refresh");
+		}
+	})
+		
 	$(".errorChk").text("");
 	url="#san_four_page";
 	$.mobile.navigate(url);	
 }
 
+var sanHHID;
+var sanHHName;
 function san_planbdData2Next(){
+	sanHhIdName=$("#san_hhSerail").val();
+	sanHHserial=sanHhIdName.split("-");
+	 sanHHID=sanHHserial[0]
+	 sanHHName=sanHHserial[1]
+	
 	san_lat_type=$("#san_lat_type").val();
 	san_act_type=$("#san_act_type").val();
 	san_subsidized=$("#san_subsidized").val();
@@ -1279,7 +1377,8 @@ function san_planbdData2Next(){
 }
 
 function sanDataSubmit() {
-   
+	$(".sucChk").text("");
+    $(".errorChk").text("");	
 	$("#btn_san_submit").hide();
 	
 	var d = new Date();	
@@ -1397,19 +1496,42 @@ function syncDataSan(){
 
 //===========WWF================
 function wwf(wwf){
-	hhIdName=$("#hhSerail").val();
-	sanHHserial=hhIdName.split("-");
-	 sanHHID=sanHHserial[0]
-	 sanHHName=sanHHserial[1]
-	
-	$("#hh_id_san_wwf").text(sanHHID+"-"+(sanHHName).replace(/%20/g," "));
+	$(".sucChk").text("");
+	$(".errorChk").text("");	
+	//alert(apipath+"seatchHH?&clsId="+clsId+"&clsName="+clsName);
+	$.ajax({
+		type:'POST',
+		url:apipath+"seatchHH?&clsId="+clsId+"&clsName="+clsName,
+		success: function(resStr){
+			houseHList=resStr.split('fdfd')
+			
+				var hhListStr="";		
+				hhListStr +='<option value="0">Select HH Name</option>'		       	        
+				for(i=0; i<houseHList.length; i++){
+					hhList=houseHList[i];
+					hhListStr +="<option value="+encodeURIComponent(hhList)+"><a>"+hhList+"</a></option>"
+				}
+				
+				var rpt_rep_ob_hwf=$("#hwf_hhSerail");					
+				rpt_rep_ob_hwf.empty();					
+				rpt_rep_ob_hwf.append(hhListStr);					
+				rpt_rep_ob_hwf.selectmenu("refresh");		
+		}
+	})
 	
 	$(".errorChk").text("");
 	url="#wwf_four_page";
 	$.mobile.navigate(url);		
 }
 
+var sanHwfHHID;
+var sanHwfHHName;
 function wwf_planbdData2Next(){
+	hwFHhIdName=$("#hwf_hhSerail").val();
+	sanHwfHHserial=hwFHhIdName.split("-");
+	 sanHwfHHID=sanHwfHHserial[0]
+	 sanHwfHHName=sanHwfHHserial[1]
+	 
 	hw_type=$("#hw_type").val();
 	hw_com_date=$("#hw_com_date").val();	
 	
@@ -1432,6 +1554,8 @@ function wwf_planbdData2Next(){
 
 
 function wwfDataSubmit(){
+	$(".sucChk").text("");
+	$(".errorChk").text("");	
 	$("#btn_wwf_submit").hide();
 	
 	var d = new Date();	
@@ -1586,10 +1710,10 @@ function onfail_wwf(r) {
 }
 
 function syncDataHwf(){		
-	//alert(apipath+"submitData_hwf?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wwf+"&achPhoto2="+imageName2_wwf+"&latitude="+wwf_latitude+"&longitude="+wwf_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&sanHHserial="+sanHHID+"&sanHHName="+encodeURIComponent(sanHHName)+"&hw_type="+hw_type+"&hw_com_date="+hw_com_date);
+	//alert(apipath+"submitData_hwf?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wwf+"&achPhoto2="+imageName2_wwf+"&latitude="+wwf_latitude+"&longitude="+wwf_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&sanHHserial="+sanHwfHHID+"&sanHHName="+encodeURIComponent(sanHwfHHName)+"&hw_type="+hw_type+"&hw_com_date="+hw_com_date);
 	$.ajax({
 		type:'POST',
-		url:apipath+"submitData_hwf?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wwf+"&achPhoto2="+imageName2_wwf+"&latitude="+wwf_latitude+"&longitude="+wwf_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&sanHHserial="+sanHHID+"&sanHHName="+encodeURIComponent(sanHHName)+"&hw_type="+hw_type+"&hw_com_date="+hw_com_date,
+		url:apipath+"submitData_hwf?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wwf+"&achPhoto2="+imageName2_wwf+"&latitude="+wwf_latitude+"&longitude="+wwf_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&sanHHserial="+sanHwfHHID+"&sanHHName="+encodeURIComponent(sanHwfHHName)+"&hw_type="+hw_type+"&hw_com_date="+hw_com_date,
 																																																										
 		success: function(result) {			
 			if(result=='Success'){
@@ -1624,7 +1748,6 @@ var wp_serial;
 var wp_org_id;
 var wp_act_type;
 var wp_technology;
-var wp_tub_pre;
 var wp_subsidized;
 var wp_com_date;
 var wp_wq;
@@ -1632,12 +1755,29 @@ var wp_wq_date;
 var wp_wq_result;
 
 function wp(wp){
-	hhIdName=$("#hhSerail").val();
-	sanHHserial=hhIdName.split("-");
-	 sanHHID=sanHHserial[0]
-	 sanHHName=sanHHserial[1]
+	$(".sucChk").text("");
+	$(".errorChk").text("");		
+	//alert(apipath+"seatchHH?&clsId="+clsId+"&clsName="+clsName);
+	$.ajax({
+		type:'POST',
+		url:apipath+"seatchHH?&clsId="+clsId+"&clsName="+clsName,
+		success: function(resStr){
+			houseHList=resStr.split('fdfd')
+			
+				var hhListStr="";	
+				hhListStr +='<option value="0">Select HH Name</option>'		        
+				for(i=0; i<houseHList.length; i++){
+					hhList=houseHList[i];
+					hhListStr +="<option value="+encodeURIComponent(hhList)+"><a>"+hhList+"</a></option>"
+				}
+								
+				var rpt_rep_ob_wp=$("#wp_hhSerail");					
+				rpt_rep_ob_wp.empty();					
+				rpt_rep_ob_wp.append(hhListStr);					
+				rpt_rep_ob_wp.selectmenu("refresh");	
+		}
+	})
 	
-	$("#hh_id_san_wp").text(sanHHID+"-"+(sanHHName).replace(/%20/g," "));
 	
 	//alert(apipath+"search_wp_serial_enlist?div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code);
 	$.ajax({
@@ -1647,6 +1787,7 @@ function wp(wp){
 				wpSerialList=result.split('fdfd')
 				
 				var wplistStr="";
+				wplistStr +='<option value="0">Select WP Serial</option>'
 				for(i=0; i<wpSerialList.length; i++){
 					wplist=wpSerialList[i].split(',');
 					wplistStr+="<option value="+encodeURIComponent(wplist)+">"+wplist+"</option>";
@@ -1664,37 +1805,69 @@ function wp(wp){
 }
 
 var wp_serial_enlist;
+var wp_tub_pre;
 var sps_family;
+var sanWpHHID;
+var sanWpHHName;
 function wpEnlistDataSubmit(){
+	$(".sucChk").text("");
 	$(".errorChk").text("");
+	wpHhIdName=$("#wp_hhSerail").val();
+	sanWpHHserial=wpHhIdName.split("-");
+	 sanWpHHID=sanWpHHserial[0]
+	 sanWpHHName=sanWpHHserial[1]
+	
 	wp_serial_enlist=$("#wp_serial_enlist").val();
+	wp_tub_pre=$("#wp_tub_pre").val();
 	sps_family=$("#sps_family").val();
-	//alert(apipath+"submitData_wp?&wp_serial_enlist="+wp_serial_enlist+"&sanHHserial="+sanHHID+"&sanHHName="+encodeURIComponent(sanHHName));
-	$.ajax({
-		type:'POST',
-		url:apipath+"submitData_wp?&wp_serial_enlist="+wp_serial_enlist+"&sanHHserial="+sanHHID+"&sanHHName="+encodeURIComponent(sanHHName)+"&sps_family="+sps_family,
-		success: function(result) {			
-			if(result=='Success'){
-				$("#wp_serial_enlist").val("");								
-				$(".sucChk").text('Successfully Submitted');
-				$(".errorChk").text("");
-				$("#btn_wp_enlist_submit").hide();						
-			}else{
-				$(".errorChk").text('Submission Failed.');																	
-				$("#btn_wp_enlist_submit").show();
-			}
-			
-		}//end result
-	});//end ajax
-		
+	
+	if(wpHhIdName=='' || wpHhIdName==0){
+		$(".errorChk").text('Required HH Name');
+	}else if(wp_serial_enlist=="" || wp_serial_enlist==0){
+		$(".errorChk").text('Required WP Serial');
+	}else if(wp_tub_pre=='' || wp_tub_pre==0){
+		$(".errorChk").text('Required Tubewell Located on Premises');
+	}else{
+		//alert(apipath+"submitData_wp?&wp_serial_enlist="+wp_serial_enlist+"&sanHHserial="+sanWpHHID+"&sanHHName="+encodeURIComponent(sanWpHHName)+"&wp_tub_pre="+wp_tub_pre+"&sps_family="+sps_family);
+		$.ajax({
+			type:'POST',
+			url:apipath+"submitData_wp?&wp_serial_enlist="+wp_serial_enlist+"&sanHHserial="+sanWpHHID+"&sanHHName="+encodeURIComponent(sanWpHHName)+"&wp_tub_pre="+wp_tub_pre+"&sps_family="+sps_family,
+			success: function(result) {			
+				if(result=='Success'){
+					$("#wp_hhSerail").val(0);
+					$("#wp_serial_enlist").val(0);	
+					$("#wp_tub_pre").val(0);							
+					$(".sucChk").text('Successfully Submitted');
+					$(".errorChk").text("");
+					$("#btn_wp_enlist_submit").show();
+				}else if(result=='Failed1'){
+					$(".errorChk").text('HH Name Already Submitted');																	
+					$("#btn_wp_enlist_submit").show();
+				}else{
+					$(".errorChk").text('Required WP Serial');																	
+					$("#btn_wp_enlist_submit").show();
+				}
+				
+			}//end result
+		});//end ajax
+	}
+}
+
+function return_wp(){
+	$(".sucChk").text("");
+	$(".errorChk").text("");
+	
+	$(".errorChk").text("");
+	url="#san_three_page";
+	$.mobile.navigate(url);
+				
 }
 
 function wp_planbdData2Next(){
 	wp_serial=$("#wp_serial").val();
 	wp_org_id=$("#wp_org_id").val();
 	wp_act_type=$("#wp_act_type").val();
-	wp_technology=$("#wp_technology").val();
-	wp_tub_pre=$("#wp_tub_pre").val();
+	wp_technology=$("#wp_technology").val();	
 	wp_subsidized=$("#wp_subsidized").val();
 	wp_com_date=$("#wp_com_date").val();
 	
@@ -1721,9 +1894,7 @@ function wp_planbdData2Next(){
 	}else if(wp_act_type==''){
 		$(".errorChk").text("Required Type of Activity"); 
 	}else if(wp_technology=='' || wp_technology==0){
-		$(".errorChk").text('Required Water Point Technology');			
-	}else if(wp_tub_pre=='' || wp_tub_pre==0){
-		$(".errorChk").text('Required Tubewell Located on Premises');
+		$(".errorChk").text('Required Water Point Technology');	
 	}else if(wp_subsidized==''){
 		$(".errorChk").text('Required Subsidized');		
 	}else if(wp_com_date==''){
@@ -1742,6 +1913,8 @@ function wp_planbdData2Next(){
 }
 
 function wpDataSubmit(){
+	$(".sucChk").text("");
+	$(".errorChk").text("");	
 	$("#btn_wp_submit").hide();
 	
 	var d = new Date();	
@@ -1834,10 +2007,10 @@ function onfail_wp(r) {
 
 function syncDataWp() {
 
-    //$("#abc").val(apipath + "submitData_wp_enlist?&syncCode=" + localStorage.sync_code + "&ffID=" + localStorage.ffID + "&ffName=" + localStorage.ffName + "&ffMobile=" + localStorage.mobile_no + "&pnGo=" + localStorage.pnGO + "&achPhoto=" + imageName_wp + "&latitude=" + wp_latitude + "&longitude=" + wp_longitude + "&div_name=" + div_name + "&div_code=" + div_code + "&dis_name=" + dis_name + "&dis_code=" + dis_code + "&up_name=" + up_name + "&up_code=" + up_code + "&un_name=" + un_name + "&un_code=" + un_code + "&san_ward=" + san_ward + "&clsId=" + clsId + "&clsName=" + encodeURIComponent(clsName) + "&wp_serial=" + wp_serial + "&wp_org_id=" + wp_org_id + "&wp_act_type=" + wp_act_type + "&wp_technology=" + wp_technology + "&wp_tub_pre=" + wp_tub_pre + "&wp_subsidized=" + wp_subsidized + "&wp_com_date=" + wp_com_date + "&wp_wq=" + wp_wq + "&wp_wq_date=" + wp_wq_date + "&wp_wq_result=" + wp_wq_result)
+    //alert(apipath+"submitData_wp_enlist?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wp+"&latitude="+wp_latitude+"&longitude="+wp_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&wp_serial="+wp_serial+"&wp_org_id="+wp_org_id+"&wp_act_type="+wp_act_type+"&wp_technology="+wp_technology+"&wp_subsidized="+wp_subsidized+"&wp_com_date="+wp_com_date+"&wp_wq="+wp_wq+"&wp_wq_date="+wp_wq_date+"&wp_wq_result="+wp_wq_result)
 	$.ajax({
 		type:'POST',
-		url:apipath+"submitData_wp_enlist?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wp+"&latitude="+wp_latitude+"&longitude="+wp_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&wp_serial="+wp_serial+"&wp_org_id="+wp_org_id+"&wp_act_type="+wp_act_type+"&wp_technology="+wp_technology+"&wp_tub_pre="+wp_tub_pre+"&wp_subsidized="+wp_subsidized+"&wp_com_date="+wp_com_date+"&wp_wq="+wp_wq+"&wp_wq_date="+wp_wq_date+"&wp_wq_result="+wp_wq_result,
+		url:apipath+"submitData_wp_enlist?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wp+"&latitude="+wp_latitude+"&longitude="+wp_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&wp_serial="+wp_serial+"&wp_org_id="+wp_org_id+"&wp_act_type="+wp_act_type+"&wp_technology="+wp_technology+"&wp_subsidized="+wp_subsidized+"&wp_com_date="+wp_com_date+"&wp_wq="+wp_wq+"&wp_wq_date="+wp_wq_date+"&wp_wq_result="+wp_wq_result,
 																																																										
 		success: function(result) {			
 			if(result=='Success'){
@@ -1845,7 +2018,6 @@ function syncDataWp() {
 				$("#wp_org_id").val("");
 				$("#wp_act_type").val("");
 				$("#wp_technology").val("");
-				$("#wp_tub_pre").val("");
 				$("#wp_subsidized").val("");
 				$("#wp_com_date").val("");
 				
@@ -1859,9 +2031,9 @@ function syncDataWp() {
 								
 				$(".sucChk").text('Successfully Submitted');
 				$(".errorChk").text("");
-				$("#btn_wp_submit").show();						
+				$("#btn_wp_submit").show();	
 			}else{
-				$(".errorChk").text('Submission Failed.');																	
+				$(".errorChk").text('Already Submitted');																	
 				$("#btn_wp_submit").show();
 			}
 			
