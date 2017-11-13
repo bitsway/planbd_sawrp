@@ -8,11 +8,10 @@ var imagePath2A="";
 var latitude="";
 var longitude="";
 
-
 //-----san--------
-var achPhoto_san="";
+var achPhoto_san ="";
 var imageName_san = "";
-var imagePathA_san="";
+var imagePathA_san ="";
 
 var san_latitude="";
 var san_longitude="";
@@ -511,8 +510,8 @@ function planbdData2Next(){
 		$(".errorChk").text("Number of HHs by Economic Status Not Match Water Point Information");
 	}else if(ecoStatus != hwTotal){
 		$(".errorChk").text("Number of HHs by Economic Status Not Match Handwashing Facility Infomrationn");
-	}else if(ecoStatus != benTotal){
-		$(".errorChk").text("Number of HHs by Economic Status Not Match Beneficiaries Count");
+	}else if(ecoStatus > benTotal){
+		$(".errorChk").text("Number of HHs by Economic Status Grater than Beneficiaries Count");
 	
 	}else if(benG_5<disG_5){
 		$(".errorChk").text("Disabilities < Beneficiaries  Girl (<=5)");
@@ -1350,7 +1349,9 @@ function san_planbdData2Next(){
 	san_com_dateS=new Date(san_com_date_chk[1]+"/"+ san_com_date_chk[0]+"/"+san_com_date_chk[2]);
 	today = new Date()
 	
-	if(san_lat_type=='' || san_lat_type==0){
+	if(sanHhIdName=='' || sanHhIdName==0){
+		$(".errorChk").text('Required HH Name');
+	}else if(san_lat_type=='' || san_lat_type==0){
 		$(".errorChk").text("Required Type of Latrine Provided");  
 	}else if(san_act_type==''){
 		$(".errorChk").text("Required Type of Activity");  
@@ -1378,7 +1379,7 @@ function sanDataSubmit() {
 	san_latitude=$("#ach_lat_san").val();
 	san_longitude=$("#ach_long_san").val();
 	
-	achPhoto_san=$("#achPhoto_san").val();
+	achPhoto_san=$("#achPhoto_sanitation").val();
 	
 	if (san_latitude==undefined || san_latitude==''){
 		san_latitude=0;
@@ -1394,7 +1395,7 @@ function sanDataSubmit() {
 		//imagePathA_san="test"					
 		if (imagePathA_san != ""){							
 			$(".errorChk").text("Syncing photo 1..");
-			imageName_san = localStorage.mobile_no + "_" + get_time + ".jpg";										
+			imageName_san = localStorage.mobile_no + "_" + get_time + ".jpg";								
             uploadPhotoAch_san(imagePathA_san, imageName_san);	
 			//$("#btn_san_submit").show();					
 		}		
@@ -1416,7 +1417,7 @@ function onSuccessA_san(imageURI) {
     var image = document.getElementById('myImageA_san');
     image.src = imageURI;
 	imagePathA_san = imageURI;	
-    $("#achPhoto_san").val(imagePathA_san);
+    $("#achPhoto_sanitation").val(imagePathA_san);
 	
 }
 
@@ -1448,6 +1449,11 @@ function winAchInfo_san(r) {
 	syncDataSan();	
 }
 
+function onfail_san(r) {
+	$(".errorChk").text('File upload Failed. Please check internet connection.');
+	$("#btn_san_submit").show();
+}
+
 
 function syncDataSan(){		
 	//alert(apipath+"submitData_san?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_san+"&latitude="+san_latitude+"&longitude="+san_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&sanHHserial="+sanHHID+"&sanHHName="+encodeURIComponent(sanHHName)+"&san_lat_type="+san_lat_type+"&san_act_type="+san_act_type+"&san_subsidized="+san_subsidized+"&san_com_date="+san_com_date);
@@ -1457,26 +1463,27 @@ function syncDataSan(){
 		success: function(result) {			
 			if(result=='Success'){
 				
-				$("#ward").val("");
+				/*$("#ward").val("");
 				$("#village").val("");
 				$("#clusID").val("");
 				$("#clusName").val("");
-				$("#socialMapID").val("");
+				$("#socialMapID").val("");*/
 				
-				$("#san_lat_type").val("");
+				$("#san_hhSerail").val(0);
+				$("#san_lat_type").val(0);
 				$("#san_act_type").val("");
 				$("#san_subsidized").val("");
 				$("#san_com_date").val("");							
 				//--------------
 				$("#ach_lat_san").val(0);
 				$("#ach_long_san").val(0);
-				$("#achPhoto_san").val("");		
+				$("#achPhoto_sanitation").val("");		
 								
 				$(".sucChk").text('Successfully Submitted');
 				$(".errorChk").text("");
 				$("#btn_san_submit").show();						
 			}else{
-				$(".errorChk").text('Submission Failed.');																	
+				$(".errorChk").text('Already Submitted');																	
 				$("#btn_san_submit").show();
 			}
 			
@@ -1530,7 +1537,9 @@ function wwf_planbdData2Next(){
 	hw_com_dateS=new Date(hw_com_date_chk[1]+"/"+ hw_com_date_chk[0]+"/"+hw_com_date_chk[2]);
 	today = new Date()
 	
-	if(hw_type=='' || hw_type==0){
+	if(hwFHhIdName=='' || hwFHhIdName==0){
+		$(".errorChk").text('Required HH Name');
+	}else if(hw_type=='' || hw_type==0){
 		$(".errorChk").text('Required Type of Handwash Facilities');		
 	}else if(hw_com_date==''){
 		$(".errorChk").text('Required Date of Completion');	
@@ -1709,11 +1718,11 @@ function syncDataHwf(){
 		success: function(result) {			
 			if(result=='Success'){
 				
-				$("#ward").val("");
+				/*$("#ward").val("");
 				$("#village").val("");
 				$("#clusID").val("");
 				$("#clusName").val("");
-				$("#socialMapID").val("");
+				$("#socialMapID").val("");*/
 											
 				//--------------
 				$("#ach_lat_wwf").val(0);
@@ -1725,7 +1734,7 @@ function syncDataHwf(){
 				$(".errorChk").text("");
 				$("#btn_wwf_submit").show();						
 			}else{
-				$(".errorChk").text('Submission Failed.');																	
+				$(".errorChk").text('Already Submitted');																	
 				$("#btn_wwf_submit").show();
 			}
 			
@@ -1881,7 +1890,7 @@ function wp_planbdData2Next(){
 	}else if(wp_org_id==''){
 		$(".errorChk").text('Required Organization ID');	
 	}else if(wp_org_id.length >15){
-		$(".errorChk").text('Maximum 10 Digit Organization ID');		
+		$(".errorChk").text('Maximum 15 Digit Organization ID');		
 	}else if(wp_act_type==''){
 		$(".errorChk").text("Required Type of Activity"); 
 	}else if(wp_technology=='' || wp_technology==0){
@@ -1998,7 +2007,7 @@ function onfail_wp(r) {
 
 function syncDataWp() {
 
-   // alert(apipath+"submitData_wp_enlist?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wp+"&latitude="+wp_latitude+"&longitude="+wp_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&wp_serial="+wp_serial+"&wp_org_id="+wp_org_id+"&wp_act_type="+wp_act_type+"&wp_technology="+wp_technology+"&wp_subsidized="+wp_subsidized+"&wp_com_date="+wp_com_date+"&wp_wq="+wp_wq+"&wp_wq_date="+wp_wq_date+"&wp_wq_result="+wp_wq_result)
+    //alert(apipath+"submitData_wp_enlist?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wp+"&latitude="+wp_latitude+"&longitude="+wp_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&wp_serial="+wp_serial+"&wp_org_id="+wp_org_id+"&wp_act_type="+wp_act_type+"&wp_technology="+wp_technology+"&wp_subsidized="+wp_subsidized+"&wp_com_date="+wp_com_date+"&wp_wq="+wp_wq+"&wp_wq_date="+wp_wq_date+"&wp_wq_result="+wp_wq_result)
 	$.ajax({
 		type:'POST',
 		url:apipath+"submitData_wp_enlist?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wp+"&latitude="+wp_latitude+"&longitude="+wp_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&wp_serial="+wp_serial+"&wp_org_id="+wp_org_id+"&wp_act_type="+wp_act_type+"&wp_technology="+wp_technology+"&wp_subsidized="+wp_subsidized+"&wp_com_date="+wp_com_date+"&wp_wq="+wp_wq+"&wp_wq_date="+wp_wq_date+"&wp_wq_result="+wp_wq_result,
