@@ -116,9 +116,7 @@ var apipath="http://w02.yeapps.com/planbd_sawrp/syncmobile/";
 //var apipath="http://127.0.0.1:8000/planbd_sawrp/syncmobile/";
 
 url ="";
-var hhIDList=''
-var benList=''
-var benCount=1;
+
 $(document).ready(function(){
 	if (localStorage.synced!='YES'){
 			 url = "#pagesync";						
@@ -131,123 +129,12 @@ $(document).ready(function(){
 			$("#upCode").val(localStorage.up_code);
 			$("#unName").val(localStorage.un_name);						
 			$("#unCode").val(localStorage.un_code);
-			
-			//------------
-			$("#btn_new_socialmap").hide();	
-			$("#btn_socialmap_home").hide();
-			//ben
-			$("#btn_new_ben").hide();
-			$("#btn_ben_service").hide();
-			$("#btn_ben_home").hide();
-			//san
-			$("#btn_new_ben_san").hide();
-			$("#btn_ben_service_san").hide();
-			$("#btn_ben_home_san").hide();
-			//hwf
-			$("#btn_new_ben_hwf").hide();	
-			$("#btn_ben_service_hwf").hide();
-			$("#btn_ben_home_hwf").hide();
-			//wp
-			$("#btn_addNew_wp").hide();
-			$("#btn_home_wp").hide();	
-			
-			//-----------
-			$("#benAdd").click(function(){
-			
-			 wp_hhSerail=$("#wp_hhSerail").val();
-			 wp_tub_pre=$("#wp_tub_pre").val();
-			 sps_family=$("#sps_family").val();
-			
-			wpHHserial=wp_hhSerail.split("-");
-			 wpHHID=wpHHserial[0]
-			 wpHHName=wpHHserial[1]
-			
-			if(wpHHID=='' || wpHHID==0){
-				$(".errorChk").text('Required HH ID');
-			}else if(wp_tub_pre=='' || wp_tub_pre==0){
-				$(".errorChk").text('Required Tubewell Located on Premises');
-			}else if(sps_family=='' || sps_family==0){
-				$(".errorChk").text('Required Sponsorship Family');
-			}else{
-				tub_pre='';
-				if(wp_tub_pre==1){
-					tub_pre='On Premises'
-				}else if(wp_tub_pre==2){
-					tub_pre='&#8805; 30 min'
-				}else{
-					tub_pre='&#62; 30 min'
-				}
-				
-				var i="<tr id='"+wpHHID+"'><td>"+wpHHID+"</td><td>"+tub_pre+"</td><td>"+sps_family+"</td><td>"+'<input style="background-color:#99dfff;" type="button" onclick="rowRemove(\''+wpHHID+'\')" value="X">'+"</td></tr>"
-				
-				//alert(stuList.indexOf(stu3Id) >-1);
-				//if( stuList.indexOf(stu3Id) >-1){
-				if( hhIDList.indexOf(wpHHID) >-1 ){
-					$(".errorChk").text("HH ID Already Exit");
-				}else{
-					$("#benTable").append(i);
-					benCount+=1;
-					$(".errorChk").text("");
-					
-					if(benList=="" ){
-						benList=wpHHID+","+wp_tub_pre+","+sps_family;
-					}else{
-						benList +="||"+wpHHID+","+wp_tub_pre+","+sps_family;
-					}
-					if(hhIDList=="" ){
-						hhIDList=wpHHID;
-					}else{
-						hhIDList +="||"+wpHHID;
-					}
-				}
-			}
-			
-		 });
 							
 			url = "#homePage";
 		}
 	$.mobile.navigate(url);
 	
 });
-
-function rowRemove(wpHHID){
-	$("#"+wpHHID).remove();	
-	benCount-=1;
-	var listS='';
-	iStrS=benList.split('||');
-	iLenS=iStrS.length
-	for(i=0;i<iLenS;i++){
-		iStrDS=iStrS[i].split(',');
-		
-		if(iStrDS[0]!=wpHHID){
-			if (listS==''){
-				listS=iStrS[i]
-			}else{
-				listS+='||'+iStrS[i]
-			}	
-		}		
-	}
-	
-	benList=listS
-	
-	//==========
-	var repl1='';
-	iStr=hhIDList.split('||');
-	iLen=iStr.length
-	for(i=0;i<iLen;i++){
-		iStrD=iStr[i].split(',');
-		
-		if(iStrD[0]!=wpHHID){
-			if (repl1==''){
-				repl1=iStr[i]
-			}else{
-				repl1+='||'+iStr[i]
-			}	
-		}		
-	}
-	
-	hhIDList=repl1
-}
 
 function syncBasic(){
 	var mobile=$("#mobile").val() ;
@@ -361,7 +248,7 @@ var noLatrine;
 
 var hyTub;
 var unhyTub;
-var noTub; //not use
+var noTub;
 
 var hwYes;
 var hwNo;
@@ -445,29 +332,6 @@ function totalBeneficiary(){
 	var totalGB=eval(benG_5)+eval(benB_5)+eval(benG_5_18)+eval(benB_5_18)+eval(benF_18_plus)+eval(benM_18_plus);	
 	$("#benTotal").val(totalGB);
 }
-
-function totalhh(){
-	rich=$("#rich").val();
-	middle=$("#middle").val();
-	poor=$("#poor").val();
-	exPoor=$("#exPoor").val();
-	
-	if(rich==''){
-		rich=0;
-	}
-	if(middle==''){
-		middle=0;
-	}	
-	if(poor==''){
-		poor=0;
-	}	
-	if(exPoor==''){
-		exPoor=0;
-	}		
-		
-	var totalHh=eval(rich)+eval(middle)+eval(poor)+eval(exPoor);	
-	$("#TotalHh").val(totalHh);
-}
 	
 var social;
 function social_mapping(socialMap){
@@ -515,7 +379,7 @@ function planbdData1Next(){
 	socialMapID=$("#socialMapID").val();
 	
 	if(ward=='' || ward==0){
-		$(".errorChk").text("Required ward no");
+		$(".errorChk").text("Required ward");
 	}else if(clusID==''){
 		$(".errorChk").text("Required Cluster ID");
 	}else if(clusID.length !=2){
@@ -536,13 +400,11 @@ function planbdData1Next(){
 function washCommitt(){
 	commExit=$("#commExit").val();	
 	if(commExit=='No'){
-		/*$("#commFemale").attr('readonly','readonly').css("background-color","#F9F9F9");
-		$("#commMale").attr('readonly','readonly').css("background-color","#F9F9F9");*/
-		$("#washCommmember").hide();
+		$("#commFemale").attr('readonly','readonly').css("background-color","#F9F9F9");
+		$("#commMale").attr('readonly','readonly').css("background-color","#F9F9F9");
 	}else{
-		$("#washCommmember").show();
-		/*$("#commFemale").removeAttr('readonly');
-		$("#commMale").removeAttr('readonly');*/
+		$("#commFemale").removeAttr('readonly');
+		$("#commMale").removeAttr('readonly');
 	}
 }
 
@@ -558,7 +420,7 @@ function planbdData2Next(){
 	
 	hyTub=$("#hyTub").val();
 	unhyTub=$("#unhyTub").val();
-	//noTub=$("#noTub").val();
+	noTub=$("#noTub").val();
 	
 	hwYes=$("#hwYes").val();
 	hwNo=$("#hwNo").val();
@@ -589,7 +451,7 @@ function planbdData2Next(){
 	
 	ecoStatus=eval(rich)+eval(middle)+eval(poor)+eval(exPoor);
 	sanTotal=eval(hyLatrine)+eval(unhyLatrine)+eval(noLatrine);
-	wpTotal=eval(hyTub)+eval(unhyTub)//+eval(noTub);
+	wpTotal=eval(hyTub)+eval(unhyTub)+eval(noTub);
 	hwTotal=eval(hwYes)+eval(hwNo);
 	
 	benGtotal=eval(benG_5)+eval(benG_5_18)+eval(benF_18_plus);
@@ -602,34 +464,28 @@ function planbdData2Next(){
 	}else if(poor==''){
 		$(".errorChk").text("Required poor");
 	}else if(exPoor==''){
-		$(".errorChk").text("Required extreme poor");
+		$(".errorChk").text("Required extreme Poor");
 	}else if(hyLatrine==''){
-		$(".errorChk").text("Required hygienic latrine");
+		$(".errorChk").text("Required Hygienic Latrine");
 	}else if(unhyLatrine==''){
-		$(".errorChk").text("Required unhygienic latrine");
+		$(".errorChk").text("Required Unhygienic Latrine");
 	}else if(noLatrine==''){
-		$(".errorChk").text("Required no latrine");
+		$(".errorChk").text("Required No Latrine");
 	}else if(hyTub==''){
-		$(".errorChk").text("Required hygienic tubewell ");
+		$(".errorChk").text("Required Hygienic Tubewell ");
 	}else if(unhyTub==''){
-		$(".errorChk").text("Required unhygienic tubewell ");
-	/*}else if(noTub==''){
-		$(".errorChk").text("Required No Tubewell");*/
+		$(".errorChk").text("Required Unhygienic Tubewell ");
+	}else if(noTub==''){
+		$(".errorChk").text("Required No Tubewell");
 	}else if(hwYes==''){
-		$(".errorChk").text("Required handwashing facility yes");
+		$(".errorChk").text("Required Handwashing Facility Yes");
 	}else if(hwNo==''){
-		$(".errorChk").text("Required handwashing facility no");
-	}else if(odfStatus=='' || odfStatus==0){
-		$(".errorChk").text("Required ODF status of community");
-	}else if(commExit=='' || commExit==0){
-		$(".errorChk").text("Required wash committee exist");
-	}else if(commFunc=='' || commFunc==0){
-		$(".errorChk").text("Required wash committee functional");		
+		$(".errorChk").text("Required Handwashing Facility No");
 	}else if(commFemale=='' && commExit=='Yes'){	
-		$(".errorChk").text("Required female ");
+		$(".errorChk").text("Required Female ");
 	}else if(commMale=='' && commExit=='Yes'){
-		$(".errorChk").text("Required male");
-	/*}else if(benG_5==''){
+		$(".errorChk").text("Required Male");
+	}else if(benG_5==''){
 		$(".errorChk").text("Required Girl (<=5)");
 	}else if(benB_5==''){
 		$(".errorChk").text("Required Boy (<=5)");
@@ -642,11 +498,11 @@ function planbdData2Next(){
 	}else if(benM_18_plus==''){
 		$(".errorChk").text("Required Male (18+)");	
 	}else if(benGtotal<EthF){
-		$(".errorChk").text("Invalid Ethnic Female");*/	
+		$(".errorChk").text("Invalid Ethnic Female");	
 	}else if(benBtotal<EthM){
-		$(".errorChk").text("Invalid ethnic male ");
+		$(".errorChk").text("Invalid Ethnic Male ");
 	}else if(benTotal<(eval(EthF)+eval(EthM))){
-		$(".errorChk").text("Invalid total number of HH ");
+		$(".errorChk").text("Invalid Total number of HH ");
 		
 	}else if(ecoStatus < sanTotal){
 		$(".errorChk").text("Number of HHs by Economic Status Less than or Equal Sanitation Information");
@@ -655,7 +511,7 @@ function planbdData2Next(){
 	}else if(ecoStatus != hwTotal){
 		$(".errorChk").text("Number of HHs by Economic Status Not Match Handwashing Facility Infomrationn");
 	}else if(ecoStatus > benTotal){
-		$(".errorChk").text("Number of HHs by Economic Status Grater than or Equal Beneficiaries Count");
+		$(".errorChk").text("Number of HHs by Economic Status Grater than Beneficiaries Count");
 	
 	}else if(benG_5<disG_5){
 		$(".errorChk").text("Disabilities < Beneficiaries  Girl (<=5)");
@@ -824,16 +680,16 @@ function syncData(){
 	//alert(apipath+"submitData?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName+"&achPhoto2="+imageName2+"&latitude="+latitude+"&longitude="+longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ward="+ward+"&village="+village+"&clusID="+clusID+"&clusName="+clusName+"&socialMapID="+socialMapID+"&rich="+rich+"&middle="+middle+"&poor="+poor+"&exPoor="+exPoor+"&hyLatrine="+hyLatrine+"&unhyLatrine="+unhyLatrine+"&noLatrine="+noLatrine+"&hyTub="+hyTub+"&unhyTub="+unhyTub+"&noTub="+noTub+"&hwYes="+hwYes+"&hwNo="+hwNo+"&odfStatus="+odfStatus+"&commExit="+commExit+"&commFunc="+commFunc+"&commFemale="+commFemale+"&commMale="+commMale+"&benTotal="+benTotal+"&benG_5="+benG_5+"&benB_5="+benB_5+"&benG_5_18="+benG_5_18+"&benB_5_18="+benB_5_18+"&benF_18_plus="+benF_18_plus+"&benM_18_plus="+benM_18_plus+"&EthF="+EthF+"&EthM="+EthM+"&disG_5="+disG_5+"&disB_5="+disB_5+"&disG_5_18="+disG_5_18+"&disB_5_18="+disB_5_18+"&disF_18_plus="+disF_18_plus+"&disM_18_plus="+disM_18_plus);
 	$.ajax({
 		type: 'POST',
-		url:apipath+"submitData?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName+"&achPhoto2="+imageName2+"&latitude="+latitude+"&longitude="+longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ward="+ward+"&village="+village+"&clusID="+clusID+"&clusName="+clusName+"&socialMapID="+socialMapID+"&rich="+rich+"&middle="+middle+"&poor="+poor+"&exPoor="+exPoor+"&hyLatrine="+hyLatrine+"&unhyLatrine="+unhyLatrine+"&noLatrine="+noLatrine+"&hyTub="+hyTub+"&unhyTub="+unhyTub+"&hwYes="+hwYes+"&hwNo="+hwNo+"&odfStatus="+odfStatus+"&commExit="+commExit+"&commFunc="+commFunc+"&commFemale="+commFemale+"&commMale="+commMale+"&benTotal="+benTotal+"&benG_5="+benG_5+"&benB_5="+benB_5+"&benG_5_18="+benG_5_18+"&benB_5_18="+benB_5_18+"&benF_18_plus="+benF_18_plus+"&benM_18_plus="+benM_18_plus+"&EthF="+EthF+"&EthM="+EthM+"&disG_5="+disG_5+"&disB_5="+disB_5+"&disG_5_18="+disG_5_18+"&disB_5_18="+disB_5_18+"&disF_18_plus="+disF_18_plus+"&disM_18_plus="+disM_18_plus,
+		url:apipath+"submitData?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName+"&achPhoto2="+imageName2+"&latitude="+latitude+"&longitude="+longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ward="+ward+"&village="+village+"&clusID="+clusID+"&clusName="+clusName+"&socialMapID="+socialMapID+"&rich="+rich+"&middle="+middle+"&poor="+poor+"&exPoor="+exPoor+"&hyLatrine="+hyLatrine+"&unhyLatrine="+unhyLatrine+"&noLatrine="+noLatrine+"&hyTub="+hyTub+"&unhyTub="+unhyTub+"&noTub="+noTub+"&hwYes="+hwYes+"&hwNo="+hwNo+"&odfStatus="+odfStatus+"&commExit="+commExit+"&commFunc="+commFunc+"&commFemale="+commFemale+"&commMale="+commMale+"&benTotal="+benTotal+"&benG_5="+benG_5+"&benB_5="+benB_5+"&benG_5_18="+benG_5_18+"&benB_5_18="+benB_5_18+"&benF_18_plus="+benF_18_plus+"&benM_18_plus="+benM_18_plus+"&EthF="+EthF+"&EthM="+EthM+"&disG_5="+disG_5+"&disB_5="+disB_5+"&disG_5_18="+disG_5_18+"&disB_5_18="+disB_5_18+"&disF_18_plus="+disF_18_plus+"&disM_18_plus="+disM_18_plus,
 																																																												
 		success: function(result) {			
 			if(result=='Success'){
 				
-				/*$("#ward").val("");
+				$("#ward").val("");
 				$("#village").val("");
 				$("#clusID").val("");
 				$("#clusName").val("");
-				$("#socialMapID").val("");*/
+				$("#socialMapID").val("");
 				
 				$("#rich").val("");
 				$("#middle").val("");
@@ -846,15 +702,15 @@ function syncData(){
 				
 				$("#hyTub").val("");
 				$("#unhyTub").val("");
-				//$("#noTub").val("");
+				$("#noTub").val("");
 				
 				$("#hwYes").val("");
 				$("#hwNo").val("");
 				
-				$("#odfStatus").val(0);
+				$("#odfStatus").val("");
 				
-				$("#commExit").val(0);
-				$("#commFunc").val(0);
+				$("#commExit").val("");
+				$("#commFunc").val("");
 				
 				$("#commFemale").val("");
 				$("#commMale").val("");
@@ -882,34 +738,14 @@ function syncData(){
 								
 				$(".sucChk").text('Successfully Submitted');
 				$(".errorChk").text("");
-				$("#btn_submit").hide();
-				$("#btn_new_socialmap").show();	
-				$("#btn_socialmap_home").show();					
+				$("#btn_submit").show();						
 			}else{
-				$(".errorChk").text('Cluster ID Already Exist');																	
+				$(".errorChk").text('Submission Failed.');																	
 				$("#btn_submit").show();
-				$("#btn_new_socialmap").hide();	
-				$("#btn_socialmap_home").hide();	
 			}
 			
 		}//end result
 	});//end ajax
-}
-
-function addNewSocialMap(){
-	$("#btn_submit").show();
-	$("#btn_new_socialmap").hide();	
-	$("#btn_socialmap_home").hide();
-	
-	$(".errorChk").text("");			
-	url="#first_page";					
-	$.mobile.navigate(url);
-}
-
-function socialMapHome(){
-	$(".errorChk").text("");			
-	url="#homePage";					
-	$.mobile.navigate(url);
 }
 
 
@@ -993,7 +829,7 @@ function beneficiary(beneficiary){
 				success: function(resStr){					
 					wordList=resStr.split('fdfd');					
 					var woListStr="";	
-					woListStr+='<option value="">Select Ward No</option>'		        
+					woListStr+='<option value="">Select Ward</option>'		        
 					for(i=0; i<wordList.length; i++){						
 						woListStr+="<option value="+encodeURIComponent(wordList[i])+">"+wordList[i]+"</option>";			
 					}
@@ -1058,19 +894,19 @@ function ben_planbdData1Next(){
 	
 	ben_socialMapID=$("#ben_socialMapID").val();
 	ben_hh_serial=$("#ben_hh_serial").val();
-	//localStorage.hh_serial=ben_hh_serial;
+	
 	if(ben_ward=='' || ben_ward==0){
-		$(".errorChk").text("Required ward no");
+		$(".errorChk").text("Required ward");
 	}else if(ben_clusID=='' || ben_clusID==0){
 		$(".errorChk").text("Required Cluster ID");	
 	/*}else if(ben_socialMapID==''){
 		$(".errorChk").text("Required Social Map ID");
 	}else if(ben_socialMapID.length !=12){
 		$(".errorChk").text("Invalid Social Map ID");*/
-	}else if(ben_hh_serial=='' || ben_hh_serial==undefined){
+	}else if(ben_hh_serial==''){
 		$(".errorChk").text("Required HH Serial");
 	}else if(ben_hh_serial.length !=3){
-		$(".errorChk").text("Maximum 3 digit HH Serial");		
+		$(".errorChk").text("Invalid HH Serial");		
 	}else{
 		
 		//"&ben_ward="+ben_ward+&ben_village="+ben_village"+&ben_clusID="+ben_clusID+"&ben_clusName="+ben_clusName+"&ben_socialMapID="+ben_socialMapID+"&ben_hh_serial="+ben_hh_serial
@@ -1130,14 +966,7 @@ function ben_planbdData1Next(){
 						$.mobile.navigate(url);
 					}			
 			}
-		})
-		
-		$("#divi_ben_2").text(localStorage.div_name);
-		$("#dis_ben_2").text(localStorage.dis_name);
-		$("#upaz_ben_2").text(localStorage.up_name);
-		$("#uni_ben_2").text(localStorage.un_name);
-		$("#wardNo_ben_2").text(ben_ward);
-		$("#cLuster_ben_2").text(ben_clusID+"-"+(ben_clusName).replace(/%20/g," "));
+		})		
 	}
 }
 
@@ -1211,11 +1040,11 @@ function benDataSubmit(){
 		$(".errorChk").text("Required HH ID");
 	}else if(ben_hh_head_name==''){
 		$(".errorChk").text("Required HH Head Name");
-	}else if(ben_hh_head_gender=='' || ben_hh_head_gender==0){
+	}else if(ben_hh_head_gender=='' || ben_hh_head_gender==null){
 		$(".errorChk").text("Required Gender");	
-	}else if(ben_eco_condition=='' || ben_eco_condition==0){
+	}else if(ben_eco_condition=='' || ben_eco_condition==null){
 		$(".errorChk").text("Required Economic Condition");	
-	/*}else if(ben_benG_5==''){
+	}else if(ben_benG_5==''){
 		$(".errorChk").text("Required Girl (<=5)");
 	}else if(ben_benB_5==''){
 		$(".errorChk").text("Required Boy (<=5)");
@@ -1226,7 +1055,7 @@ function benDataSubmit(){
 	}else if(ben_benF_18_plus==''){
 		$(".errorChk").text("Required Female (18+)");  
 	}else if(ben_benM_18_plus==''){
-		$(".errorChk").text("Required Male (18+)");	*/
+		$(".errorChk").text("Required Male (18+)");	
 	}else if(benBenGtotal<ben_EthF){
 		$(".errorChk").text("Invalid Ethnic Female");	
 	}else if(benBenBtotal<ben_EthM){
@@ -1254,11 +1083,9 @@ function benDataSubmit(){
 																																																											
 		success: function(result) {			
 			if(result=='Success'){
-				localStorage.hh_serial=ben_hh_serial;
-				localStorage.hh_head_name=ben_hh_head_name;
 				
-				/*$("#ben_ward").val("");
-				$("#ben_clusID").val("");*/
+				$("#ben_ward").val("");
+				$("#ben_clusID").val("");
 				$("#ben_hh_serial").val("");								
 				
 				$("#ben_hh_id").val("");
@@ -1283,16 +1110,10 @@ function benDataSubmit(){
 														
 				$(".sucChk").text('Successfully Submitted');
 				$(".errorChk").text("");
-				$("#btn_ben_submit").hide();
-				$("#btn_new_ben").show();
-				$("#btn_ben_service").show();
-				$("#btn_ben_home").show();						
+				$("#btn_ben_submit").show();						
 			}else{
 				$(".errorChk").text('Submission Failed.');																	
 				$("#btn_ben_submit").show();
-				$("#btn_new_ben").hide();
-				$("#btn_ben_service").hide();
-				$("#btn_ben_home").hide();
 			}
 			
 		}//end result
@@ -1301,119 +1122,240 @@ function benDataSubmit(){
 	}
 }
 
-function benGoToHome(){
-	
-	$(".errorChk").text("");			
-	url="#homePage";					
-	$.mobile.navigate(url);	
-}
-function addNewBen(){
-	$("#btn_ben_submit").show();
-	$("#btn_new_ben").hide();
-	$("#btn_ben_service").hide();	
-	$("#btn_ben_home").hide();
-	
-	//san
-	$("#btn_san_submit").show();
-	$("#btn_new_ben_san").hide();
-	$("#btn_ben_service_san").hide();
-	$("#btn_ben_home_san").hide();
-	
-	//hwf
-	$("#btn_wwf_submit").show();
-	$("#btn_new_ben_hwf").hide();	
-	$("#btn_ben_service_hwf").hide();
-	$("#btn_ben_home_hwf").hide();	
-	
-	$(".errorChk").text("");			
-	url="#ben_first_page";					
-	$.mobile.navigate(url);	
+
+
+//===========Sanitation=================
+var san_ward;
+var clsId;
+var clsName;
+var san_lat_type;
+var san_act_type;
+var san_subsidized;
+var san_com_date;
+//------
+var hw_type;
+var hw_com_date;
+
+function sanitaion(sanitaion){
+	if(localStorage.sync_code==undefined || localStorage.sync_code==""){
+		$(".errorChk").text("Required Sync");
+	}else{
+		social=sanitaion;
+		
+		div_name=$("#divName").val();
+		div_code=$("#divCode").val();
+		dis_name=$("#disName").val();
+		dis_code=$("#disCode").val();
+		up_name=$("#upName").val();
+		up_code=$("#upCode").val();
+		un_name=$("#unName").val();
+		un_code=$("#unCode").val();
+		 
+		if(div_name==''){
+			$(".errorChk").text("Required Division");	
+		}else if(dis_name==''){
+			$(".errorChk").text("Required District");	
+		}else if(up_name==''){
+			$(".errorChk").text("Required Upzila Name");
+		}else if(un_name==''){
+			$(".errorChk").text("Required Union Name");
+		}else{
+			
+			//alert(apipath+"benSearchWord?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code);
+			$.ajax({
+				type:'POST',
+				url:apipath+"benSearchWord?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code,
+				success: function(resStr){					
+					sanWordList=resStr.split('fdfd');
+										
+					var sanWoListStr="";
+					sanWoListStr+='<option value="">Select Ward</option>'					        
+					for(i=0; i<sanWordList.length; i++){						
+						sanWoListStr+="<option value="+encodeURIComponent(sanWordList[i])+">"+sanWordList[i]+"</option>";			
+					}
+					
+					var rpt_rep_ob=$("#san_ward");					
+					rpt_rep_ob.empty();					
+					rpt_rep_ob.append(sanWoListStr);					
+					rpt_rep_ob.selectmenu("refresh");	
+				}
+			});
+			
+			$("#divi_san").text(localStorage.div_name);
+			$("#dis_san").text(localStorage.dis_name);
+			$("#upaz_san").text(localStorage.up_name);
+			$("#uni_san").text(localStorage.un_name);
+			
+			$(".errorChk").text("");			
+			url="#san_first_page";					
+			$.mobile.navigate(url);	
+		}
+		
+	}
 }
 
-var div_name;
-var div_code;
-var dis_name;
-var dis_code;
-var up_name;
-var up_code;
-var un_name;
-var un_code;
 
-function services_ben(){
-	var hhSerial=localStorage.hh_serial;
-	//alert(apipath+"searchSanitation?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&hhSerial="+hhSerial);
-	$.ajax({
-		type:'POST',
-		url:apipath+"searchSanitation?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&ward="+ben_ward+"&cluster_id="+ben_clusID+"&hhSerial="+hhSerial,
-		success: function(resStr){					
-			sanhhList=resStr.split('fdfd');
-			if (hhSerial==sanhhList){
-				$("#sanitationBtn").hide();
-			}else{
-				$("#sanitationBtn").show();
+function san_planbdData1Next(){
+	san_ward=$("#san_ward").val();
+	if (san_ward=="" || san_ward==undefined){
+		$(".errorChk").text("Required Ward");	
+	}else{
+		var clusterList="";
+		$.ajax({
+			type:'POST',
+			url:apipath+"searchCluster?&sanWard="+san_ward,
+			success: function(resStr){
+				
+				clusterList=resStr.split('fdfd')
+					var listStr="";
+					listStr+='<option value="">Select cluster</option>'
+					for(i=0; i<clusterList.length; i++){
+						clsList=clusterList[i].split(',');
+						listStr+="<option value="+encodeURIComponent(clsList)+">"+clsList+"</option>";
+					}
+									
+					var rpt_rep_ob=$("#clusterIDName");					
+					rpt_rep_ob.empty();					
+					rpt_rep_ob.append(listStr);					
+					rpt_rep_ob.selectmenu("refresh");
 			}
-		}
-	})
+		})
+		$("#divi_san_w").text(localStorage.div_name);
+		$("#dis_san_w").text(localStorage.dis_name);
+		$("#upaz_san_w").text(localStorage.up_name);
+		$("#uni_san_w").text(localStorage.un_name);
+		$("#ward_san_w").text(san_ward);
 	
-	$.ajax({
-		type:'POST',
-		url:apipath+"searchHwf?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&ward="+ben_ward+"&cluster_id="+ben_clusID+"&hhSerial="+hhSerial,
-		success: function(result){					
-			hwfList=result.split('fdfd');
-			if (hhSerial==hwfList){
-				$("#hwfBtn").hide();
-			}else{
-				$("#hwfBtn").show();
-			}
-		}
-	})
+	$(".errorChk").text("");
+	url="#san_second_page";
+	$.mobile.navigate(url);
+	}
+}
+
+
+function clusterData(){	
+	clusIDName=$("#clusterIDName").val();
+	if(clusIDName=="" || clusIDName==undefined){
+		$(".errorChk").text("Required Cluster");
+	}else{
+		clsIdName=clusIDName.split("-");
+		clsId=clsIdName[0];
+		clsName=clsIdName[1];
+		
+		$("#divi_san_c").text(localStorage.div_name);
+		$("#dis_san_c").text(localStorage.dis_name);
+		$("#upaz_san_c").text(localStorage.up_name);
+		$("#uni_san_c").text(localStorage.un_name);
+		$("#ward_san_c").text(san_ward);
+		$("#cluster_san_c").text(clsId+"-"+(clsName).replace(/%20/g," "));
+		
+		$("#divi_san_san").text(localStorage.div_name);
+		$("#dis_san_san").text(localStorage.dis_name);
+		$("#upaz_san_san").text(localStorage.up_name);
+		$("#uni_san_san").text(localStorage.un_name);
+		$("#ward_san_san").text(san_ward);
+		$("#cluster_san_san").text(clsId+"-"+(clsName).replace(/%20/g," "));
+		
+		$("#divi_san_hwf").text(localStorage.div_name);
+		$("#dis_san_hwf").text(localStorage.dis_name);
+		$("#upaz_san_hwf").text(localStorage.up_name);
+		$("#uni_san_hwf").text(localStorage.un_name);
+		$("#ward_san_hwf").text(san_ward);
+		$("#cluster_san_hwf").text(clsId+"-"+(clsName).replace(/%20/g," "));
+		
+		$("#divi_san_wp").text(localStorage.div_name);
+		$("#dis_san_wp").text(localStorage.dis_name);
+		$("#upaz_san_wp").text(localStorage.up_name);
+		$("#uni_san_wp").text(localStorage.un_name);
+		$("#ward_san_wp").text(san_ward);
+		$("#cluster_san_wp").text(clsId+"-"+(clsName).replace(/%20/g," "));
+		
+		$(".errorChk").text("");
+		url="#san_three_page";
+		$.mobile.navigate(url);	
+	}
+}
+
+function wpList(){
+	/*clusIDName=$("#clusterIDName").val();
 	
+	clsIdName=clusIDName.split("-");
+	clsId=clsIdName[0];
+	clsName=clsIdName[1];
 	
+	$("#divi_en").text(localStorage.div_name);
+	$("#dis_en").text(localStorage.dis_name);
+	$("#upaz_en").text(localStorage.up_name);
+	$("#uni_en").text(localStorage.un_name);
+	$("#ward_en").text(san_ward);
+	$("#cluster_en").text(clsId+"-"+(clsName).replace(/%20/g," "));*/
 	
-	$("#divi_san_c").text(localStorage.div_name);
-	$("#dis_san_c").text(localStorage.dis_name);
-	$("#upaz_san_c").text(localStorage.up_name);
-	$("#uni_san_c").text(localStorage.un_name);
-	$("#ward_san_c").text(ben_ward);
-	$("#cluster_san_c").text(ben_clusID+"-"+(ben_clusName).replace(/%20/g," "));
-	
-	$(".errorChk").text("");			
-	url="#service_page";					
+	$(".errorChk").text("");
+	url="#wp_enlistment";
 	$.mobile.navigate(url);		
 }
 
+/*hhIdName=$("#hhSerail").val();
+	sanHHserial=hhIdName.split("-");
+	 sanHHID=sanHHserial[0]
+	 sanHHName=sanHHserial[1]	
+	$("#hh_id_san_san").text(sanHHID+"-"+(sanHHName).replace(/%20/g," "));*/
+	
 function san(){
 	$(".sucChk").text("");
 	$(".errorChk").text("");	
 	
-	$("#divi_san_san").text(localStorage.div_name);
-	$("#dis_san_san").text(localStorage.dis_name);
-	$("#upaz_san_san").text(localStorage.up_name);
-	$("#uni_san_san").text(localStorage.un_name);
-	$("#ward_san_san").text(ben_ward);
-	$("#cluster_san_san").text(ben_clusID+"-"+(ben_clusName).replace(/%20/g," "));
-	
+	//alert(apipath+"seatchHH?&clsId="+clsId+"&clsName="+clsName);
+	$.ajax({
+		type:'POST',
+		url:apipath+"seatchHH?&clsId="+clsId+"&clsName="+clsName,
+		success: function(resStr){
+			
+			houseHList=resStr.split('fdfd')
+			
+				var hhListStr="";
+				hhListStr +='<option value="0">Select HH Name</option>'			        
+				for(i=0; i<houseHList.length; i++){
+					hhList=houseHList[i];
+					hhListStr +="<option value="+encodeURIComponent(hhList)+"><a>"+hhList+"</a></option>"
+				}
+						
+				var rpt_rep_ob=$("#san_hhSerail");					
+				rpt_rep_ob.empty();					
+				rpt_rep_ob.append(hhListStr);					
+				rpt_rep_ob.selectmenu("refresh");
+		}
+	})
+		
 	$(".errorChk").text("");
-	url="#san_page";
-	$.mobile.navigate(url);
+	url="#san_four_page";
+	$.mobile.navigate(url);	
 }
 
-
+var sanHHID;
+var sanHHName;
 function san_planbdData2Next(){
+	sanHhIdName=$("#san_hhSerail").val();
+	sanHHserial=sanHhIdName.split("-");
+	 sanHHID=sanHHserial[0]
+	 sanHHName=sanHHserial[1]
+	
 	san_lat_type=$("#san_lat_type").val();
 	san_act_type=$("#san_act_type").val();
 	san_subsidized=$("#san_subsidized").val();
 	san_com_date=$("#san_com_date").val();
 
 	san_com_date_chk=san_com_date.split('/');
-	san_com_dateS=new Date(san_com_date_chk[1]+"/"+ san_com_date_chk[2]+"/"+san_com_date_chk[0]);
+	san_com_dateS=new Date(san_com_date_chk[1]+"/"+ san_com_date_chk[0]+"/"+san_com_date_chk[2]);
 	today = new Date()
 	
-	if(san_lat_type=='' || san_lat_type==0){
+	if(sanHhIdName=='' || sanHhIdName==0){
+		$(".errorChk").text('Required HH Name');
+	}else if(san_lat_type=='' || san_lat_type==0){
 		$(".errorChk").text("Required Type of Latrine Provided");  
-	}else if(san_act_type=='' || san_act_type==0){
+	}else if(san_act_type==''){
 		$(".errorChk").text("Required Type of Activity");  
-	}else if(san_subsidized==''|| san_subsidized==0){
+	}else if(san_subsidized==''){
 		$(".errorChk").text("Required Subsidized"); 
 	}else if(san_com_date==''){
 		$(".errorChk").text("Required Date of Completion");
@@ -1514,10 +1456,10 @@ function onfail_san(r) {
 
 
 function syncDataSan(){		
-	//alert(apipath+"submitData_san?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_san+"&latitude="+san_latitude+"&longitude="+san_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&clsId="+ben_clusID+"&clsName="+encodeURIComponent(ben_clusName)+"&sanHHserial="+localStorage.hh_serial+"&sanHHName="+encodeURIComponent(localStorage.hh_head_name)+"&san_lat_type="+san_lat_type+"&san_act_type="+san_act_type+"&san_subsidized="+san_subsidized+"&san_com_date="+san_com_date);
+	//alert(apipath+"submitData_san?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_san+"&latitude="+san_latitude+"&longitude="+san_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&sanHHserial="+sanHHID+"&sanHHName="+encodeURIComponent(sanHHName)+"&san_lat_type="+san_lat_type+"&san_act_type="+san_act_type+"&san_subsidized="+san_subsidized+"&san_com_date="+san_com_date);
 	$.ajax({
 		type:'POST',
-		url:apipath+"submitData_san?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_san+"&latitude="+san_latitude+"&longitude="+san_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&clsId="+ben_clusID+"&clsName="+encodeURIComponent(ben_clusName)+"&sanHHserial="+localStorage.hh_serial+"&sanHHName="+encodeURIComponent(localStorage.hh_head_name)+"&san_lat_type="+san_lat_type+"&san_act_type="+san_act_type+"&san_subsidized="+san_subsidized+"&san_com_date="+san_com_date,
+		url:apipath+"submitData_san?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_san+"&latitude="+san_latitude+"&longitude="+san_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&sanHHserial="+sanHHID+"&sanHHName="+encodeURIComponent(sanHHName)+"&san_lat_type="+san_lat_type+"&san_act_type="+san_act_type+"&san_subsidized="+san_subsidized+"&san_com_date="+san_com_date,
 		success: function(result) {			
 			if(result=='Success'){
 				
@@ -1527,7 +1469,7 @@ function syncDataSan(){
 				$("#clusName").val("");
 				$("#socialMapID").val("");*/
 				
-				//$("#san_hhSerail").val(0);
+				$("#san_hhSerail").val(0);
 				$("#san_lat_type").val(0);
 				$("#san_act_type").val("");
 				$("#san_subsidized").val("");
@@ -1539,16 +1481,10 @@ function syncDataSan(){
 								
 				$(".sucChk").text('Successfully Submitted');
 				$(".errorChk").text("");
-				$("#btn_san_submit").hide();
-				$("#btn_new_ben_san").show();
-				$("#btn_ben_service_san").show();
-				$("#btn_ben_home_san").show();						
+				$("#btn_san_submit").show();						
 			}else{
 				$(".errorChk").text('Already Submitted');																	
 				$("#btn_san_submit").show();
-				$("#btn_new_ben_san").hide();
-				$("#btn_ben_service_san").hide();
-				$("#btn_ben_home_san").hide();
 			}
 			
 		}//end result
@@ -1560,30 +1496,50 @@ function syncDataSan(){
 function wwf(wwf){
 	$(".sucChk").text("");
 	$(".errorChk").text("");	
-	
-	$("#divi_san_hwf").text(localStorage.div_name);
-	$("#dis_san_hwf").text(localStorage.dis_name);
-	$("#upaz_san_hwf").text(localStorage.up_name);
-	$("#uni_san_hwf").text(localStorage.un_name);
-	$("#ward_san_hwf").text(ben_ward);
-	$("#cluster_san_hwf").text(ben_clusID+"-"+(ben_clusName).replace(/%20/g," "));
+	//alert(apipath+"seatchHH?&clsId="+clsId+"&clsName="+clsName);
+	$.ajax({
+		type:'POST',
+		url:apipath+"seatchHH?&clsId="+clsId+"&clsName="+clsName,
+		success: function(resStr){
+			houseHList=resStr.split('fdfd')
+			
+				var hhListStr="";		
+				hhListStr +='<option value="0">Select HH Name</option>'		       	        
+				for(i=0; i<houseHList.length; i++){
+					hhList=houseHList[i];
+					hhListStr +="<option value="+encodeURIComponent(hhList)+"><a>"+hhList+"</a></option>"
+				}
+				
+				var rpt_rep_ob_hwf=$("#hwf_hhSerail");					
+				rpt_rep_ob_hwf.empty();					
+				rpt_rep_ob_hwf.append(hhListStr);					
+				rpt_rep_ob_hwf.selectmenu("refresh");		
+		}
+	})
 	
 	$(".errorChk").text("");
 	url="#wwf_four_page";
 	$.mobile.navigate(url);		
 }
 
-
+var sanHwfHHID;
+var sanHwfHHName;
 function wwf_planbdData2Next(){
-	
+	hwFHhIdName=$("#hwf_hhSerail").val();
+	sanHwfHHserial=hwFHhIdName.split("-");
+	 sanHwfHHID=sanHwfHHserial[0]
+	 sanHwfHHName=sanHwfHHserial[1]
+	 
 	hw_type=$("#hw_type").val();
 	hw_com_date=$("#hw_com_date").val();	
 	
 	hw_com_date_chk=hw_com_date.split('/');
-	hw_com_dateS=new Date(hw_com_date_chk[1]+"/"+ hw_com_date_chk[2]+"/"+hw_com_date_chk[0]);
+	hw_com_dateS=new Date(hw_com_date_chk[1]+"/"+ hw_com_date_chk[0]+"/"+hw_com_date_chk[2]);
 	today = new Date()
 	
-	if(hw_type=='' || hw_type==0){
+	if(hwFHhIdName=='' || hwFHhIdName==0){
+		$(".errorChk").text('Required HH Name');
+	}else if(hw_type=='' || hw_type==0){
 		$(".errorChk").text('Required Type of Handwash Facilities');		
 	}else if(hw_com_date==''){
 		$(".errorChk").text('Required Date of Completion');	
@@ -1754,18 +1710,19 @@ function onfail_wwf(r) {
 }
 
 function syncDataHwf(){		
-	//alert(apipath+"submitData_hwf?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wwf+"&achPhoto2="+imageName2_wwf+"&latitude="+wwf_latitude+"&longitude="+wwf_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&clsId="+ben_clusID+"&clsName="+encodeURIComponent(ben_clusName)+"&sanHHserial="+localStorage.hh_serial+"&sanHHName="+encodeURIComponent(localStorage.hh_head_name)+"&hw_type="+hw_type+"&hw_com_date="+hw_com_date);
+	//alert(apipath+"submitData_hwf?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wwf+"&achPhoto2="+imageName2_wwf+"&latitude="+wwf_latitude+"&longitude="+wwf_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&sanHHserial="+sanHwfHHID+"&sanHHName="+encodeURIComponent(sanHwfHHName)+"&hw_type="+hw_type+"&hw_com_date="+hw_com_date);
 	$.ajax({
 		type:'POST',
-		url:apipath+"submitData_hwf?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wwf+"&achPhoto2="+imageName2_wwf+"&latitude="+wwf_latitude+"&longitude="+wwf_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&clsId="+ben_clusID+"&clsName="+encodeURIComponent(ben_clusName)+"&sanHHserial="+localStorage.hh_serial+"&sanHHName="+encodeURIComponent(localStorage.hh_head_name)+"&hw_type="+hw_type+"&hw_com_date="+hw_com_date,																																																							
+		url:apipath+"submitData_hwf?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wwf+"&achPhoto2="+imageName2_wwf+"&latitude="+wwf_latitude+"&longitude="+wwf_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&sanHHserial="+sanHwfHHID+"&sanHHName="+encodeURIComponent(sanHwfHHName)+"&hw_type="+hw_type+"&hw_com_date="+hw_com_date,
+																																																										
 		success: function(result) {			
 			if(result=='Success'){
 				
-				$("#ward").val("");
+				/*$("#ward").val("");
 				$("#village").val("");
 				$("#clusID").val("");
 				$("#clusName").val("");
-				$("#socialMapID").val("");
+				$("#socialMapID").val("");*/
 											
 				//--------------
 				$("#ach_lat_wwf").val(0);
@@ -1775,16 +1732,10 @@ function syncDataHwf(){
 								
 				$(".sucChk").text('Successfully Submitted');
 				$(".errorChk").text("");
-				$("#btn_wwf_submit").hide();
-				$("#btn_new_ben_hwf").show();	
-				$("#btn_ben_service_hwf").show();
-				$("#btn_ben_home_hwf").show();					
+				$("#btn_wwf_submit").show();						
 			}else{
 				$(".errorChk").text('Already Submitted');																	
 				$("#btn_wwf_submit").show();
-				$("#btn_new_ben_hwf").hide();	
-				$("#btn_ben_service_hwf").hide();
-				$("#btn_ben_home_hwf").hide();
 			}
 			
 		}//end result
@@ -1792,218 +1743,174 @@ function syncDataHwf(){
 }
 
 
-
-
-var san_ward;
-var clsId;
-var clsName;
-var san_lat_type;
-var san_act_type;
-var san_subsidized;
-var san_com_date;
-//------
-var hw_type;
-var hw_com_date;
-
-function wp(wp){
-	if(localStorage.sync_code==undefined || localStorage.sync_code==""){
-		$(".errorChk").text("Required Sync");
-	}else{
-		social=wp;
-		
-		div_name=$("#divName").val();
-		div_code=$("#divCode").val();
-		dis_name=$("#disName").val();
-		dis_code=$("#disCode").val();
-		up_name=$("#upName").val();
-		up_code=$("#upCode").val();
-		un_name=$("#unName").val();
-		un_code=$("#unCode").val();
-		 
-		if(div_name==''){
-			$(".errorChk").text("Required Division");	
-		}else if(dis_name==''){
-			$(".errorChk").text("Required District");	
-		}else if(up_name==''){
-			$(".errorChk").text("Required Upzila Name");
-		}else if(un_name==''){
-			$(".errorChk").text("Required Union Name");
-		}else{
-			
-			//alert(apipath+"benSearchWord?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code);
-			$.ajax({
-				type:'POST',
-				url:apipath+"benSearchWord?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code,
-				success: function(resStr){					
-					sanWordList=resStr.split('fdfd');
-										
-					var sanWoListStr="";
-					sanWoListStr+='<option value="">Select Ward</option>'					        
-					for(i=0; i<sanWordList.length; i++){						
-						sanWoListStr+="<option value="+encodeURIComponent(sanWordList[i])+">"+sanWordList[i]+"</option>";			
-					}
-					
-					var rpt_rep_ob=$("#san_ward");					
-					rpt_rep_ob.empty();					
-					rpt_rep_ob.append(sanWoListStr);					
-					rpt_rep_ob.selectmenu("refresh");	
-				}
-			});
-			
-			$("#divi_san").text(localStorage.div_name);
-			$("#dis_san").text(localStorage.dis_name);
-			$("#upaz_san").text(localStorage.up_name);
-			$("#uni_san").text(localStorage.un_name);
-			
-			$(".errorChk").text("");			
-			url="#san_first_page";					
-			$.mobile.navigate(url);	
-		}
-		
-	}
-}
-
-var wp_ward;
+//===========WP================-->
 var wp_serial;
 var wp_org_id;
 var wp_act_type;
 var wp_technology;
 var wp_subsidized;
 var wp_com_date;
+var wp_wq;
+var wp_wq_date;
 var wp_wq_result;
-function wp1Next(){
-	wp_ward=$("#san_ward").val();
-	clusIDName=$("#clusterIDName").val();
-	wp_serial=$("#wp_serial").val();
-	wp_org_id=$("#wp_org_id").val();
-	wp_act_type=$("#wp_act_type").val();
-	wp_technology=$("#wp_technology").val();
-	wp_subsidized=$("#wp_subsidized").val();
-	wp_com_date=$("#wp_com_date").val();
-	wp_wq=$("#wp_wq").val();
-	wp_wq_date=$("#wp_wq_date").val();
-	wp_wq_result=$("#wp_wq_result").val();
-	
-	clsIdName=clusIDName.split("-");
-	clsId=clsIdName[0];
-	clsName=clsIdName[1];
-	
-	
-	wp_com_date_chk=wp_com_date.split('/');	
-	wp_com_dateS=new Date(wp_com_date_chk[1]+"/"+ wp_com_date_chk[2]+"/"+wp_com_date_chk[0]);	
-	today = new Date()
-	
-	wp_wq_date_chk=wp_wq_date.split('/');
-	wp_wq_dateS=new Date(wp_wq_date_chk[1]+"/"+ wp_wq_date_chk[2]+"/"+wp_wq_date_chk[0]);
-	currentDate = new Date()
-	
-	
-	if(wp_ward=='' || wp_ward==0){
-		$(".errorChk").text('Required ward');	
-	}else if (clsId=="" || clsId==0){
-		$(".errorChk").text("Required cluster");
-	}else if(wp_serial==''){
-		$(".errorChk").text('Required wp serial');	
-	}else if(wp_serial.length !=3){
-		$(".errorChk").text('Maximum 3 digit wp serial');
-	/*}else if(wp_org_id==''){
-		$(".errorChk").text('Required organization ID');*/	
-	}else if(wp_org_id.length >15){
-		$(".errorChk").text('Maximum 15 digit organization ID');		
-	}else if(wp_act_type=='' || wp_act_type==0){
-		$(".errorChk").text("Required type of activity"); 
-	}else if(wp_technology=='' || wp_technology==0){
-		$(".errorChk").text('Required water point technology');	
-	}else if(wp_subsidized=='' || wp_subsidized==0){
-		$(".errorChk").text('Required subsidized');		
-	}else if(wp_com_date==''){
-		$(".errorChk").text('Required date of completion');	
-	}else if(wp_com_dateS > today){
-		$(".errorChk").text("Invalid completion date");	
-	}else if(wp_wq=='' || wp_wq==0){
-		$(".errorChk").text("Required water quality test type");	
-	}else if(wp_wq_date==''){
-		$(".errorChk").text('Required date of water quality test');	
-	}else if(wp_wq_dateS > currentDate){
-		$(".errorChk").text("Invalid Date of Water Quality Test");	
-	}else if(wp_wq_result=='' || wp_wq_result==0){
-		$(".errorChk").text("Required result water quality test");		
-	}else{
-		var clusterList="";
-		$.ajax({
+
+function wp(wp){
+	$(".sucChk").text("");
+	$(".errorChk").text("");		
+	//alert(apipath+"seatchHH?&clsId="+clsId+"&clsName="+clsName);
+	$.ajax({
 		type:'POST',
 		url:apipath+"seatchHH?&clsId="+clsId+"&clsName="+clsName,
 		success: function(resStr){
 			houseHList=resStr.split('fdfd')
 			
-			var hhListStr="";	
-			hhListStr +='<option value="0">Select HH Name</option>'		        
-			for(i=0; i<houseHList.length; i++){
-				hhList=houseHList[i];
-				hhListStr +="<option value="+encodeURIComponent(hhList)+"><a>"+hhList+"</a></option>"
-			}
-							
-			var rpt_rep_ob_wp=$("#wp_hhSerail");					
-			rpt_rep_ob_wp.empty();					
-			rpt_rep_ob_wp.append(hhListStr);					
-			rpt_rep_ob_wp.selectmenu("refresh");	
+				var hhListStr="";	
+				hhListStr +='<option value="0">Select HH Name</option>'		        
+				for(i=0; i<houseHList.length; i++){
+					hhList=houseHList[i];
+					hhListStr +="<option value="+encodeURIComponent(hhList)+"><a>"+hhList+"</a></option>"
+				}
+								
+				var rpt_rep_ob_wp=$("#wp_hhSerail");					
+				rpt_rep_ob_wp.empty();					
+				rpt_rep_ob_wp.append(hhListStr);					
+				rpt_rep_ob_wp.selectmenu("refresh");	
+		}
+	})
+	
+	
+	//alert(apipath+"search_wp_serial_enlist?div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code);
+	$.ajax({
+			type:'POST',
+			url:apipath+"search_wp_serial_enlist?div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId,
+			success: function(result){			
+				wpSerialList=result.split('fdfd')
+				
+				var wplistStr="";
+				wplistStr +='<option value="0">Select WP Serial</option>'
+				for(i=0; i<wpSerialList.length; i++){
+					wplist=wpSerialList[i].split(',');
+					wplistStr+="<option value="+encodeURIComponent(wplist)+">"+wplist+"</option>";
+				}
+								
+				var rpt_rep_ob=$("#wp_serial_enlist");					
+				rpt_rep_ob.empty();					
+				rpt_rep_ob.append(wplistStr);					
+				rpt_rep_ob.selectmenu("refresh");
 			}
 		})
-		
-		$("#divi_san_w").text(localStorage.div_name);
-		$("#dis_san_w").text(localStorage.dis_name);
-		$("#upaz_san_w").text(localStorage.up_name);
-		$("#uni_san_w").text(localStorage.un_name);
-		$("#ward_san_w").text(san_ward);
-		$("#cluster_san_w").text(clsId+"-"+clsName);
-		
-		$(".errorChk").text("");
-		url="#san_second_page";
-		$.mobile.navigate(url);
-	}	
+	$(".errorChk").text("");
+	url="#wp_four_page";
+	$.mobile.navigate(url);		
 }
+
+var wp_serial_enlist;
+var wp_tub_pre;
+var sps_family;
+var sanWpHHID;
+var sanWpHHName;
+function wpEnlistDataSubmit(){
+	$(".sucChk").text("");
+	$(".errorChk").text("");
+	wpHhIdName=$("#wp_hhSerail").val();
+	sanWpHHserial=wpHhIdName.split("-");
+	 sanWpHHID=sanWpHHserial[0]
+	 sanWpHHName=sanWpHHserial[1]
 	
-
-var san_ward;
-function clusterIDNAme(){	
-	div_code=$("#divCode").val();
-	dis_code=$("#disCode").val();
-	up_code=$("#upCode").val();
-	un_code=$("#unCode").val();
-	san_ward=$("#san_ward").val();
-	//alert(apipath+"cluster_list?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&san_ward="+san_ward);
-	$.ajax({		
-		url:apipath+"wp_cluster_list?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&san_ward="+san_ward,
-		success: function(clusterStr) {
-			clusterLiStr=clusterStr.split("fdfd");
-			
-			clsListS="";
-			for (i=0;i<clusterLiStr.length;i++){
-			  cls=clusterLiStr[i]
-			  clsListS+="<option value="+encodeURIComponent(cls)+">"+cls+"</option>";					  
-			}	
-			
-			var rpt_rep_ob=$("#clusterIDName");
-			rpt_rep_ob.empty();
-			rpt_rep_ob.append(clsListS);
-			rpt_rep_ob.selectmenu("refresh");
-			
-			}		  
-		});		
-}
-
-
-function clusterData(){
-	if(hhIDList==''){
-		$(".errorChk").text("Required HH List");		
+	wp_serial_enlist=$("#wp_serial_enlist").val();
+	wp_tub_pre=$("#wp_tub_pre").val();
+	sps_family=$("#sps_family").val();
+	
+	if(wpHhIdName=='' || wpHhIdName==0){
+		$(".errorChk").text('Required HH Name');
+	}else if(wp_serial_enlist=="" || wp_serial_enlist==0){
+		$(".errorChk").text('Required WP Serial');
+	}else if(wp_tub_pre=='' || wp_tub_pre==0){
+		$(".errorChk").text('Required Tubewell Located on Premises');
 	}else{
-			
-		$(".errorChk").text("");
-		url="#wp_inPhoto";
-		$.mobile.navigate(url);	
+		//alert(apipath+"submitData_wp?&wp_serial_enlist="+wp_serial_enlist+"&sanHHserial="+sanWpHHID+"&sanHHName="+encodeURIComponent(sanWpHHName)+"&wp_tub_pre="+wp_tub_pre+"&sps_family="+sps_family);
+		$.ajax({
+			type:'POST',
+			url:apipath+"submitData_wp?&wp_serial_enlist="+wp_serial_enlist+"&sanHHserial="+sanWpHHID+"&sanHHName="+encodeURIComponent(sanWpHHName)+"&wp_tub_pre="+wp_tub_pre+"&sps_family="+sps_family,
+			success: function(result) {			
+				if(result=='Success'){
+					$("#wp_hhSerail").val(0);
+					$("#wp_serial_enlist").val(0);	
+					$("#wp_tub_pre").val(0);							
+					$(".sucChk").text('Successfully Submitted');
+					$(".errorChk").text("");
+					$("#btn_wp_enlist_submit").show();
+				}else if(result=='Failed1'){
+					$(".errorChk").text('HH Name Already Submitted');																	
+					$("#btn_wp_enlist_submit").show();
+				}else{
+					$(".errorChk").text('Required WP Serial');																	
+					$("#btn_wp_enlist_submit").show();
+				}
+				
+			}//end result
+		});//end ajax
 	}
 }
 
+function return_wp(){
+	$(".sucChk").text("");
+	$(".errorChk").text("");
+	
+	$(".errorChk").text("");
+	url="#san_three_page";
+	$.mobile.navigate(url);
+				
+}
+
+function wp_planbdData2Next(){
+	wp_serial=$("#wp_serial").val();
+	wp_org_id=$("#wp_org_id").val();
+	wp_act_type=$("#wp_act_type").val();
+	wp_technology=$("#wp_technology").val();	
+	wp_subsidized=$("#wp_subsidized").val();
+	wp_com_date=$("#wp_com_date").val();
+	
+	wp_wq=$("#wp_wq").val();
+	wp_wq_date=$("#wp_wq_date").val();
+	wp_wq_result=$("#wp_wq_result").val();
+	
+	wp_com_date_chk=wp_com_date.split('/');	
+	wp_com_dateS=new Date(wp_com_date_chk[1]+"/"+ wp_com_date_chk[0]+"/"+wp_com_date_chk[2]);	
+	today = new Date()
+	
+	wp_wq_date_chk=wp_wq_date.split('/');
+	wp_wq_dateS=new Date(wp_wq_date_chk[1]+"/"+ wp_wq_date_chk[0]+"/"+wp_wq_date_chk[2]);
+	currentDate = new Date()
+	
+	if(wp_serial==''){
+		$(".errorChk").text('Required wp Serial');	
+	}else if(wp_serial.length !=3){
+		$(".errorChk").text('Maximum 3 Digit WP Serial');
+	}else if(wp_org_id==''){
+		$(".errorChk").text('Required Organization ID');	
+	}else if(wp_org_id.length >15){
+		$(".errorChk").text('Maximum 15 Digit Organization ID');		
+	}else if(wp_act_type==''){
+		$(".errorChk").text("Required Type of Activity"); 
+	}else if(wp_technology=='' || wp_technology==0){
+		$(".errorChk").text('Required Water Point Technology');	
+	}else if(wp_subsidized==''){
+		$(".errorChk").text('Required Subsidized');		
+	}else if(wp_com_date==''){
+		$(".errorChk").text('Required Date of Completion');	
+	}else if(wp_com_dateS > today){
+		$(".errorChk").text("Invalid Completion Date");	
+	}else if(wp_wq_date==''){
+		$(".errorChk").text('Required Date of Water Quality Test');	
+	}else if(wp_wq_dateS > currentDate){
+		$(".errorChk").text("Invalid Date of Water Quality Test");		
+	}else{
+		$(".errorChk").text("");
+		url="#wp_inPhoto";
+		$.mobile.navigate(url);
+	}	
+}
 
 function wpDataSubmit(){
 	$(".sucChk").text("");
@@ -2100,60 +2007,39 @@ function onfail_wp(r) {
 
 function syncDataWp() {
 
-   //alert(apipath+"submitData_wp?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wp+"&latitude="+wp_latitude+"&longitude="+wp_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&wp_ward="+wp_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&wp_serial="+wp_serial+"&wp_org_id="+wp_org_id+"&wp_act_type="+wp_act_type+"&wp_technology="+wp_technology+"&wp_subsidized="+wp_subsidized+"&wp_com_date="+wp_com_date+"&wp_wq="+wp_wq+"&wp_wq_date="+wp_wq_date+"&wp_wq_result="+wp_wq_result+"&benList="+encodeURIComponent(benList))
+    //alert(apipath+"submitData_wp_enlist?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wp+"&latitude="+wp_latitude+"&longitude="+wp_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&wp_serial="+wp_serial+"&wp_org_id="+wp_org_id+"&wp_act_type="+wp_act_type+"&wp_technology="+wp_technology+"&wp_subsidized="+wp_subsidized+"&wp_com_date="+wp_com_date+"&wp_wq="+wp_wq+"&wp_wq_date="+wp_wq_date+"&wp_wq_result="+wp_wq_result)
 	$.ajax({
 		type:'POST',
-		url:apipath+"submitData_wp?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wp+"&latitude="+wp_latitude+"&longitude="+wp_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&wp_ward="+wp_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&wp_serial="+wp_serial+"&wp_org_id="+wp_org_id+"&wp_act_type="+wp_act_type+"&wp_technology="+wp_technology+"&wp_subsidized="+wp_subsidized+"&wp_com_date="+wp_com_date+"&wp_wq="+wp_wq+"&wp_wq_date="+wp_wq_date+"&wp_wq_result="+wp_wq_result+"&benList="+encodeURIComponent(benList),
+		url:apipath+"submitData_wp_enlist?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wp+"&latitude="+wp_latitude+"&longitude="+wp_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&san_ward="+san_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&wp_serial="+wp_serial+"&wp_org_id="+wp_org_id+"&wp_act_type="+wp_act_type+"&wp_technology="+wp_technology+"&wp_subsidized="+wp_subsidized+"&wp_com_date="+wp_com_date+"&wp_wq="+wp_wq+"&wp_wq_date="+wp_wq_date+"&wp_wq_result="+wp_wq_result,
 																																																										
 		success: function(result) {			
 			if(result=='Success'){
 				$("#wp_serial").val("");
 				$("#wp_org_id").val("");
-				$("#wp_act_type").val(0);
-				$("#wp_technology").val(0);
-				$("#wp_subsidized").val(0);
+				$("#wp_act_type").val("");
+				$("#wp_technology").val("");
+				$("#wp_subsidized").val("");
 				$("#wp_com_date").val("");
 				
-				$("#wp_wq").val(0);
+				$("#wp_wq").val("");
 				$("#wp_wq_date").val("");
-				$("#wp_wq_result").val(0);
-				
-				$("#wp_hhSerail").val(0);
-				$("#wp_tub_pre").val(0);
-				$("#sps_family").val(0);											
+				$("#wp_wq_result").val("");											
 				//--------------
 				$("#ach_lat_wp").val(0);
 				$("#ach_long_wp").val(0);
 				$("#achPhoto_wp").val("");	
-				benList='';				
+								
 				$(".sucChk").text('Successfully Submitted');
 				$(".errorChk").text("");
-				$("#btn_wp_submit").hide();
-				$("#btn_addNew_wp").show();
-				$("#btn_home_wp").show();	
+				$("#btn_wp_submit").show();	
 			}else{
-				$(".errorChk").text('Already Submitted WP Serial');																	
+				$(".errorChk").text('Already Submitted');																	
 				$("#btn_wp_submit").show();
-				$("#btn_addNew_wp").hide();
-				$("#btn_home_wp").hide();	
 			}
 			
 		}//end result
 	});//end ajax
 }
-
-function addNewWP(){
-	
-	$("#btn_wp_submit").show();
-	$("#btn_addNew_wp").hide();
-	$("#btn_home_wp").hide();
-		
-	$(".errorChk").text("");			
-	url="#homePage";					
-	$.mobile.navigate(url);		
-}
-
-//======================
 
 
 function exit() {

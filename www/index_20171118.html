@@ -99,11 +99,11 @@
                 <li><a href="#" onClick="beneficiary('beneficiary')" data-transition="slide">Beneficiary</a></li>
             </ul>
             <ul data-role="listview" data-inset="true">
-            	<li><a href="#" onclick="wp('wp')" data-transition="slide">Water Point</a></li>
+            	<li><a href="#" onclick="sanitaion('sanitaion')" data-transition="slide">Sanitaion/HWF/WP</a></li>
             </ul>
     </div>
     
-    <div data-theme="c" data-role="footer" data-position="fixed" style="font-size:12px;background-color:#CCC;" align="center" >mReporting 20171119</div><!------/footer 20150401-20150309 -->
+    <div data-theme="c" data-role="footer" data-position="fixed" style="font-size:12px;background-color:#CCC;" align="center" >mReporting 20171111</div><!------/footer 20150401-20150309 -->
     
     <div data-role="panel" id="leftpanel" data-position="left" data-display="overlay" data-theme="c">
         <div align="center"></div>
@@ -180,9 +180,9 @@
             </table>
          
             <li class="ui-field-contain">
-                <label for="ward">Ward No</label>               
+                <label for="ward">Ward</label>               
                 <select name="ward" id="ward" data-native-menu="false" onblur="social_map_id()">
-                    <option value="">Select Ward No</option>
+                    <option value="">Ward No</option>
                     <option value="01">01</option>
                     <option value="02">02</option>
                     <option value="03">03</option>
@@ -199,7 +199,7 @@
                     <input type="text" id="village" name="village" maxlength="50"/>
             </li>
             <li class="ui-field-contain" >
-                <label for="clusID">Cluster ID <span style="font-size:11px;">(2 digit)</span></label>                	
+                <label for="clusID">Cluster ID</label>                	
                     <input type="number" id="clusID" name="clusID" onblur="social_map_id()"/>
             </li>
             <li class="ui-field-contain" >
@@ -242,27 +242,22 @@
                     </tr>
             		<tr>
                         <td width="70%" style="vertical-align:middle;">Rich</td>
-                        <td width="30%"><input type="number" id="rich" name="rich" onblur="totalhh()" /></td>
+                        <td width="30%"><input type="number" id="rich" name="rich" /></td>
                         <td width="5" align="left">&nbsp;</td>
                     </tr>
                     <tr>
                         <td width="70%" style="vertical-align:middle;">Middle</td>
-                        <td width="30%"><input type="number" id="middle" name="middle" onblur="totalhh()"/></td>
+                        <td width="30%"><input type="number" id="middle" name="middle" /></td>
                         <td width="5" align="left">&nbsp;</td>
                     </tr>
                     <tr>
                         <td width="70%" style="vertical-align:middle;">Poor</td>
-                        <td width="30%"><input type="number" id="poor" name="poor" onblur="totalhh()"/></td>
+                        <td width="30%"><input type="number" id="poor" name="poor" /></td>
                         <td width="5" align="left">&nbsp;</td>
                     </tr>
                     <tr>
                         <td width="70%" style="vertical-align:middle;">Extreme Poor</td>
-                        <td width="30%"><input type="number" id="exPoor" name="exPoor" onblur="totalhh()"/></td>
-                        <td width="5" align="left">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td width="70%" style="vertical-align:middle;">Total Number of HH </td>
-                        <td width="30%"><input type="number" id="TotalHh" name="TotalHh"  readonly="readonly" style="background-color:#EEEEEE;"/></td>
+                        <td width="30%"><input type="number" id="exPoor" name="exPoor" /></td>
                         <td width="5" align="left">&nbsp;</td>
                     </tr>
                 </table>                    
@@ -306,11 +301,11 @@
                         <td width="30%"><input type="number" id="unhyTub" name="unhyTub" /></td>
                         <td width="5" align="left">&nbsp;</td>
                     </tr>
-                    <!--<tr>
+                    <tr>
                         <td width="70%" style="vertical-align:middle;">No Tubewell</td>
                         <td width="30%"><input type="number" id="noTub" name="noTub" /></td>
                         <td width="5" align="left">&nbsp;</td>
-                    </tr>-->
+                    </tr>
                 </table>                    
             </li>
             
@@ -341,7 +336,6 @@
                         <td width="70%" style="vertical-align:middle;">ODF Status of Community</td>
                         <td width="30%">
                             <select id="odfStatus" name="odfStatus" data-native-menu="false">
-                                <option value="0">Select</option>
                                 <option value="Yes">Yes</option>
                                 <option value="No">No</option>
                             </select>
@@ -357,10 +351,9 @@
                     	<td colspan="3" ><strong>WASH Committee information</strong></td>
                     </tr>
             		<tr>
-                        <td width="70%" style="vertical-align:middle;">WASH Committee Exist</td>
+                        <td width="70%" style="vertical-align:middle;">WASH Committee Exits</td>
                         <td width="30%">
                             <select id="commExit" name="commExit" data-native-menu="false" onchange="washCommitt()">
-                                <option value="0">Select</option>
                                 <option value="Yes">Yes</option>
                                 <option value="No">No</option>
                             </select>
@@ -371,7 +364,6 @@
                         <td width="70%" style="vertical-align:middle;">WASH Committee Functional</td>
                         <td width="30%">
                             <select id="commFunc" name="commFunc" data-native-menu="false">
-                                <option value="0">Select</option>
                                 <option value="Yes">Yes</option>
                                 <option value="No">No</option>
                             </select>
@@ -381,7 +373,7 @@
                 </table>                    
             </li>           
             
-            <li class="ui-field-contain" id="washCommmember">
+            <li class="ui-field-contain" >
             	<table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" id="beneficiaryCount" style="cell-spacing:0px;"  data-role="table" data-theme="d"  data-mode="display:none">
                     <tr valign="middle">
                     	<td colspan="3" ><strong>WASH Committee member</strong></td>
@@ -529,9 +521,7 @@
         <div class="sucChk" style="color:#00CA00;"></div>
         <br/>
 		<br/>
-        <a data-role="button" id="btn_submit" onClick="dataSubmit();" class="ui-btn" >Submit</a>
-        <a data-role="button" id="btn_new_socialmap" onClick="addNewSocialMap();" class="ui-btn" >Add New Social Mapping</a>
-        <a data-role="button" id="btn_socialmap_home" onClick="socialMapHome();" class="ui-btn" >Go To Home</a> 
+        <a data-role="button" id="btn_submit" onClick="dataSubmit();" class="ui-btn" >Submit</a> 
 		<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         
     </div>
@@ -564,7 +554,7 @@
             </table>
             
             <li class="ui-field-contain">
-                <label for="ben_ward">Ward No</label>
+                <label for="ben_ward">Ward</label>
                 <select name="ben_ward" id="ben_ward" data-native-menu="false"  onblur="social_map_id()" onchange="cluster('bene')" >
                     <option value="0">Ward No</option>
                 </select>           
@@ -588,7 +578,7 @@
                     <input type="number" id="ben_socialMapID" name="ben_socialMapID" onblur="joinSocialID()"/>
             </li>-->
             <li class="ui-field-contain" >
-                <label for="ben_hh_serial">HH Serial <span style="font-size:11px;">(3 digit)</span></label>
+                <label for="ben_hh_serial">HH Serial</label>
                     <input type="number" id="ben_hh_serial" name="ben_hh_serial" onblur="social_map_id()"/>
             </li>            
 		</ul>
@@ -608,26 +598,7 @@
     
     <div data-role="content" >             
         <ul data-role="listview" data-inset="true">
-            <table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" style="cell-spacing:0px; font-size:10px"  data-role="table" data-theme="d"  data-mode="display:none">
-                <tr style="background-color:#E9E9E9">
-                    <td >Division :</td>
-                    <td ><div id="divi_ben_2"></div></td>
-                    <td >District :</td>
-                    <td ><div id="dis_ben_2"></div></td>
-                </tr>
-                <tr style="background-color:#E9E9E9">
-                    <td >Upazila :</td>
-                    <td ><div id="upaz_ben_2"></div></td>
-                    <td >Union :</td>
-                    <td ><div id="uni_ben_2"></div></td>
-                </tr>
-                <tr style="background-color:#E9E9E9">
-                    <td >Ward No :</td>
-                    <td ><div id="wardNo_ben_2"></div></td>
-                    <td >Cluster :</td>
-                    <td ><div id="cLuster_ben_2"></div></td>
-                </tr>
-            </table> 
+            <li style="background-color:#F2F2F2;" class="auto_break"><strong></strong> </li>  
             <li class="ui-field-contain" >
                 <label for="ben_hh_id">HH ID</label>
                     <input type="text" id="ben_hh_id" name="ben_hh_id" readonly="readonly" style="background-color:#F9F9F9"/>
@@ -639,16 +610,14 @@
             <li class="ui-field-contain" >
                 <label for="ben_hh_head_gender">HH Head Gender</label>                	
                     <select id="ben_hh_head_gender" name="ben_hh_head_gender" data-native-menu="false">
-                    	<option value="0">Select HH Head Gender</option>
-                        <option value="Male">Male</option>
+                    	<option value="Male">Male</option>
                         <option value="Female">Female</option>
                     </select>
             </li>
             <li class="ui-field-contain" >
                 <label for="ben_eco_condition">Economic Condition</label>                	
                     <select id="ben_eco_condition" name="ben_eco_condition" data-native-menu="false">
-                    	<option value="0">Select Economic Condition</option>
-                        <option value="Rich">A: Rich</option>
+                    	<option value="Rich">A: Rich</option>
                         <option value="Middle">B: Middle Class</option>
                         <option value="Poor">C: Poor</option>
                         <option value="Exterme Poor">D: Exterme Poor</option>
@@ -752,12 +721,9 @@
                 </table>
             </li>
 		</ul>
-                         
-        <br />  
-    <a data-role="button" id="btn_new_ben" onClick="addNewBen();" class="ui-btn" >Add New Beneficiary</a> 
-    <a data-role="button" id="btn_ben_service" onClick="services_ben();" class="ui-btn" >Asign Services</a>         
-    <a data-role="button" id="btn_ben_submit" onClick="benDataSubmit();" class="ui-btn" >Submit</a>
-    <a data-role="button" id="btn_ben_home" onClick="benGoToHome();" class="ui-btn" >Go To Home</a>
+                 
+    <!--<a data-role="button" onclick="ben_planbdData2Next()" href="#" data-transition="slide" >Next</a>-->
+    <a data-role="button" id="btn_ben_submit" onClick="benDataSubmit();" class="ui-btn" >Submit</a> 
         <div class="errorChk" style="color:#F00;"></div>
         <div class="sucChk" style="color:#00CA00;"></div>
             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
@@ -765,11 +731,124 @@
 </div>
 
 
-<div data-role="page" data-theme="c" id="service_page" style="overflow:scroll;">
+<!--<div data-role="page" data-theme="c" id="ben_inPhoto" style="overflow:scroll" >
+    <div data-theme="c" data-role="header" data-position="fixed" >
+    <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
+        <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
+        <h3>BENEFICIARY</h3>
+  </div>
+    <div data-role="content">       
+       
+        <a data-role="button" id="btn_1_take_pic_ben" onClick="getAchivementImage1_ben();" class="ui-btn" >Take Picture 1</a>       
+        <img src="" width="128" height="128" alt="Image1" id="myImageA_ben" />        
+        <input name="achPhoto_ben" id="achPhoto_ben" value=""  type="hidden">
+        
+        <a data-role="button" id="btn_2_take_pic" onClick="getAchivementImage2_ben();" class="ui-btn" >Take Picture 2</a>       
+        <img src="" width="128" height="128" alt="Image2" id="myImage2A_ben" />
+        <input name="achPhoto_2_ben" id="achPhoto_2_ben" value=""  type="hidden">
+        
+        <input name="ach_lat_ben" id="ach_lat_ben" value=""  type="hidden">
+        <input name="ach_long_ben" id="ach_long_ben" value=""  type="hidden">
+        <a data-role="button" id="btn_ach_lat_long_ben" onClick="getLocationInfoAch_ben();" class="ui-btn" >Confirm Location</a>
+        
+		<div class="errorChk" style="color:#F00;"></div>
+        <div class="sucChk" style="color:#00CA00;"></div>
+        <br/>
+		<br/>
+        <a data-role="button" id="btn_ben_submit" onClick="benDataSubmit();" class="ui-btn" >Submit</a> 
+		<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        
+    </div>
+  </div>-->
+<!----===========-- end-----==============--->
+
+<!--=============Sanitation================-->
+<div data-role="page" data-theme="c" id="san_first_page" style="overflow:scroll;">
     <div data-theme="c" data-role="header" data-position="fixed" >
         <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
         <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
-        <h3>Services</h3>
+        <h3>SANITATION/HWF/WP</h3>
+    </div>
+    
+    <div data-role="content" >             
+        <ul data-role="listview" data-inset="true">
+        	<table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" style="cell-spacing:0px; font-size:10px"  data-role="table" data-theme="d"  data-mode="display:none">
+                <tr style="background-color:#E9E9E9">
+                    <td >Division :</td>
+                    <td ><div id="divi_san"></div></td>
+                    <td >District :</td>
+                    <td ><div id="dis_san"></div></td>
+                </tr>
+                <tr style="background-color:#E9E9E9">
+                    <td >Upazila :</td>
+                    <td ><div id="upaz_san"></div></td>
+                    <td >Union :</td>
+                    <td ><div id="uni_san"></div></td>
+                </tr>
+            </table>
+            <li class="ui-field-contain">
+                <label for="san_ward">Select Ward</label>               
+                <select name="san_ward" id="san_ward" data-native-menu="false">
+                    <option value="">Ward No</option> 
+                </select>	
+            </li>            
+		</ul>
+                 
+    <a data-role="button" onclick="san_planbdData1Next()" href="#" data-transition="slide" >Next</a>
+        <div class="errorChk"></div>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    </div>
+</div>
+
+
+<div data-role="page" data-theme="c" id="san_second_page" style="overflow:scroll;">
+    <div data-theme="c" data-role="header" data-position="fixed" >
+        <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
+        <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
+        <h3>SANITATION/HWF/WP</h3>
+    </div>
+    
+    <div data-role="content" >             
+        <ul data-role="listview" data-inset="true">
+        	<table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" style="cell-spacing:0px; font-size:10px"  data-role="table" data-theme="d"  data-mode="display:none">
+                <tr style="background-color:#E9E9E9">
+                    <td >Division :</td>
+                    <td ><div id="divi_san_w"></div></td>
+                    <td >District :</td>
+                    <td ><div id="dis_san_w"></div></td>
+                </tr>
+                <tr style="background-color:#E9E9E9">
+                    <td >Upazila :</td>
+                    <td ><div id="upaz_san_w"></div></td>
+                    <td >Union :</td>
+                    <td ><div id="uni_san_w"></div></td>
+                </tr>
+                <tr style="background-color:#E9E9E9">
+                    <td >Ward:</td>
+                    <td ><div id="ward_san_w"></div></td>
+                    <td > </td>
+                    <td ></td>
+                </tr>
+            </table>
+            <li class="ui-field-contain" style="margin-bottom:15px;">
+                <label for="clusterIDName">Select Cluster</label>
+                <select name="clusterIDName" id="clusterIDName" data-native-menu="false">
+                    <option value="0">Select Cluster</option>
+                </select>                	
+        	</li>  
+		</ul>    
+        <a data-role="button" onclick="clusterData()" href="#" data-transition="slide" >Service to Beneficiary</a>
+        <div class="errorChk"></div>
+            <br/><br/><br/><br/><br/><br/><br/><br/>
+    </div>
+</div>
+
+
+<div data-role="page" data-theme="c" id="san_three_page" style="overflow:scroll;">
+    <div data-theme="c" data-role="header" data-position="fixed" >
+        <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
+        <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
+        <h3>SANITATION/HWF/WP</h3>
     </div>
     
     <div data-role="content" >       
@@ -795,17 +874,15 @@
                 </tr>
             </table>
 		</ul>
-        <!-- style="background-color:#66ffb3;"
-            style="background-color:#00cccc;"-->
         <ul data-role="listview" data-inset="true" >
-            <li><a id="sanitationBtn"  href="#" onclick="san('san')" data-transition="slide">Sanitaion</a></li>
+            <li><a style="background-color:#66ffb3;" href="#" onclick="san('san')" data-transition="slide">Sanitaion</a></li>
         </ul>    
         <ul data-role="listview" data-inset="true">
-            <li><a id="hwfBtn"  href="#" onclick="wwf('wwf')" data-transition="slide">HWF</a></li>
+            <li><a style="background-color:#00cccc;" href="#" onclick="wwf('wwf')" data-transition="slide">HWF</a></li>
         </ul>
-        
-        <a data-role="button" id="btn_new_ben_ser" onClick="addNewBen();" class="ui-btn" >Add New Beneficiary</a>      
-        <a data-role="button" id="btn_ben_home_ser" onClick="benGoToHome();" class="ui-btn" >Go To Home</a>
+        <ul data-role="listview" data-inset="true">
+            <li><a style="background-color:#ff80bf;" href="#" onclick="wp('wp')" data-transition="slide">WP</a></li>
+        </ul>  
               
         <div class="errorChk"></div>
             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
@@ -815,14 +892,14 @@
 
 
 
-<div data-role="page" data-theme="c" id="san_page" style="overflow:scroll;">
+<div data-role="page" data-theme="c" id="san_four_page" style="overflow:scroll;">
     <div data-theme="c" data-role="header" data-position="fixed" >
         <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
         <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
         <h3>SANITATION</h3>
     </div>
     
-    <div data-role="content" >             
+    <div data-role="content" style="background-color:#66ffb3">             
          <ul data-role="listview" data-inset="true" >
          	<table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" style="cell-spacing:0px; font-size:10px"  data-role="table" data-theme="d"  data-mode="display:none">
                 <tr style="background-color:#E9E9E9">
@@ -845,16 +922,16 @@
                 </tr>
             </table>
             <li style="background-color:#F2F2F2;" class="auto_break"><strong>Sanitation Point Details</strong> </li>
-            <!--<li class="ui-field-contain" >
+            <li class="ui-field-contain" >
                 <label for="san_hhSerail">HH Name</label>
                 <select name="san_hhSerail" id="san_hhSerail" data-native-menu="false">
                     <option value="0">Select HH</option>
                 </select>                	
-        	</li>-->
+        	</li>
             <li class="ui-field-contain">
                 <label for="san_lat_type">Type of Latrine Provided</label>               
                 <select name="san_lat_type" id="san_lat_type" data-native-menu="false">
-                    <option value="0">Select Type of Latrine Provided</option>
+                    <option value="0">Select</option>
                     <option value="Offset Pit">Offset Pit</option>
                     <option value="Water Sealed Pit">Water Sealed Pit</option>
                     <option value="Pit Latrine with Sato Pan">Pit Latrine with Sato Pan</option>
@@ -864,7 +941,6 @@
             <li class="ui-field-contain">
                 <label for="san_act_type">Type of Activity</label>               
                 <select name="san_act_type" id="san_act_type" data-native-menu="false">
-                    <option value="0">Select Type of Activity</option>
                     <option value="New">New</option>
                     <option value="Renovation">Renovation</option>
                 </select>	
@@ -872,7 +948,6 @@
             <li class="ui-field-contain">
                 <label for="san_subsidized">Subsidized</label>               
                 <select name="san_subsidized" id="san_subsidized" data-native-menu="false">
-                    <option value="0">Select Subsidized</option>
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
                 </select>	
@@ -910,9 +985,6 @@
         <br/>
 		<br/>
         <a data-role="button" id="btn_san_submit" onClick="sanDataSubmit();" class="ui-btn" >Submit</a> 
-        <a data-role="button" id="btn_new_ben_san" onClick="addNewBen();" class="ui-btn" >Add New Beneficiary</a> 
-        <a data-role="button" id="btn_ben_service_san" onClick="services_ben();" class="ui-btn" >Asign Services</a>      
-        <a data-role="button" id="btn_ben_home_san" onClick="benGoToHome();" class="ui-btn" >Go To Home</a>
 		<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         
     </div>
@@ -926,7 +998,7 @@
         <h3>HWF</h3>
     </div>
     
-    <div data-role="content" >             
+    <div data-role="content" style="background-color:#00cccc;">             
          <ul data-role="listview" data-inset="true">
          	<table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" style="cell-spacing:0px; font-size:10px"  data-role="table" data-theme="d"  data-mode="display:none">
                 <tr style="background-color:#E9E9E9">
@@ -949,16 +1021,16 @@
                 </tr>
             </table>
             <li style="background-color:#F2F2F2;" class="auto_break"><strong>Handwashing Facility Details</strong> </li>
-            <!--<li class="ui-field-contain" >
+            <li class="ui-field-contain" >
                 <label for="hwf_hhSerail">HH Name</label>
                 <select name="hwf_hhSerail" id="hwf_hhSerail" data-native-menu="false">
                     <option value="0">Select HH</option>
                 </select>                	
-        	</li>-->
+        	</li>
             <li class="ui-field-contain">
                 <label for="hw_type">Type of Handwash Facilities</label>               
                 <select name="hw_type" id="hw_type" data-native-menu="false">
-                    <option value="0">Select Type of Handwash Facilities</option>
+                    <option value="0">Select</option>
                     <option value="1">Water tank with tap</option>
                     <option value="2">Barrel / Drum with pipe line  to Spout / Tap</option>
                     <option value="3">Bucket with Tap</option>
@@ -1010,52 +1082,113 @@
         <div class="sucChk" style="color:#00CA00;"></div>
         <br/>
 		<br/>
-        <a data-role="button" id="btn_wwf_submit" onClick="wwfDataSubmit();" class="ui-btn" >Submit</a>
-        <a data-role="button" id="btn_new_ben_hwf" onClick="addNewBen();" class="ui-btn" >Add New Beneficiary</a> 
-        <a data-role="button" id="btn_ben_service_hwf" onClick="services_ben();" class="ui-btn" >Asign Services</a>      
-        <a data-role="button" id="btn_ben_home_hwf" onClick="benGoToHome();" class="ui-btn" >Go To Home</a> 
+        <a data-role="button" id="btn_wwf_submit" onClick="wwfDataSubmit();" class="ui-btn" >Submit</a> 
 		<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         
     </div>
   </div>
-
-
-<!--=============Sanitation================-->
-<div data-role="page" data-theme="c" id="san_first_page" style="overflow:scroll;">
+  
+<!--============WP=============-->  
+<div data-role="page" data-theme="c" id="wp_four_page" style="overflow:scroll;">
     <div data-theme="c" data-role="header" data-position="fixed" >
         <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
         <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
-        <h3>Water Point</h3>
+        <h3>WP</h3>
     </div>
     
-    <div data-role="content" >             
-        <ul data-role="listview" data-inset="true">
-        	<table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" style="cell-spacing:0px; font-size:10px"  data-role="table" data-theme="d"  data-mode="display:none">
+    <div data-role="content" style="background-color:#ff80bf" id="refresh_wp">             
+         <ul data-role="listview" data-inset="true">         	
+            <table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" style="cell-spacing:0px; font-size:10px"  data-role="table" data-theme="d"  data-mode="display:none">
                 <tr style="background-color:#E9E9E9">
                     <td >Division :</td>
-                    <td ><div id="divi_san"></div></td>
+                    <td ><div id="divi_san_wp"></div></td>
                     <td >District :</td>
-                    <td ><div id="dis_san"></div></td>
+                    <td ><div id="dis_san_wp"></div></td>
                 </tr>
                 <tr style="background-color:#E9E9E9">
                     <td >Upazila :</td>
-                    <td ><div id="upaz_san"></div></td>
+                    <td ><div id="upaz_san_wp"></div></td>
                     <td >Union :</td>
-                    <td ><div id="uni_san"></div></td>
+                    <td ><div id="uni_san_wp"></div></td>
+                </tr>
+                <tr style="background-color:#E9E9E9">
+                    <td >Ward:</td>
+                    <td ><div id="ward_san_wp"></div></td>
+                    <td > Cluster</td>
+                    <td ><div id="cluster_san_wp"></div></td>
                 </tr>
             </table>
+            <li class="ui-field-contain" >
+                <label for="wp_hhSerail">HH Name</label>
+                <select name="wp_hhSerail" id="wp_hhSerail" data-native-menu="false">
+                    <option value="0">Select HH</option>
+                </select>                	
+        	</li>
             <li class="ui-field-contain">
-                <label for="san_ward">Select Ward</label>               
-                <select name="san_ward" id="san_ward" data-native-menu="false" onchange="clusterIDNAme()">
-                    <option value="">Ward No</option> 
+                <label for="wp_serial_enlist">WP Serial</label>               
+                <select name="wp_serial_enlist" id="wp_serial_enlist" data-native-menu="false">
+                    <option value="0">WP Serial</option> 
                 </select>	
             </li>
-            <li class="ui-field-contain" >
-                <label for="clusterIDName">Select Cluster</label>
-                <select name="clusterIDName" id="clusterIDName" data-native-menu="false">
-                    <option value="0">Select Cluster</option>
-                </select>                	
-        	</li>  
+            <li class="ui-field-contain">
+                <label for="wp_tub_pre">Tubewell Located on Premises</label>               
+                <select name="wp_tub_pre" id="wp_tub_pre" data-native-menu="false">
+                    <option value="0">Select</option>
+                    <option value="1">Tubewell located on Premises</option>
+                    <option value="2">Require less than 30 min to fetch water from distant Tubewell</option>
+                    <option value="3">Require more than 30 min to fetch water from distant Tubewell</option>
+                </select>	
+            </li>
+             <li class="ui-field-contain">
+                <label for="sps_family">Sponsorship Family</label>               
+                <select name="sps_family" id="sps_family" data-native-menu="false">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>	
+            </li>    
+		</ul>
+    <a data-role="button" id="btn_wp_enlist_submit" onClick="wpEnlistDataSubmit();" class="ui-btn" >Submit</a> 
+       <div class="errorChk" style="color:#F00;"></div>
+        <div class="sucChk" style="color:#00CA00;"></div>
+        <br /><br />
+        
+        <li class="ui-field-contain" >
+            <a style="background-color:#33ffcc;text-align:center;" data-role="button" onclick="wpList()" href="#" data-transition="slide" >Water Point List</a>
+        </li>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    </div>
+</div>
+
+
+<div data-role="page" data-theme="c" id="wp_enlistment" style="overflow:scroll;">
+    <div data-theme="c" data-role="header" data-position="fixed" >
+        <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
+        <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
+        <h3>WP</h3>
+    </div>
+    
+    <div data-role="content" >             
+         <ul data-role="listview" data-inset="true">  
+         	<!--<table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" style="cell-spacing:0px; font-size:10px"  data-role="table" data-theme="d"  data-mode="display:none">
+                <tr style="background-color:#E9E9E9">
+                    <td >Division :</td>
+                    <td ><div id="divi_en"></div></td>
+                    <td >District :</td>
+                    <td ><div id="dis_en"></div></td>
+                </tr>
+                <tr style="background-color:#E9E9E9">
+                    <td >Upazila :</td>
+                    <td ><div id="upaz_en"></div></td>
+                    <td >Union :</td>
+                    <td ><div id="uni_en"></div></td>
+                </tr>
+                <tr style="background-color:#E9E9E9">
+                    <td >Ward:</td>
+                    <td ><div id="ward_en"></div></td>
+                    <td > Cluster</td>
+                    <td ><div id="cluster_en"></div></td>
+                </tr>
+            </table>-->       	
             <li style="background-color:#F2F2F2;" class="auto_break"><strong>Water Point Details</strong> </li>
             <li class="ui-field-contain">
             	<label for="wp_serial">WP Serial </label>
@@ -1063,12 +1196,11 @@
             </li> 
             <li class="ui-field-contain">
             	<label for="wp_org_id">Organization ID</label>
-                <input type="text" id="wp_org_id" name="wp_org_id"/>
+                <input type="number" id="wp_org_id" name="wp_org_id"/>
             </li> 
             <li class="ui-field-contain">
                 <label for="wp_act_type">Type of Activity</label>               
                 <select name="wp_act_type" id="wp_act_type" data-native-menu="false">
-                	<option value="0">Select Type of Activity</option>
                     <option value="New">New</option>
                     <option value="Renovation">Renovation</option>
                 </select>	
@@ -1076,7 +1208,7 @@
             <li class="ui-field-contain">
                 <label for="wp_technology">Water Point Technology </label>               
                 <select name="wp_technology" id="wp_technology" data-native-menu="false">
-                    <option value="0">Select Water Point Technology</option>
+                    <option value="0">Select</option>
                     <option value="1">Deep Hand Tubewell</option>
                     <option value="2">Deep Set Pump</option>
                     <option value="3">Shallow Tubewell</option>
@@ -1087,7 +1219,6 @@
             <li class="ui-field-contain">
                 <label for="wp_subsidized">Subsidized</label>               
                 <select name="wp_subsidized" id="wp_subsidized" data-native-menu="false">
-                    <option value="0">Select Subsidized</option>
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
                 </select>	
@@ -1097,11 +1228,10 @@
                 <input type="date" id="wp_com_date" name="wp_com_date"/>
             </li> 
             
-            <!--<li style="background-color:#F2F2F2;" class="auto_break"><strong>Water Quality</strong> </li>-->
+            <li style="background-color:#F2F2F2;" class="auto_break"><strong>Water Quality</strong> </li>
             <li class="ui-field-contain">
                 <label for="wp_wq">Water Quality Test Type</label>               
                 <select name="wp_wq" id="wp_wq" data-native-menu="false">
-                	<option value="0">Select Water Quality Test Type</option>
                     <option value="Arsenic">Arsenic</option>
                     <option value="Bacterial">Bacterial</option>
                     <option value="Both Arsenic And Bacteria">Both Arsenic & Bacteria</option>
@@ -1114,107 +1244,24 @@
             <li class="ui-field-contain">
                 <label for="wp_wq_result">Result Water Quality Test</label>               
                 <select name="wp_wq_result" id="wp_wq_result" data-native-menu="false">
-                    <option value="0">Select Result Water Quality Test</option>
                     <option value="Potable">Potable</option>
                     <option value="Not Potable">Not Potable</option>
                     <option value="Not Undertaken Yet">Not Undertaken Yet</option>
                 </select>	
             </li>
-                                    
 		</ul>
-                 
-    <a data-role="button" onclick="wp1Next()" href="#" data-transition="slide" >Next</a>
+    <a data-role="button" onclick="wp_planbdData2Next()" href="#" data-transition="slide" >Next</a>
         <div class="errorChk"></div>
             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
     </div>
 </div>
 
 
-<div data-role="page" data-theme="c" id="san_second_page" style="overflow:scroll;">
-    <div data-theme="c" data-role="header" data-position="fixed" >
-        <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
-        <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
-        <h3>Water Point</h3>
-    </div>
-    
-    <div data-role="content" >             
-        <ul data-role="listview" data-inset="true">
-        	<table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" style="cell-spacing:0px; font-size:10px"  data-role="table" data-theme="d"  data-mode="display:none">
-                <tr style="background-color:#E9E9E9">
-                    <td >Division :</td>
-                    <td ><div id="divi_san_w"></div></td>
-                    <td >District :</td>
-                    <td ><div id="dis_san_w"></div></td>
-                </tr>
-                <tr style="background-color:#E9E9E9">
-                    <td >Upazila :</td>
-                    <td ><div id="upaz_san_w"></div></td>
-                    <td >Union :</td>
-                    <td ><div id="uni_san_w"></div></td>
-                </tr>
-                <tr style="background-color:#E9E9E9">
-                    <td >Ward:</td>
-                    <td ><div id="ward_san_w"></div></td>
-                    <td >Cluster</td>
-                    <td ><div id="cluster_san_w"></div></td>
-                </tr>
-            </table>
-            
-            <li class="ui-field-contain" >
-                <label for="wp_hhSerail">HH Name</label>
-                <select name="wp_hhSerail" id="wp_hhSerail" data-native-menu="false">
-                    <option value="0">Select HH</option>
-                </select>                	
-        	</li>
-            <li class="ui-field-contain">
-                <label for="wp_tub_pre">Tubewell Located on Premises</label>               
-                <select name="wp_tub_pre" id="wp_tub_pre" data-native-menu="false">
-                    <option value="0">Select TW Located on Premises</option>
-                    <option value="1">On Premises</option>
-                    <option value="2">&#8805; 30 min</option>
-                    <option value="3">&#62; 30 min</option>
-                </select>	
-            </li>
-             <li class="ui-field-contain">
-                <label for="sps_family">Sponsorship Family</label>               
-                <select name="sps_family" id="sps_family" data-native-menu="false">
-                	<option value="0">Select Sponsorship Family</option>
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                </select>	
-            </li>
-            <li class="ui-field-contain">
-            	<input type="button" id="benAdd" value="ADD" />
-            </li>
-            <div class="errorChk" style="color:#F00;"></div>
-            </li>
-            <div style="background-color:#ccefff;">
-            <li class="ui-field-contain"> 
-                <table id="benTable" width="100%" bordercolor="#b3e7ff" border="1" cellspacing="0" cellpadding="0">
-                  <tr>
-                    <th scope="col">HH Name</th>
-                    <th scope="col">TW Location</th>
-                    <th scope="col" >SP Family</th>
-                    <th scope="col" ></th>
-                  </tr>
-                </table>
-            </li>
-            </div>
-		</ul>   
-        
-        <br /><br /><br />
-        <a data-role="button" onclick="clusterData()" href="#" data-transition="slide" >Next</a>
-        <div class="errorChk"></div>
-            <br/><br/><br/><br/><br/><br/><br/><br/>
-    </div>
-</div>
-  
-
 <div data-role="page" data-theme="c" id="wp_inPhoto" style="overflow:scroll" >
     <div data-theme="c" data-role="header" data-position="fixed" >
     <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
         <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
-        <h3>Water Point</h3>
+        <h3>WP</h3>
   </div>
     <div data-role="content">       
        
@@ -1230,11 +1277,9 @@
         <div class="sucChk" style="color:#00CA00;"></div>
         <br/>
 		<br/>
-        <a data-role="button" id="btn_wp_submit" onClick="wpDataSubmit();" class="ui-btn" >Submit</a>
-        <a data-role="button" id="btn_addNew_wp" onClick="addNewWP();" class="ui-btn" >Add New Water Point</a> 
-        <a data-role="button" id="btn_home_wp" onClick="benGoToHome();" class="ui-btn" >Go To Home</a> 
+        <a data-role="button" id="btn_wp_submit" onClick="wpDataSubmit();" class="ui-btn" >Submit</a> 
 		<br/>
-        
+        <a  style="background-color:#FF80BF;" data-role="button" id="" onClick="return_wp();" class="ui-btn" >Add Beneficiary to WP</a> 
         
 		<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         
