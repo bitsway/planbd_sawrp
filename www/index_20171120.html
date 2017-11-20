@@ -103,7 +103,7 @@
             </ul>
     </div>
     
-    <div data-theme="c" data-role="footer" data-position="fixed" style="font-size:12px;background-color:#CCC;" align="center" >mReporting 20171120</div><!------/footer 20150401-20150309 -->
+    <div data-theme="c" data-role="footer" data-position="fixed" style="font-size:12px;background-color:#CCC;" align="center" >mReporting 20171119</div><!------/footer 20150401-20150309 -->
     
     <div data-role="panel" id="leftpanel" data-position="left" data-display="overlay" data-theme="c">
         <div align="center"></div>
@@ -182,7 +182,7 @@
             <li class="ui-field-contain">
                 <label for="ward">Ward No</label>               
                 <select name="ward" id="ward" data-native-menu="false" onblur="social_map_id()">
-                    <option value="0">Select Ward No</option>
+                    <option value="">Select Ward No</option>
                     <option value="01">01</option>
                     <option value="02">02</option>
                     <option value="03">03</option>
@@ -530,7 +530,7 @@
         <br/>
 		<br/>
         <a data-role="button" id="btn_submit" onClick="dataSubmit();" class="ui-btn" >Submit</a>
-        <!--<a data-role="button" id="btn_new_socialmap" onClick="addNewSocialMap();" class="ui-btn" >Add New Social Mapping</a>-->
+        <a data-role="button" id="btn_new_socialmap" onClick="addNewSocialMap();" class="ui-btn" >Add New Social Mapping</a>
         <a data-role="button" id="btn_socialmap_home" onClick="socialMapHome();" class="ui-btn" >Go To Home</a> 
 		<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         
@@ -755,7 +755,7 @@
                          
         <br />  
     <a data-role="button" id="btn_new_ben" onClick="addNewBen();" class="ui-btn" >Add New Beneficiary</a> 
-    <a data-role="button" id="btn_ben_service" onClick="services_ben();" class="ui-btn" >Assign Services</a>         
+    <a data-role="button" id="btn_ben_service" onClick="services_ben();" class="ui-btn" >Asign Services</a>         
     <a data-role="button" id="btn_ben_submit" onClick="benDataSubmit();" class="ui-btn" >Submit</a>
     <a data-role="button" id="btn_ben_home" onClick="benGoToHome();" class="ui-btn" >Go To Home</a>
         <div class="errorChk" style="color:#F00;"></div>
@@ -998,9 +998,9 @@
         <img src="" width="128" height="128" alt="Image1" id="myImageA_wwf" />        
         <input name="achPhoto_wwf" id="achPhoto_wwf" value=""  type="hidden">
         
-        <!--<a data-role="button" id="btn_2_take_pic_wwf" onClick="getAchivementImage2_wwf();" class="ui-btn" >Take Picture 2</a>       
+        <a data-role="button" id="btn_2_take_pic_wwf" onClick="getAchivementImage2_wwf();" class="ui-btn" >Take Picture 2</a>       
         <img src="" width="128" height="128" alt="Image2" id="myImage2A_wwf" />
-        <input name="achPhoto_2_wwf" id="achPhoto_2_wwf" value=""  type="hidden">-->
+        <input name="achPhoto_2_wwf" id="achPhoto_2_wwf" value=""  type="hidden">
         
         <input name="ach_lat_wwf" id="ach_lat_wwf" value=""  type="hidden">
         <input name="ach_long_wwf" id="ach_long_wwf" value=""  type="hidden">
@@ -1045,9 +1045,9 @@
                 </tr>
             </table>
             <li class="ui-field-contain">
-                <label for="san_ward">Select Ward No</label>               
+                <label for="san_ward">Select Ward</label>               
                 <select name="san_ward" id="san_ward" data-native-menu="false" onchange="clusterIDNAme()">
-                    <option value="0">Ward No</option> 
+                    <option value="">Ward No</option> 
                 </select>	
             </li>
             <li class="ui-field-contain" >
@@ -1186,7 +1186,7 @@
             <li class="ui-field-contain">
             	<input type="button" id="benAdd" value="ADD" />
             </li>
-            <!--<div class="errorChk" style="color:#F00;"></div>-->
+            <div class="errorChk" style="color:#F00;"></div>
             </li>
             <div style="background-color:#ccefff;">
             <li class="ui-field-contain"> 
@@ -1201,9 +1201,10 @@
             </li>
             </div>
 		</ul>   
-        <div class="errorChk"></div>
-        <br /><br />
+        
+        <br /><br /><br />
         <a data-role="button" onclick="clusterData()" href="#" data-transition="slide" >Next</a>
+        <div class="errorChk"></div>
             <br/><br/><br/><br/><br/><br/><br/><br/>
     </div>
 </div>
