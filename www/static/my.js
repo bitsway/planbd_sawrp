@@ -884,6 +884,8 @@ function syncData(){
 				
 				$("#achPhoto").val("");										
 				$("#achPhoto_2").val("");
+				document.getElementById('myImageA').src = '';
+				document.getElementById('myImage2A').src = '';
 								
 				$(".sucChk").text('Successfully Submitted');
 				$(".errorChk").text("");
@@ -917,6 +919,9 @@ function socialMapHome(){
 	$("#odfStatus").val(0);
 	$("#commExit").val(0);
 	$("#commFunc").val(0);
+	
+	$("#btn_submit").show();	
+	$("#btn_socialmap_home").hide();	
 	
 	$(".errorChk").text("");
 	$(".sucChk").text("");					
@@ -1317,6 +1322,23 @@ function benGoToHome(){
 	$("#ben_hh_head_gender").val(0);
 	$("#ben_eco_condition").val(0);
 	
+	$("#btn_ben_submit").show();
+	$("#btn_new_ben").hide();
+	$("#btn_ben_service").hide();	
+	$("#btn_ben_home").hide();
+	
+	//san
+	$("#btn_san_submit").show();
+	$("#btn_new_ben_san").hide();
+	$("#btn_ben_service_san").hide();
+	$("#btn_ben_home_san").hide();
+	
+	//hwf
+	$("#btn_wwf_submit").show();
+	$("#btn_new_ben_hwf").hide();	
+	$("#btn_ben_service_hwf").hide();
+	$("#btn_ben_home_hwf").hide();	
+	
 	$(".sucChk").text("");		
 	$(".errorChk").text("");			
 	url="#homePage";					
@@ -1552,7 +1574,7 @@ function syncDataSan(){
 				$("#ach_long_san").val(0);
 				$("#achPhoto_sanitation").val("");	
 				$("#myImageA_san").val("");		
-								
+				document.getElementById('myImageA_san').src = '';				
 				$(".sucChk").text('Successfully Submitted');
 				$(".errorChk").text("");
 				$("#btn_san_submit").hide();
@@ -1793,7 +1815,7 @@ function syncDataHwf(){
 				$("#achPhoto_wwf").val("");
 				$("#myImageA_wwf").val("");										
 				//$("#achPhoto_2_wwf").val("");
-								
+				document.getElementById('myImageA_wwf').src = '';				
 				$(".sucChk").text('Successfully Submitted');
 				$(".errorChk").text("");
 				$("#btn_wwf_submit").hide();
@@ -2150,7 +2172,8 @@ function syncDataWp() {
 				$("#ach_lat_wp").val(0);
 				$("#ach_long_wp").val(0);
 				$("#achPhoto_wp").val("");
-				$("#myImageA_wp").val("");	
+				$("#myImageA_wp").val("");
+				document.getElementById('myImageA_wp').src = '';	
 				benList='';				
 				$(".sucChk").text('Successfully Submitted');
 				$(".errorChk").text("");
