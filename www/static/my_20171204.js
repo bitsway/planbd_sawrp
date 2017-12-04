@@ -110,10 +110,10 @@ function onError_wp(error) {
    $(".errorChk").html("Failed to Confirmed Location.");
 }
 //---- online
-var apipath="http://w02.yeapps.com/planbd_sawrp/syncmobile_20171204/";
+var apipath="http://w02.yeapps.com/planbd_sawrp/syncmobile_20171120/";
 
 //--- local
-//var apipath="http://127.0.0.1:8000/planbd_sawrp/syncmobile_20171204/";
+//var apipath="http://127.0.0.1:8000/planbd_sawrp/syncmobile_20171120/";
 
 url ="";
 var hhIDList=''
@@ -148,100 +148,40 @@ $(document).ready(function(){
 			$("#btn_ben_service_hwf").hide();
 			$("#btn_ben_home_hwf").hide();
 			//wp
+			$("#btn_addNew_wp").hide();
 			$("#btn_home_wp").hide();	
-			
-			//===========socialmap
-			var wardName='<label for="ward">Ward No</label><select name="ward" id="ward" data-native-menu="false" onblur="social_map_id()"><option value="0">Select Ward No</option><option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option><option value="09">09</option></select>'	
-			$("#wardName").html(wardName);
-			
-			var odfStatusName='<select id="odfStatus" name="odfStatus" data-native-menu="false"><option value="0">Select</option><option value="Yes">Yes</option><option value="No">No</option></select>'
-			$("#odfStatusName").html(odfStatusName);
-			
-			var commExitName='<select id="commExit" name="commExit" data-native-menu="false" onchange="washCommitt()"><option value="0">Select</option><option value="Yes">Yes</option><option value="No">No</option></select>'
-			$("#commExitName").html(commExitName);
-			
-			var commFuncName='<select id="commFunc" name="commFunc" data-native-menu="false"><option value="0">Select</option><option value="Yes">Yes</option><option value="No">No</option></select>'
-			$("#commFuncName").html(commFuncName);
-			//===========beneficary
-			var benWardNo='<label for="ben_ward">Ward No</label><select name="ben_ward" id="ben_ward" data-native-menu="false"  onblur="social_map_id()" onchange="cluster()" ><option value="0">Ward No</option></select>'   
-			$("#benWardNo").html(benWardNo);		
-			
-			var benClusIDName='<label for="ben_clusID">Cluster ID</label><select name="ben_clusID" id="ben_clusID" data-native-menu="false" onblur="social_map_id()"><option value="0">Select Cluster</option></select>' 
-			$("#benClusIDName").html(benClusIDName);		
-			
-			var benGender='<label for="ben_hh_head_gender">HH Head Gender</label><select id="ben_hh_head_gender" name="ben_hh_head_gender" data-native-menu="false"><option value="0">Select HH Head Gender</option><option value="Male">Male</option><option value="Female">Female</option></select>'
-			$("#benGender").html(benGender);
-			
-			var benEcoCondition='<label for="ben_eco_condition">Economic Condition</label><select id="ben_eco_condition" name="ben_eco_condition" data-native-menu="false"><option value="0">Select Economic Condition</option><option value="Rich">A: Rich</option><option value="Middle">B: Middle Class</option><option value="Poor">C: Poor</option><option value="Exterme Poor">D: Exterme Poor</option></select>'
-			$("#benEcoCondition").html(benEcoCondition);
-			
-			var spsFamily_ben='<label for="sps_family">Sponsorship Family</label><select name="sps_family" id="sps_family" data-native-menu="false"><option value="0">Select Sponsorship Family</option><option value="Yes">Yes</option><option value="No">No</option></select>'
-			$("#spsFamily_ben").html(spsFamily_ben);
-			
-			//----------Sanation
-			var sanLatType_ben='<label for="san_lat_type">Type of Latrine Provided</label><select name="san_lat_type" id="san_lat_type" data-native-menu="false"><option value="0">Select Type of Latrine Provided</option><option value="Offset Pit">Offset Pit</option><option value="Water Sealed Pit">Water Sealed Pit</option><option value="Pit Latrine with Sato Pan">Pit Latrine with Sato Pan</option><option value="Shared">Shared</option></select>'
-			$("#sanLatType_ben").html(sanLatType_ben);
-			
-			var sanActType_ben='<label for="san_act_type">Type of Activity</label><select name="san_act_type" id="san_act_type" data-native-menu="false"><option value="0">Select Type of Activity</option><option value="New">New</option><option value="Renovation">Renovation</option></select>'	
-			$("#sanActType_ben").html(sanActType_ben);
-			
-			var sanSubsidized_ben='<label for="san_subsidized">Subsidized</label><select name="san_subsidized" id="san_subsidized" data-native-menu="false"><option value="0">Select Subsidized</option><option value="Yes">Yes</option><option value="No">No</option></select>'			
-			$("#sanSubsidized_ben").html(sanSubsidized_ben);
-			//----------hwf
-			var hwType_hwf='<label for="hw_type">Type of Handwash Facilities</label><select name="hw_type" id="hw_type" data-native-menu="false"><option value="0">Select Type of Handwash Facilities</option><option value="1">Water tank with tap</option><option value="2">Barrel / Drum with pipe line  to Spout / Tap</option><option value="3">Bucket with Tap</option><option value="4">30L - 50L Barrel with Tap </option><option value="5">Pitcher with Tap</option><option value="6">Jerkin/Container with Tap</option><option value="7">Tippy Tap</option><option value="8">Tube Well on Premises</option><option value="9">Sink with tap water</option><option value="10">Basins</option><option value="11">Overhead Tank</option><option value="12">Jugs </option><option value="13">Bucket with mug </option></select>'
-			$("#hwType_hwf").html(hwType_hwf);	
-			
-			//==========wp
-			var clusterIDNameWP='<label for="clusterIDName">Select Cluster</label><select name="clusterIDName" id="clusterIDName" data-native-menu="false"><option value="0">Select Cluster</option></select>'  
-			$("#clusterIDNameWP").html(clusterIDNameWP);
-			
-			var wpActType='<label for="wp_act_type">Type of Activity</label><select name="wp_act_type" id="wp_act_type" data-native-menu="false"><option value="0">Select Type of Activity</option><option value="New">New</option><option value="Renovation">Renovation</option></select>'
-			$("#wpActType").html(wpActType);
-			
-			var wpTechnology='<label for="wp_technology">Water Point Technology </label><select name="wp_technology" id="wp_technology" data-native-menu="false"><option value="0">Select Water Point Technology</option><option value="1">Deep Hand Tubewell</option><option value="2">Deep Set Pump</option><option value="3">Shallow Tubewell</option><option value="4">Semi-Deep Tubewell</option><option value="5">Rain Water Harvesting</option></select>'
-			$("#wpTechnology").html(wpTechnology);
-			
-			var wpSubsidized='<label for="wp_subsidized">Subsidized</label><select name="wp_subsidized" id="wp_subsidized" data-native-menu="false"><option value="0">Select Subsidized</option><option value="Yes">Yes</option><option value="No">No</option></select>'	
-			$("#wpSubsidized").html(wpSubsidized);
-			
-			var wpWq='<label for="wp_wq">Water Quality Test Type</label><select name="wp_wq" id="wp_wq" data-native-menu="false"><option value="0">Select Water Quality Test Type</option><option value="Arsenic">Arsenic</option><option value="Bacterial">Bacterial</option><option value="Both Arsenic And Bacteria">Both Arsenic & Bacteria</option></select>'
-			$("#wpWq").html(wpWq);
-			
-			var wpWqResult='<label for="wp_wq_result">Result Water Quality Test</label><select name="wp_wq_result" id="wp_wq_result" data-native-menu="false"><option value="0">Select Result Water Quality Test</option><option value="Potable">Potable</option><option value="Not Potable">Not Potable</option><option value="Not Undertaken Yet">Not Undertaken Yet</option></select>'	
-			$("#wpWqResult").html(wpWqResult);	
-			
-			var wpTubPre='<label for="wp_tub_pre">Tubewell Located on Premises</label><select name="wp_tub_pre" id="wp_tub_pre" data-native-menu="false"><option value="0">Select TW Located on Premises</option><option value="1">On Premises</option><option value="2">\u2266 30 min</option><option value="3">&#62; 30 min</option></select>'	
-			$("#wpTubPre").html(wpTubPre);
 			
 			//-----------
 			$("#benAdd").click(function(){
 			
 			 wp_hhSerail=$("#wp_hhSerail").val();
 			 wp_tub_pre=$("#wp_tub_pre").val();
-			 //sps_family=$("#sps_family").val();
+			 sps_family=$("#sps_family").val();
 			
 			wpHHserial=wp_hhSerail.split("-");
 			 wpHHID=wpHHserial[0]
-			 wpHHName=wpHHserial[1].replace(/%20/g," ")
+			 wpHHName=wpHHserial[1]
 			
 			if(wpHHID=='' || wpHHID==0){
 				$(".errorChk").text('Required HH Name');
 			}else if(wp_tub_pre=='' || wp_tub_pre==0){
 				$(".errorChk").text('Required Tubewell Located on Premises');
-			/*}else if(sps_family=='' || sps_family==0){
-				$(".errorChk").text('Required Sponsorship Family');*/
+			}else if(sps_family=='' || sps_family==0){
+				$(".errorChk").text('Required Sponsorship Family');
 			}else{
 				tub_pre='';
 				if(wp_tub_pre==1){
 					tub_pre='On Premises'
 				}else if(wp_tub_pre==2){
-					tub_pre='\u2266 30 min'
+					tub_pre='&#8805; 30 min'
 				}else{
 					tub_pre='&#62; 30 min'
 				}
 				
-				var i="<tr id='"+wpHHID+"'><td>"+wpHHID+"-"+wpHHName+"</td><td>"+tub_pre+"</td><td>"+'<input style="background-color:#99dfff;" type="button" onclick="rowRemove(\''+wpHHID+'\')" value="X">'+"</td></tr>"
+				var i="<tr id='"+wpHHID+"'><td>"+wpHHID+"</td><td>"+tub_pre+"</td><td>"+sps_family+"</td><td>"+'<input style="background-color:#99dfff;" type="button" onclick="rowRemove(\''+wpHHID+'\')" value="X">'+"</td></tr>"
 				
+				//alert(stuList.indexOf(stu3Id) >-1);
+				//if( stuList.indexOf(stu3Id) >-1){
 				if( hhIDList.indexOf(wpHHID) >-1 ){
 					$(".errorChk").text("HH Name Already Exit");
 				}else{
@@ -250,9 +190,9 @@ $(document).ready(function(){
 					$(".errorChk").text("");
 					
 					if(benList=="" ){
-						benList=wpHHID+","+wp_tub_pre//+","+sps_family;
+						benList=wpHHID+","+wp_tub_pre+","+sps_family;
 					}else{
-						benList +="||"+wpHHID+","+wp_tub_pre//+","+sps_family;
+						benList +="||"+wpHHID+","+wp_tub_pre+","+sps_family;
 					}
 					if(hhIDList=="" ){
 						hhIDList=wpHHID;
@@ -360,81 +300,6 @@ function syncBasic(){
 					$("#upCode").val(localStorage.up_code);
 					$("#unName").val(localStorage.un_name);						
 					$("#unCode").val(localStorage.un_code);
-					
-					
-					//===========socialmap
-					var wardName='<label for="ward">Ward No</label><select name="ward" id="ward" data-native-menu="false" onblur="social_map_id()"><option value="0">Select Ward No</option><option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option><option value="09">09</option></select>'	
-					$("#wardName").html(wardName);
-					
-					var odfStatusName='<select id="odfStatus" name="odfStatus" data-native-menu="false"><option value="0">Select</option><option value="Yes">Yes</option><option value="No">No</option></select>'
-					$("#odfStatusName").html(odfStatusName);
-					
-					var commExitName='<select id="commExit" name="commExit" data-native-menu="false" onchange="washCommitt()"><option value="0">Select</option><option value="Yes">Yes</option><option value="No">No</option></select>'
-					$("#commExitName").html(commExitName);
-					
-					var commFuncName='<select id="commFunc" name="commFunc" data-native-menu="false"><option value="0">Select</option><option value="Yes">Yes</option><option value="No">No</option></select>'
-					$("#commFuncName").html(commFuncName);
-					
-					$("#btn_socialmap_home").hide();
-					
-					//===========Beneficary
-					var benWardNo='<label for="ben_ward">Ward No</label><select name="ben_ward" id="ben_ward" data-native-menu="false"  onblur="social_map_id()" onchange="cluster()" ><option value="0">Ward No</option></select>'   
-					$("#benWardNo").html(benWardNo);
-					
-					var benClusIDName='<label for="ben_clusID">Cluster ID</label><select name="ben_clusID" id="ben_clusID" data-native-menu="false" onblur="social_map_id()"><option value="0">Select Cluster</option></select>' 
-					$("#benClusIDName").html(benClusIDName);
-					
-					var benGender='<label for="ben_hh_head_gender">HH Head Gender</label><select id="ben_hh_head_gender" name="ben_hh_head_gender" data-native-menu="false"><option value="0">Select HH Head Gender</option><option value="Male">Male</option><option value="Female">Female</option></select>'
-					$("#benGender").html(benGender);
-					
-					var benEcoCondition='<label for="ben_eco_condition">Economic Condition</label><select id="ben_eco_condition" name="ben_eco_condition" data-native-menu="false"><option value="0">Select Economic Condition</option><option value="Rich">A: Rich</option><option value="Middle">B: Middle Class</option><option value="Poor">C: Poor</option><option value="Exterme Poor">D: Exterme Poor</option></select>'
-					$("#benEcoCondition").html(benEcoCondition);
-					
-					var spsFamily_ben='<label for="sps_family">Sponsorship Family</label><select name="sps_family" id="sps_family" data-native-menu="false"><option value="0">Select Sponsorship Family</option><option value="Yes">Yes</option><option value="No">No</option></select>'
-					$("#spsFamily_ben").html(spsFamily_ben);
-					
-					$("#btn_ben_home").hide();
-					$("#btn_ben_service_san").hide();
-					$("#btn_ben_home_san").hide();
-					$("#btn_ben_service").hide();
-					$("#btn_ben_service_hwf").hide();
-					$("#btn_ben_home_hwf").hide();
-					
-					//----------Sanation
-					var sanLatType_ben='<label for="san_lat_type">Type of Latrine Provided</label><select name="san_lat_type" id="san_lat_type" data-native-menu="false"><option value="0">Select Type of Latrine Provided</option><option value="Offset Pit">Offset Pit</option><option value="Water Sealed Pit">Water Sealed Pit</option><option value="Pit Latrine with Sato Pan">Pit Latrine with Sato Pan</option><option value="Shared">Shared</option></select>'
-					$("#sanLatType_ben").html(sanLatType_ben);
-					
-					var sanActType_ben='<label for="san_act_type">Type of Activity</label><select name="san_act_type" id="san_act_type" data-native-menu="false"><option value="0">Select Type of Activity</option><option value="New">New</option><option value="Renovation">Renovation</option></select>'	
-					$("#sanActType_ben").html(sanActType_ben);
-					
-					var sanSubsidized_ben='<label for="san_subsidized">Subsidized</label><select name="san_subsidized" id="san_subsidized" data-native-menu="false"><option value="0">Select Subsidized</option><option value="Yes">Yes</option><option value="No">No</option></select>'			
-					$("#sanSubsidized_ben").html(sanSubsidized_ben);
-					
-					//----------hwf
-					var hwType_hwf='<label for="hw_type">Type of Handwash Facilities</label><select name="hw_type" id="hw_type" data-native-menu="false"><option value="0">Select Type of Handwash Facilities</option><option value="1">Water tank with tap</option><option value="2">Barrel / Drum with pipe line  to Spout / Tap</option><option value="3">Bucket with Tap</option><option value="4">30L - 50L Barrel with Tap </option><option value="5">Pitcher with Tap</option><option value="6">Jerkin/Container with Tap</option><option value="7">Tippy Tap</option><option value="8">Tube Well on Premises</option><option value="9">Sink with tap water</option><option value="10">Basins</option><option value="11">Overhead Tank</option><option value="12">Jugs </option><option value="13">Bucket with mug </option></select>'
-					$("#hwType_hwf").html(hwType_hwf);
-					
-					//============wp
-					var clusterIDNameWP='<label for="clusterIDName">Select Cluster</label><select name="clusterIDName" id="clusterIDName" data-native-menu="false"><option value="0">Select Cluster</option></select>'  
-					$("#clusterIDNameWP").html(clusterIDNameWP);
-					
-					var wpActType='<label for="wp_act_type">Type of Activity</label><select name="wp_act_type" id="wp_act_type" data-native-menu="false"><option value="0">Select Type of Activity</option><option value="New">New</option><option value="Renovation">Renovation</option></select>'
-					$("#wpActType").html(wpActType);
-					
-					var wpTechnology='<label for="wp_technology">Water Point Technology </label><select name="wp_technology" id="wp_technology" data-native-menu="false"><option value="0">Select Water Point Technology</option><option value="1">Deep Hand Tubewell</option><option value="2">Deep Set Pump</option><option value="3">Shallow Tubewell</option><option value="4">Semi-Deep Tubewell</option><option value="5">Rain Water Harvesting</option></select>'
-					$("#wpTechnology").html(wpTechnology);
-					
-					var wpSubsidized='<label for="wp_subsidized">Subsidized</label><select name="wp_subsidized" id="wp_subsidized" data-native-menu="false"><option value="0">Select Subsidized</option><option value="Yes">Yes</option><option value="No">No</option></select>'	
-					$("#wpSubsidized").html(wpSubsidized);
-					
-					var wpWq='<label for="wp_wq">Water Quality Test Type</label><select name="wp_wq" id="wp_wq" data-native-menu="false"><option value="0">Select Water Quality Test Type</option><option value="Arsenic">Arsenic</option><option value="Bacterial">Bacterial</option><option value="Both Arsenic And Bacteria">Both Arsenic & Bacteria</option></select>'
-					$("#wpWq").html(wpWq);
-					
-					var wpWqResult='<label for="wp_wq_result">Result Water Quality Test</label><select name="wp_wq_result" id="wp_wq_result" data-native-menu="false"><option value="0">Select Result Water Quality Test</option><option value="Potable">Potable</option><option value="Not Potable">Not Potable</option><option value="Not Undertaken Yet">Not Undertaken Yet</option></select>'	
-					$("#wpWqResult").html(wpWqResult);
-					
-					var wpTubPre='<label for="wp_tub_pre">Tubewell Located on Premises</label><select name="wp_tub_pre" id="wp_tub_pre" data-native-menu="false"><option value="0">Select TW Located on Premises</option><option value="1">On Premises</option><option value="2">\u2266 30 min</option><option value="3">&#62; 30 min</option></select>'	
-					$("#wpTubPre").html(wpTubPre);
 										
 					$(".errorMsg").html("Sync Successful");
 					$('#syncBasic').show();
@@ -660,24 +525,11 @@ function planbdData1Next(){
 	}else if(socialMapID.length !=12){
 		$(".errorChk").text("Invalid Social Map ID");
 	}else{
-		//alert(apipath+"social_mapdata_exit?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&ward="+ward+"&clusID="+clusID+"&socialMapID="+socialMapID);
-		$.ajax({
-		type: 'POST',
-		url:apipath+"social_mapdata_exit?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&ward="+ward+"&clusID="+clusID+"&socialMapID="+socialMapID,
-																																																												
-		success: function(result) {			
-			if(result=='Success'){				
-				$(".errorChk").text("");		
-				url="#second_page";					
-				$.mobile.navigate(url);	
-			}else{
-				$(".errorChk").text('Data Already Exist');			
-				url="#first_page";					
-				$.mobile.navigate(url);		
-			}
-		}
-		})		
-		
+		//plan2Data="||ward="+ward+"||village="+village+"||clusID="+clusID+"||clusName="+clusName+"||socialMapID="+socialMapID;
+		//alert(plan2Data);
+		$(".errorChk").text("");		
+		url="#second_page";					
+		$.mobile.navigate(url);
 	}
 }
 
@@ -1063,17 +915,10 @@ function syncData(){
 }*/
 
 function socialMapHome(){
-	var wardName='<label for="ward">Ward No</label><select name="ward" id="ward" data-native-menu="false" onblur="social_map_id()"><option value="0">Select Ward No</option><option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option><option value="09">09</option></select>'	
-	$("#wardName").html(wardName).trigger('create');
-	
-	var odfStatusName='<select id="odfStatus" name="odfStatus" data-native-menu="false"><option value="0">Select</option><option value="Yes">Yes</option><option value="No">No</option></select>'
-	$("#odfStatusName").html(odfStatusName).trigger('create');
-	
-	var commExitName='<select id="commExit" name="commExit" data-native-menu="false" onchange="washCommitt()"><option value="0">Select</option><option value="Yes">Yes</option><option value="No">No</option></select>'
-	$("#commExitName").html(commExitName).trigger('create');
-	
-	var commFuncName='<select id="commFunc" name="commFunc" data-native-menu="false"><option value="0">Select</option><option value="Yes">Yes</option><option value="No">No</option></select>'
-	$("#commFuncName").html(commFuncName).trigger('create');
+	$("#ward").val(0);
+	$("#odfStatus").val(0);
+	$("#commExit").val(0);
+	$("#commFunc").val(0);
 	
 	$("#btn_submit").show();	
 	$("#btn_socialmap_home").hide();	
@@ -1116,7 +961,6 @@ var ben_hh_id;
 var ben_hh_head_name;
 var ben_hh_head_gender;
 var ben_eco_condition;
-var sps_family;
 var ben_benG_5;
 var ben_benB_5;
 var ben_benG_5_18;
@@ -1231,9 +1075,7 @@ function ben_planbdData1Next(){
 	
 	ben_socialMapID=$("#ben_socialMapID").val();
 	ben_hh_serial=$("#ben_hh_serial").val();
-	
-	localStorage.hh_serial=ben_hh_serial;
-	
+	//localStorage.hh_serial=ben_hh_serial;
 	if(ben_ward=='' || ben_ward==0){
 		$(".errorChk").text("Required ward no");
 	}else if(ben_clusID=='' || ben_clusID==0){
@@ -1248,42 +1090,10 @@ function ben_planbdData1Next(){
 		$(".errorChk").text("Maximum 3 digit HH Serial");		
 	}else{
 		
-		//alert(apipath+"search_benData?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_hh_serial="+localStorage.hh_serial);
+		//alert(apipath+"search_benData?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_hh_serial="+ben_hh_serial);
 		$.ajax({
 			type:'POST',
-			url:apipath+"search_benData?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_hh_serial="+localStorage.hh_serial,
-			success: function(result){				
-				searchResult=result;			
-				var searchResultArray = searchResult.split('||');
-					resultSearch=searchResultArray[0];
-					
-					if (resultSearch=='Success'){
-						$("#btn_ben_service").hide();								
-						$(".errorChk").text("");			
-						url="#ben_new_page";					
-						$.mobile.navigate(url);
-					}else{	
-						$(".errorChk").text("");			
-						url="#ben_second_page";					
-						$.mobile.navigate(url);
-					}			
-			}
-		})
-		
-		$("#divi_ben_2").text(localStorage.div_name);
-		$("#dis_ben_2").text(localStorage.dis_name);
-		$("#upaz_ben_2").text(localStorage.up_name);
-		$("#uni_ben_2").text(localStorage.un_name);
-		$("#wardNo_ben_2").text(ben_ward);
-		$("#cLuster_ben_2").text(ben_clusID+"-"+(ben_clusName).replace(/%20/g," "));
-	}
-}
-
-function ben_update(){
-	//alert(apipath+"update_beneficary?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_hh_serial="+localStorage.hh_serial);
-		$.ajax({
-			type:'POST',
-			url:apipath+"update_beneficary?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_hh_serial="+localStorage.hh_serial,
+			url:apipath+"search_benData?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_hh_serial="+ben_hh_serial,
 			success: function(result){				
 				searchResult=result;			
 				var searchResultArray = searchResult.split('||');
@@ -1306,12 +1116,10 @@ function ben_update(){
 						ben_disG_5_18=searchResultArray[14];	
 						ben_disB_5_18=searchResultArray[15];	
 						ben_disF_18_plus=searchResultArray[16];	
-						ben_disM_18_plus=searchResultArray[17];
-						sps_family=searchResultArray[18];					
+						ben_disM_18_plus=searchResultArray[17];					
 						
 						$("#ben_hh_head_name").val(ben_hh_head_name);
 						$("#ben_hh_head_gender").val(ben_hh_head_gender);
-						$("#ben_eco_condition").val(ben_eco_condition);
 						$("#ben_eco_condition").val(ben_eco_condition);
 						$("#ben_benG_5").val(ben_benG_5);
 						$("#ben_benB_5").val(ben_benB_5);
@@ -1327,9 +1135,7 @@ function ben_update(){
 						$("#ben_disB_5_18").val(ben_disB_5_18);
 						$("#ben_disF_18_plus").val(ben_disF_18_plus);
 						$("#ben_disM_18_plus").val(ben_disM_18_plus);				
-						$("#sps_family").val(sps_family);
-						
-						$("#btn_ben_submit").show();
+				
 						$(".errorChk").text("");			
 						url="#ben_second_page";					
 						$.mobile.navigate(url);
@@ -1341,7 +1147,15 @@ function ben_update(){
 			}
 		})
 		
+		$("#divi_ben_2").text(localStorage.div_name);
+		$("#dis_ben_2").text(localStorage.dis_name);
+		$("#upaz_ben_2").text(localStorage.up_name);
+		$("#uni_ben_2").text(localStorage.un_name);
+		$("#wardNo_ben_2").text(ben_ward);
+		$("#cLuster_ben_2").text(ben_clusID+"-"+(ben_clusName).replace(/%20/g," "));
+	}
 }
+
 
 function joinSocialID(){
 	ben_socialMapID=$("#ben_socialMapID").val();
@@ -1389,7 +1203,6 @@ function benDataSubmit(){
 	ben_hh_head_name=$("#ben_hh_head_name").val();
 	ben_hh_head_gender=$("#ben_hh_head_gender").val();
 	ben_eco_condition=$("#ben_eco_condition").val();
-	sps_family=$("#sps_family").val();
 	ben_benG_5=$("#ben_benG_5").val();
 	ben_benB_5=$("#ben_benB_5").val();
 	ben_benG_5_18=$("#ben_benG_5_18").val();
@@ -1406,8 +1219,6 @@ function benDataSubmit(){
 	ben_disF_18_plus=$("#ben_disF_18_plus").val();
 	ben_disM_18_plus=$("#ben_disM_18_plus").val();
 	
-	localStorage.hh_head_name=ben_hh_head_name;
-	
 	benBenGtotal=eval(ben_benG_5)+eval(ben_benG_5_18)+eval(ben_benF_18_plus);
 	benBenBtotal=eval(ben_benB_5)+eval(ben_benB_5_18)+eval(ben_benM_18_plus);
 	
@@ -1419,8 +1230,6 @@ function benDataSubmit(){
 		$(".errorChk").text("Required Gender");	
 	}else if(ben_eco_condition=='' || ben_eco_condition==0 || ben_eco_condition==null){
 		$(".errorChk").text("Required Economic Condition");	
-	}else if(sps_family=='' || sps_family==0 || sps_family==null){
-		$(".errorChk").text("Required Sponsorship Family");		
 	/*}else if(ben_benG_5==''){
 		$(".errorChk").text("Required Girl (<=5)");
 	}else if(ben_benB_5==''){
@@ -1453,15 +1262,15 @@ function benDataSubmit(){
 		$(".errorChk").text("Disabilities < Beneficiaries  Male (18+)");
 	}else{
 			
-		//alert(apipath+"submitData_ben?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_clusName="+ben_clusName+"&ben_hh_serial="+ben_hh_serial+"&ben_hh_id="+ben_hh_id+"&ben_hh_head_name="+ben_hh_head_name+"&ben_hh_head_gender="+ben_hh_head_gender+"&ben_eco_condition="+ben_eco_condition+"&ben_benG_5="+ben_benG_5+"&ben_benB_5="+ben_benB_5+"&ben_benG_5_18="+ben_benG_5_18+"&ben_benB_5_18="+ben_benB_5_18+"&ben_benF_18_plus="+ben_benF_18_plus+"&ben_benM_18_plus="+ben_benM_18_plus+"&ben_EthF="+ben_EthF+"&ben_EthM="+ben_EthM+"&ben_disG_5="+ben_disG_5+"&ben_disB_5="+ben_disB_5+"&ben_disG_5_18="+ben_disG_5_18+"&ben_disB_5_18="+ben_disB_5_18+"&ben_disF_18_plus="+ben_disF_18_plus+"&ben_disM_18_plus="+ben_disM_18_plus+"&sps_family="+sps_family);
+		//alert(apipath+"submitData_ben?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_clusName="+ben_clusName+"&ben_hh_serial="+ben_hh_serial+"&ben_hh_id="+ben_hh_id+"&ben_hh_head_name="+ben_hh_head_name+"&ben_hh_head_gender="+ben_hh_head_gender+"&ben_eco_condition="+ben_eco_condition+"&ben_benG_5="+ben_benG_5+"&ben_benB_5="+ben_benB_5+"&ben_benG_5_18="+ben_benG_5_18+"&ben_benB_5_18="+ben_benB_5_18+"&ben_benF_18_plus="+ben_benF_18_plus+"&ben_benM_18_plus="+ben_benM_18_plus+"&ben_EthF="+ben_EthF+"&ben_EthM="+ben_EthM+"&ben_disG_5="+ben_disG_5+"&ben_disB_5="+ben_disB_5+"&ben_disG_5_18="+ben_disG_5_18+"&ben_disB_5_18="+ben_disB_5_18+"&ben_disF_18_plus="+ben_disF_18_plus+"&ben_disM_18_plus="+ben_disM_18_plus);
 		$.ajax({
 		type: 'POST',
-		url:apipath+"submitData_ben?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_clusName="+ben_clusName+"&ben_hh_serial="+ben_hh_serial+"&ben_hh_id="+ben_hh_id+"&ben_hh_head_name="+ben_hh_head_name+"&ben_hh_head_gender="+ben_hh_head_gender+"&ben_eco_condition="+ben_eco_condition+"&ben_benG_5="+ben_benG_5+"&ben_benB_5="+ben_benB_5+"&ben_benG_5_18="+ben_benG_5_18+"&ben_benB_5_18="+ben_benB_5_18+"&ben_benF_18_plus="+ben_benF_18_plus+"&ben_benM_18_plus="+ben_benM_18_plus+"&ben_EthF="+ben_EthF+"&ben_EthM="+ben_EthM+"&ben_disG_5="+ben_disG_5+"&ben_disB_5="+ben_disB_5+"&ben_disG_5_18="+ben_disG_5_18+"&ben_disB_5_18="+ben_disB_5_18+"&ben_disF_18_plus="+ben_disF_18_plus+"&ben_disM_18_plus="+ben_disM_18_plus+"&sps_family="+sps_family,
+		url:apipath+"submitData_ben?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_clusName="+ben_clusName+"&ben_hh_serial="+ben_hh_serial+"&ben_hh_id="+ben_hh_id+"&ben_hh_head_name="+ben_hh_head_name+"&ben_hh_head_gender="+ben_hh_head_gender+"&ben_eco_condition="+ben_eco_condition+"&ben_benG_5="+ben_benG_5+"&ben_benB_5="+ben_benB_5+"&ben_benG_5_18="+ben_benG_5_18+"&ben_benB_5_18="+ben_benB_5_18+"&ben_benF_18_plus="+ben_benF_18_plus+"&ben_benM_18_plus="+ben_benM_18_plus+"&ben_EthF="+ben_EthF+"&ben_EthM="+ben_EthM+"&ben_disG_5="+ben_disG_5+"&ben_disB_5="+ben_disB_5+"&ben_disG_5_18="+ben_disG_5_18+"&ben_disB_5_18="+ben_disB_5_18+"&ben_disF_18_plus="+ben_disF_18_plus+"&ben_disM_18_plus="+ben_disM_18_plus,
 																																																											
 		success: function(result) {			
 			if(result=='Success'){
-				/*localStorage.hh_serial=ben_hh_serial;
-				localStorage.hh_head_name=ben_hh_head_name;*/
+				localStorage.hh_serial=ben_hh_serial;
+				localStorage.hh_head_name=ben_hh_head_name;
 				
 				$("#ben_ward").val(0);
 				$("#ben_clusID").val(0);
@@ -1471,7 +1280,6 @@ function benDataSubmit(){
 				$("#ben_hh_head_name").val("");
 				$("#ben_hh_head_gender").val(0);
 				$("#ben_eco_condition").val(0);
-				$("#sps_family").val(0);
 				$("#ben_benG_5").val("");
 				$("#ben_benB_5").val("");
 				$("#ben_benG_5_18").val("");
@@ -1491,44 +1299,13 @@ function benDataSubmit(){
 				$(".sucChk").text('Successfully Submitted');
 				$(".errorChk").text("");
 				$("#btn_ben_submit").hide();
-				//$("#btn_new_ben").show();
+				$("#btn_new_ben").show();
 				$("#btn_ben_service").show();
-				$("#btn_ben_home").show();
-			}else if(result=='updated'){
-				$("#ben_ward").val(0);
-				$("#ben_clusID").val(0);
-				$("#ben_hh_serial").val("");								
-				
-				$("#ben_hh_id").val("");
-				$("#ben_hh_head_name").val("");
-				$("#ben_hh_head_gender").val(0);
-				$("#ben_eco_condition").val(0);
-				$("#ben_benG_5").val("");
-				$("#ben_benB_5").val("");
-				$("#ben_benG_5_18").val("");
-				$("#ben_benB_5_18").val("");
-				$("#ben_benF_18_plus").val("");
-				$("#ben_benM_18_plus").val("");
-				$("#benBen_Total").val("");
-				$("#ben_EthF").val("");
-				$("#ben_EthM").val("");
-				$("#ben_disG_5").val("");
-				$("#ben_disB_5").val("");
-				$("#ben_disG_5_18").val("");
-				$("#ben_disB_5_18").val("");
-				$("#ben_disF_18_plus").val("");
-				$("#ben_disM_18_plus").val("");
-														
-				$(".sucChk").text('Successfully Updated');
-				$(".errorChk").text("");
-				$("#btn_ben_submit").hide();
-				//$("#btn_new_ben").show();
-				$("#btn_ben_service").hide();
-				$("#btn_ben_home").show();
+				$("#btn_ben_home").show();						
 			}else{
 				$(".errorChk").text('Submission Failed.');																	
 				$("#btn_ben_submit").show();
-				//$("#btn_new_ben").hide();
+				$("#btn_new_ben").hide();
 				$("#btn_ben_service").hide();
 				$("#btn_ben_home").hide();
 			}
@@ -1539,98 +1316,39 @@ function benDataSubmit(){
 	}
 }
 
-
-function goToHome(){
-	var benWardNo='<label for="ben_ward">Ward No</label><select name="ben_ward" id="ben_ward" data-native-menu="false"  onblur="social_map_id()" onchange="cluster()" ><option value="0">Ward No</option></select>'   
-	$("#benWardNo").html(benWardNo).trigger('create');
-	
-	var benClusIDName='<label for="ben_clusID">Cluster ID</label><select name="ben_clusID" id="ben_clusID" data-native-menu="false" onblur="social_map_id()"><option value="0">Select Cluster</option></select>' 
-	$("#benClusIDName").html(benClusIDName).trigger('create');
-	
-	var benGender='<label for="ben_hh_head_gender">HH Head Gender</label><select id="ben_hh_head_gender" name="ben_hh_head_gender" data-native-menu="false"><option value="0">Select HH Head Gender</option><option value="Male">Male</option><option value="Female">Female</option></select>'
-	$("#benGender").html(benGender).trigger('create');
-	
-	var benEcoCondition='<label for="ben_eco_condition">Economic Condition</label><select id="ben_eco_condition" name="ben_eco_condition" data-native-menu="false"><option value="0">Select Economic Condition</option><option value="Rich">A: Rich</option><option value="Middle">B: Middle Class</option><option value="Poor">C: Poor</option><option value="Exterme Poor">D: Exterme Poor</option></select>'
-	$("#benEcoCondition").html(benEcoCondition).trigger('create');
-	
-	var spsFamily_ben='<label for="sps_family">Sponsorship Family</label><select name="sps_family" id="sps_family" data-native-menu="false"><option value="0">Select Sponsorship Family</option><option value="Yes">Yes</option><option value="No">No</option></select>'
-	$("#spsFamily_ben").html(spsFamily_ben).trigger('create');
+function benGoToHome(){
+	$("#ben_ward").val(0);
+	$("#ben_clusID").val(0);
+	$("#ben_hh_head_gender").val(0);
+	$("#ben_eco_condition").val(0);
 	
 	$("#btn_ben_submit").show();
-	//$("#btn_new_ben").hide();
+	$("#btn_new_ben").hide();
 	$("#btn_ben_service").hide();	
 	$("#btn_ben_home").hide();
-	$("#ben_hh_serial").val("");	
 	
 	//san
-	var sanLatType_ben='<label for="san_lat_type">Type of Latrine Provided</label><select name="san_lat_type" id="san_lat_type" data-native-menu="false"><option value="0">Select Type of Latrine Provided</option><option value="Offset Pit">Offset Pit</option><option value="Water Sealed Pit">Water Sealed Pit</option><option value="Pit Latrine with Sato Pan">Pit Latrine with Sato Pan</option><option value="Shared">Shared</option></select>'
-	$("#sanLatType_ben").html(sanLatType_ben).trigger('create');
-	
-	var sanActType_ben='<label for="san_act_type">Type of Activity</label><select name="san_act_type" id="san_act_type" data-native-menu="false"><option value="0">Select Type of Activity</option><option value="New">New</option><option value="Renovation">Renovation</option></select>'	
-	$("#sanActType_ben").html(sanActType_ben).trigger('create');
-	
-	var sanSubsidized_ben='<label for="san_subsidized">Subsidized</label><select name="san_subsidized" id="san_subsidized" data-native-menu="false"><option value="0">Select Subsidized</option><option value="Yes">Yes</option><option value="No">No</option></select>'			
-	$("#sanSubsidized_ben").html(sanSubsidized_ben).trigger('create');
-				
 	$("#btn_san_submit").show();
 	$("#btn_new_ben_san").hide();
 	$("#btn_ben_service_san").hide();
 	$("#btn_ben_home_san").hide();
 	
 	//hwf
-	var hwType_hwf='<label for="hw_type">Type of Handwash Facilities</label><select name="hw_type" id="hw_type" data-native-menu="false"><option value="0">Select Type of Handwash Facilities</option><option value="1">Water tank with tap</option><option value="2">Barrel / Drum with pipe line  to Spout / Tap</option><option value="3">Bucket with Tap</option><option value="4">30L - 50L Barrel with Tap </option><option value="5">Pitcher with Tap</option><option value="6">Jerkin/Container with Tap</option><option value="7">Tippy Tap</option><option value="8">Tube Well on Premises</option><option value="9">Sink with tap water</option><option value="10">Basins</option><option value="11">Overhead Tank</option><option value="12">Jugs </option><option value="13">Bucket with mug </option></select>'
-	$("#hwType_hwf").html(hwType_hwf).trigger('create');
-	
 	$("#btn_wwf_submit").show();
 	$("#btn_new_ben_hwf").hide();	
 	$("#btn_ben_service_hwf").hide();
 	$("#btn_ben_home_hwf").hide();	
-	
-	//wp
-	var clusterIDNameWP='<label for="clusterIDName">Select Cluster</label><select name="clusterIDName" id="clusterIDName" data-native-menu="false"><option value="0">Select Cluster</option></select>'  
-	$("#clusterIDNameWP").html(clusterIDNameWP).trigger('create');
-	
-	var wpActType='<label for="wp_act_type">Type of Activity</label><select name="wp_act_type" id="wp_act_type" data-native-menu="false"><option value="0">Select Type of Activity</option><option value="New">New</option><option value="Renovation">Renovation</option></select>'
-	$("#wpActType").html(wpActType).trigger('create');
-	
-	var wpTechnology='<label for="wp_technology">Water Point Technology </label><select name="wp_technology" id="wp_technology" data-native-menu="false"><option value="0">Select Water Point Technology</option><option value="1">Deep Hand Tubewell</option><option value="2">Deep Set Pump</option><option value="3">Shallow Tubewell</option><option value="4">Semi-Deep Tubewell</option><option value="5">Rain Water Harvesting</option></select>'
-	$("#wpTechnology").html(wpTechnology).trigger('create');
-	
-	var wpSubsidized='<label for="wp_subsidized">Subsidized</label><select name="wp_subsidized" id="wp_subsidized" data-native-menu="false"><option value="0">Select Subsidized</option><option value="Yes">Yes</option><option value="No">No</option></select>'	
-	$("#wpSubsidized").html(wpSubsidized).trigger('create');
-	
-	var wpWq='<label for="wp_wq">Water Quality Test Type</label><select name="wp_wq" id="wp_wq" data-native-menu="false"><option value="0">Select Water Quality Test Type</option><option value="Arsenic">Arsenic</option><option value="Bacterial">Bacterial</option><option value="Both Arsenic And Bacteria">Both Arsenic & Bacteria</option></select>'
-	$("#wpWq").html(wpWq).trigger('create');
-	
-	var wpWqResult='<label for="wp_wq_result">Result Water Quality Test</label><select name="wp_wq_result" id="wp_wq_result" data-native-menu="false"><option value="0">Select Result Water Quality Test</option><option value="Potable">Potable</option><option value="Not Potable">Not Potable</option><option value="Not Undertaken Yet">Not Undertaken Yet</option></select>'	
-	$("#wpWqResult").html(wpWqResult).trigger('create');
-	
-	var wpTubPre='<label for="wp_tub_pre">Tubewell Located on Premises</label><select name="wp_tub_pre" id="wp_tub_pre" data-native-menu="false"><option value="0">Select TW Located on Premises</option><option value="1">On Premises</option><option value="2">\u2266 30 min</option><option value="3">&#62; 30 min</option></select>'	
-	$("#wpTubPre").html(wpTubPre).trigger('create');
-	
-	benList='';	
-	hhIDList='';	
-	$("#benTable").empty();				
-	$("#btn_wp_submit").show();
-	$("#btn_home_wp").hide();
 	
 	$(".sucChk").text("");		
 	$(".errorChk").text("");			
 	url="#homePage";					
 	$.mobile.navigate(url);	
 }
-/*function addNewBen(){
-	var benWardNo='<label for="ben_ward">Ward No</label><select name="ben_ward" id="ben_ward" data-native-menu="false"  onblur="social_map_id()" onchange="cluster()" ><option value="0">Ward No</option></select>'   
-	$("#benWardNo").html(benWardNo).trigger('create');
-	
-	var benClusIDName='<label for="ben_clusID">Cluster ID</label><select name="ben_clusID" id="ben_clusID" data-native-menu="false" onblur="social_map_id()"><option value="0">Select Cluster</option></select>' 
-	$("#benClusIDName").html(benClusIDName).trigger('create');
-	
-	var benGender='<label for="ben_hh_head_gender">HH Head Gender</label><select id="ben_hh_head_gender" name="ben_hh_head_gender" data-native-menu="false"><option value="0">Select HH Head Gender</option><option value="Male">Male</option><option value="Female">Female</option></select>'
-	$("#benGender").html(benGender).trigger('create');
-	
-	var benEcoCondition='<label for="ben_eco_condition">Economic Condition</label><select id="ben_eco_condition" name="ben_eco_condition" data-native-menu="false"><option value="0">Select Economic Condition</option><option value="Rich">A: Rich</option><option value="Middle">B: Middle Class</option><option value="Poor">C: Poor</option><option value="Exterme Poor">D: Exterme Poor</option></select>'
-	$("#benEcoCondition").html(benEcoCondition).trigger('create');
+function addNewBen(){
+	$("#ben_ward").val(0);
+	$("#ben_clusID").val(0);
+	$("#ben_hh_head_gender").val(0);
+	$("#ben_eco_condition").val(0);
 	
 	$("#btn_ben_submit").show();
 	$("#btn_new_ben").hide();
@@ -1653,7 +1371,7 @@ function goToHome(){
 	$(".sucChk").text("");					
 	url="#ben_first_page";					
 	$.mobile.navigate(url);	
-}*/
+}
 
 var div_name;
 var div_code;
@@ -1845,8 +1563,7 @@ function syncDataSan(){
 		type:'POST',
 		url:apipath+"submitData_san?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_san+"&latitude="+san_latitude+"&longitude="+san_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&clsId="+ben_clusID+"&clsName="+encodeURIComponent(ben_clusName)+"&sanHHserial="+localStorage.hh_serial+"&sanHHName="+encodeURIComponent(localStorage.hh_head_name)+"&san_lat_type="+san_lat_type+"&san_act_type="+san_act_type+"&san_subsidized="+san_subsidized+"&san_com_date="+san_com_date,
 		success: function(result) {			
-			if(result=='Success'){				
-				$("#ben_hh_serial").val("");
+			if(result=='Success'){
 				
 				$("#san_lat_type").val(0);
 				$("#san_act_type").val(0);
@@ -1930,7 +1647,7 @@ function wwfDataSubmit(){
 	wwf_longitude=$("#ach_long_wwf").val();
 	
 	achPhoto_wwf=$("#achPhoto_wwf").val();
-	achPhoto_2_wwf=$("#achPhoto_2_wwf").val();
+	//achPhoto_2_wwf=$("#achPhoto_2_wwf").val();
 	
 	if (wwf_latitude==undefined || wwf_latitude==''){
 		wwf_latitude=0;
@@ -2084,9 +1801,13 @@ function syncDataHwf(){
 		type:'POST',
 		url:apipath+"submitData_hwf?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wwf+"&latitude="+wwf_latitude+"&longitude="+wwf_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&clsId="+ben_clusID+"&clsName="+encodeURIComponent(ben_clusName)+"&sanHHserial="+localStorage.hh_serial+"&sanHHName="+encodeURIComponent(localStorage.hh_head_name)+"&hw_type="+hw_type+"&hw_com_date="+hw_com_date,																																																							
 		success: function(result) {			
-			if(result=='Success'){				
-				$("#ben_hh_serial").val("");
+			if(result=='Success'){
 				
+				/*$("#ward").val("");
+				$("#village").val("");
+				$("#clusID").val("");
+				$("#clusName").val("");
+				$("#socialMapID").val("");*/
 				$("#hw_type").val(0);							
 				//--------------
 				$("#ach_lat_wwf").val(0);
@@ -2251,55 +1972,38 @@ function wp1Next(){
 	}else if(wp_wq_result=='' || wp_wq_result==0){
 		$(".errorChk").text("Required result water quality test");		
 	}else{
-		//alert(apipath+"wp_serial_check?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&wp_ward="+wp_ward+"&clsId="+clsId+"&wp_serial="+wp_serial);
+		var clusterList="";
+		//alert(apipath+"seatchHH?div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&wp_ward="+wp_ward+"&clsId="+clsId+"&clsName="+clsName);
 		$.ajax({
 		type:'POST',
-		url:apipath+"wp_serial_check?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&wp_ward="+wp_ward+"&clsId="+clsId+"&wp_serial="+wp_serial,
-																																																										
-		success: function(result) {			
-			if(result=='Success'){
-				
-				//========
-				var clusterList="";
-				//alert(apipath+"seatchHH?div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&wp_ward="+wp_ward+"&clsId="+clsId+"&clsName="+clsName);
-				$.ajax({
-				type:'POST',
-				url:apipath+"seatchHH?div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&wp_ward="+wp_ward+"&clsId="+clsId+"&clsName="+clsName,
-				success: function(resStr){
-					houseHList=resStr.split('fdfd')
-					
-					var hhListStr="";	
-					hhListStr +='<option value="0">Select HH Name</option>'		        
-					for(i=0; i<houseHList.length; i++){
-						hhList=houseHList[i];
-						hhListStr +='<option value='+encodeURIComponent(hhList)+'><a>'+hhList+'</a></option>'
-					}
-									
-					var rpt_rep_ob_wp=$("#wp_hhSerail");					
-					rpt_rep_ob_wp.empty();					
-					rpt_rep_ob_wp.append(hhListStr);					
-					rpt_rep_ob_wp.selectmenu("refresh");	
-					}
-				})				
-				$("#divi_san_w").text(localStorage.div_name);
-				$("#dis_san_w").text(localStorage.dis_name);
-				$("#upaz_san_w").text(localStorage.up_name);
-				$("#uni_san_w").text(localStorage.un_name);
-				$("#ward_san_w").text(san_ward);
-				$("#cluster_san_w").text(clsId+"-"+clsName);
-				$("#wpActType_wp").text(wp_act_type).slice(3);
-				$("#wpSerial_wp").text(wp_serial);
-				
-				$(".errorChk").text("");
-				url="#san_second_page";
-				$.mobile.navigate(url);				
-			}else{
-				$(".errorChk").text("Already exits wp serial");
-				url="#san_first_page";				
+		url:apipath+"seatchHH?div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&wp_ward="+wp_ward+"&clsId="+clsId+"&clsName="+clsName,
+		success: function(resStr){
+			houseHList=resStr.split('fdfd')
+			
+			var hhListStr="";	
+			hhListStr +='<option value="0">Select HH Name</option>'		        
+			for(i=0; i<houseHList.length; i++){
+				hhList=houseHList[i];
+				hhListStr +="<option value="+encodeURIComponent(hhList)+"><a>"+hhList+"</a></option>"
 			}
-		}
-		});
+							
+			var rpt_rep_ob_wp=$("#wp_hhSerail");					
+			rpt_rep_ob_wp.empty();					
+			rpt_rep_ob_wp.append(hhListStr);					
+			rpt_rep_ob_wp.selectmenu("refresh");	
+			}
+		})
 		
+		$("#divi_san_w").text(localStorage.div_name);
+		$("#dis_san_w").text(localStorage.dis_name);
+		$("#upaz_san_w").text(localStorage.up_name);
+		$("#uni_san_w").text(localStorage.un_name);
+		$("#ward_san_w").text(san_ward);
+		$("#cluster_san_w").text(clsId+"-"+clsName);
+		
+		$(".errorChk").text("");
+		url="#san_second_page";
+		$.mobile.navigate(url);
 	}	
 }
 	
@@ -2438,7 +2142,8 @@ function onfail_wp(r) {
 }
 
 
-function syncDataWp(){
+function syncDataWp() {
+
     //alert(apipath+"submitData_wp?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wp+"&latitude="+wp_latitude+"&longitude="+wp_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&wp_ward="+wp_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&wp_serial="+wp_serial+"&wp_org_id="+wp_org_id+"&wp_act_type="+wp_act_type+"&wp_technology="+wp_technology+"&wp_subsidized="+wp_subsidized+"&wp_com_date="+wp_com_date+"&wp_wq="+wp_wq+"&wp_wq_date="+wp_wq_date+"&wp_wq_result="+wp_wq_result+"&benList="+encodeURIComponent(benList))
 	$.ajax({
 		type:'POST',
@@ -2461,23 +2166,24 @@ function syncDataWp(){
 				$("#wp_wq_result").val(0);
 				
 				$("#wp_hhSerail").val(0);
-				$("#wp_tub_pre").val(0);											
+				$("#wp_tub_pre").val(0);
+				$("#sps_family").val(0);											
 				//--------------
 				$("#ach_lat_wp").val(0);
 				$("#ach_long_wp").val(0);
 				$("#achPhoto_wp").val("");
 				$("#myImageA_wp").val("");
 				document.getElementById('myImageA_wp').src = '';	
-				benList='';	
-				hhIDList='';
-				$("#benTable").empty();
+				benList='';				
 				$(".sucChk").text('Successfully Submitted');
 				$(".errorChk").text("");
 				$("#btn_wp_submit").hide();
+				$("#btn_addNew_wp").show();
 				$("#btn_home_wp").show();	
 			}else{
 				$(".errorChk").text('Already Submitted WP Serial');																	
 				$("#btn_wp_submit").show();
+				$("#btn_addNew_wp").hide();
 				$("#btn_home_wp").hide();	
 			}
 			
@@ -2485,14 +2191,28 @@ function syncDataWp(){
 	});//end ajax
 }
 
-/*function addNewWP(){
+function addNewWP(){
+	$("#san_ward").val(0);
+	$("#clusterIDName").val(0);
+	$("#wp_act_type").val(0);
+	$("#wp_technology").val(0);
+	$("#wp_subsidized").val(0);
+	$("#wp_wq").val(0);
+	$("#wp_wq_result").val(0);
 	
+	$("#wp_hhSerail").val(0);
+	$("#wp_tub_pre").val(0);
+	$("#sps_family").val(0);
+							
+	$("#btn_wp_submit").show();
+	$("#btn_addNew_wp").hide();
+	$("#btn_home_wp").hide();
 	
 	$(".sucChk").text("");			
 	$(".errorChk").text("");			
 	url="#homePage";					
 	$.mobile.navigate(url);		
-}*/
+}
 
 //======================
 

@@ -103,7 +103,7 @@
             </ul>
     </div>
     
-    <div data-theme="c" data-role="footer" data-position="fixed" style="font-size:12px;background-color:#CCC;" align="center" >mReporting 20171204</div><!------/footer 20150401-20150309 -->
+    <div data-theme="c" data-role="footer" data-position="fixed" style="font-size:12px;background-color:#CCC;" align="center" >mReporting 20171120</div><!------/footer 20150401-20150309 -->
     
     <div data-role="panel" id="leftpanel" data-position="left" data-display="overlay" data-theme="c">
         <div align="center"></div>
@@ -180,8 +180,19 @@
             </table>
          
             <li class="ui-field-contain">
-            <div id="wardName"></div>
-                
+                <label for="ward">Ward No</label>               
+                <select name="ward" id="ward" data-native-menu="false" onblur="social_map_id()">
+                    <option value="0">Select Ward No</option>
+                    <option value="01">01</option>
+                    <option value="02">02</option>
+                    <option value="03">03</option>
+                    <option value="04">04</option>
+                    <option value="05">05</option>
+                    <option value="06">06</option>
+                    <option value="07">07</option>
+                    <option value="08">08</option>
+                    <option value="09">09</option>	 
+                </select>	
             </li>
             <li class="ui-field-contain" >
                 <label for="village">Village</label>                	
@@ -329,7 +340,11 @@
             		<tr>
                         <td width="70%" style="vertical-align:middle;">ODF Status of Community</td>
                         <td width="30%">
-                        	<div id="odfStatusName"></div>                            
+                            <select id="odfStatus" name="odfStatus" data-native-menu="false">
+                                <option value="0">Select</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
                         </td>
                         <td width="5" align="left">&nbsp;</td>
                     </tr>
@@ -344,14 +359,22 @@
             		<tr>
                         <td width="70%" style="vertical-align:middle;">WASH Committee Exist</td>
                         <td width="30%">
-                        	<div id="commExitName"></div>
+                            <select id="commExit" name="commExit" data-native-menu="false" onchange="washCommitt()">
+                                <option value="0">Select</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
                         </td>
                         <td width="5" align="left">&nbsp;</td>
                     </tr>
                     <tr>
                         <td width="70%" style="vertical-align:middle;">WASH Committee Functional</td>
                         <td width="30%">
-                        	<div id="commFuncName"></div>                            
+                            <select id="commFunc" name="commFunc" data-native-menu="false">
+                                <option value="0">Select</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
                         </td>
                         <td width="5" align="left">&nbsp;</td>
                     </tr>
@@ -541,14 +564,20 @@
             </table>
             
             <li class="ui-field-contain">
-            	<div id="benWardNo"></div>
+                <label for="ben_ward">Ward No</label>
+                <select name="ben_ward" id="ben_ward" data-native-menu="false"  onblur="social_map_id()" onchange="cluster('bene')" >
+                    <option value="0">Ward No</option>
+                </select>           
             </li>
             <!--<li class="ui-field-contain" >
                 <label for="ben_village">Village</label>                	
                     <input type="text" id="ben_village" name="ben_village" maxlength="50"/>
             </li>-->
             <li class="ui-field-contain" >
-            	<div id="benClusIDName"></div>
+                <label for="ben_clusID">Cluster ID</label>
+                <select name="ben_clusID" id="ben_clusID" data-native-menu="false" onblur="social_map_id()">
+                    <option value="0">Select Cluster</option>
+                </select>                	
             </li>
             <!--<li class="ui-field-contain" >
                 <label for="ben_clusName">Cluster Name</label>
@@ -569,31 +598,6 @@
             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
     </div>
 </div>
-
-
-
-<div data-role="page" data-theme="c" id="ben_new_page" style="overflow:scroll;">
-    <div data-theme="c" data-role="header" data-position="fixed" >
-        <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
-        <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
-        <h3>BENEFICIARY</h3>
-    </div>
-    
-    <div data-role="content" >
-    	<ul data-role="listview" data-inset="true">             
-        	<li><a id="btn_ben_service_new" href="#" onClick="services_ben();" data-transition="slide">Services</a></li> 
-        </ul>
-        &nbsp;  
-        <ul data-role="listview" data-inset="true">
-            <li><a id="btn_ben_update"  href="#" onclick="ben_update();" data-transition="slide">Update</a></li>
-        </ul>
-                 
-        <div class="errorChk"></div>
-            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-    </div>
-</div>
-
-
 
 <div data-role="page" data-theme="c" id="ben_second_page" style="overflow:scroll;">
     <div data-theme="c" data-role="header" data-position="fixed" >
@@ -633,13 +637,22 @@
                     <input type="text" id="ben_hh_head_name" name="ben_hh_head_name" maxlength="50"/>
             </li>
             <li class="ui-field-contain" >
-            	<div id="benGender"></div>                
+                <label for="ben_hh_head_gender">HH Head Gender</label>                	
+                    <select id="ben_hh_head_gender" name="ben_hh_head_gender" data-native-menu="false">
+                    	<option value="0">Select HH Head Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
             </li>
             <li class="ui-field-contain" >
-            	<div id="benEcoCondition"></div>                
-            </li>
-            <li class="ui-field-contain">
-            	<div id="spsFamily_ben"></div>                	
+                <label for="ben_eco_condition">Economic Condition</label>                	
+                    <select id="ben_eco_condition" name="ben_eco_condition" data-native-menu="false">
+                    	<option value="0">Select Economic Condition</option>
+                        <option value="Rich">A: Rich</option>
+                        <option value="Middle">B: Middle Class</option>
+                        <option value="Poor">C: Poor</option>
+                        <option value="Exterme Poor">D: Exterme Poor</option>
+                    </select>
             </li>
             <li class="ui-field-contain" >
                 <table width="100%" class="ui-body-d ui-shadow table-stripe ui-responsive" id="beneficiaryCount" style="cell-spacing:0px;"  data-role="table" data-theme="d"  data-mode="display:none">
@@ -741,10 +754,10 @@
 		</ul>
                          
         <br />  
-    <!--<a data-role="button" id="btn_new_ben" onClick="addNewBen();" class="ui-btn" >Add New Beneficiary</a> -->
-    <a data-role="button" id="btn_ben_service" onClick="services_ben();" class="ui-btn" >Services</a>         
+    <a data-role="button" id="btn_new_ben" onClick="addNewBen();" class="ui-btn" >Add New Beneficiary</a> 
+    <a data-role="button" id="btn_ben_service" onClick="services_ben();" class="ui-btn" >Assign Services</a>         
     <a data-role="button" id="btn_ben_submit" onClick="benDataSubmit();" class="ui-btn" >Submit</a>
-    <a data-role="button" id="btn_ben_home" onClick="goToHome();" class="ui-btn" >Go To Home</a>
+    <a data-role="button" id="btn_ben_home" onClick="benGoToHome();" class="ui-btn" >Go To Home</a>
         <div class="errorChk" style="color:#F00;"></div>
         <div class="sucChk" style="color:#00CA00;"></div>
             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
@@ -791,8 +804,8 @@
             <li><a id="hwfBtn"  href="#" onclick="wwf('wwf')" data-transition="slide">HWF</a></li>
         </ul>
         
-        <!--<a data-role="button" id="btn_new_ben_ser" onClick="addNewBen();" class="ui-btn" >Add New Beneficiary</a> -->     
-        <a data-role="button" id="btn_ben_home_ser" onClick="goToHome();" class="ui-btn" >Go To Home</a>
+        <a data-role="button" id="btn_new_ben_ser" onClick="addNewBen();" class="ui-btn" >Add New Beneficiary</a>      
+        <a data-role="button" id="btn_ben_home_ser" onClick="benGoToHome();" class="ui-btn" >Go To Home</a>
               
         <div class="errorChk"></div>
             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
@@ -839,13 +852,30 @@
                 </select>                	
         	</li>-->
             <li class="ui-field-contain">
-            	<div id="sanLatType_ben"></div>
+                <label for="san_lat_type">Type of Latrine Provided</label>               
+                <select name="san_lat_type" id="san_lat_type" data-native-menu="false">
+                    <option value="0">Select Type of Latrine Provided</option>
+                    <option value="Offset Pit">Offset Pit</option>
+                    <option value="Water Sealed Pit">Water Sealed Pit</option>
+                    <option value="Pit Latrine with Sato Pan">Pit Latrine with Sato Pan</option>
+                    <option value="Shared">Shared</option>
+                </select>	
             </li>
             <li class="ui-field-contain">
-            	<div id="sanActType_ben"></div>
+                <label for="san_act_type">Type of Activity</label>               
+                <select name="san_act_type" id="san_act_type" data-native-menu="false">
+                    <option value="0">Select Type of Activity</option>
+                    <option value="New">New</option>
+                    <option value="Renovation">Renovation</option>
+                </select>	
             </li>
             <li class="ui-field-contain">
-            	<div id="sanSubsidized_ben"></div>                	
+                <label for="san_subsidized">Subsidized</label>               
+                <select name="san_subsidized" id="san_subsidized" data-native-menu="false">
+                    <option value="0">Select Subsidized</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>	
             </li>
             <li class="ui-field-contain">
             	<label for="san_com_date">Date of Completion</label>
@@ -880,9 +910,9 @@
         <br/>
 		<br/>
         <a data-role="button" id="btn_san_submit" onClick="sanDataSubmit();" class="ui-btn" >Submit</a> 
-        <!--<a data-role="button" id="btn_new_ben_san" onClick="addNewBen();" class="ui-btn" >Add New Beneficiary</a> -->
-        <a data-role="button" id="btn_ben_service_san" onClick="services_ben();" class="ui-btn" >Services</a>      
-        <a data-role="button" id="btn_ben_home_san" onClick="goToHome();" class="ui-btn" >Go To Home</a>
+        <a data-role="button" id="btn_new_ben_san" onClick="addNewBen();" class="ui-btn" >Add New Beneficiary</a> 
+        <a data-role="button" id="btn_ben_service_san" onClick="services_ben();" class="ui-btn" >Asign Services</a>      
+        <a data-role="button" id="btn_ben_home_san" onClick="benGoToHome();" class="ui-btn" >Go To Home</a>
 		<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         
     </div>
@@ -926,7 +956,23 @@
                 </select>                	
         	</li>-->
             <li class="ui-field-contain">
-            	<div id="hwType_hwf"></div>
+                <label for="hw_type">Type of Handwash Facilities</label>               
+                <select name="hw_type" id="hw_type" data-native-menu="false">
+                    <option value="0">Select Type of Handwash Facilities</option>
+                    <option value="1">Water tank with tap</option>
+                    <option value="2">Barrel / Drum with pipe line  to Spout / Tap</option>
+                    <option value="3">Bucket with Tap</option>
+                    <option value="4">30L - 50L Barrel with Tap </option>
+                    <option value="5">Pitcher with Tap</option>
+                    <option value="6">Jerkin/Container with Tap</option>
+                    <option value="7">Tippy Tap</option>
+                    <option value="8">Tube Well on Premises</option>
+                    <option value="9">Sink with tap water</option>
+                    <option value="10">Basins</option>
+                    <option value="11">Overhead Tank</option>
+                    <option value="12">Jugs </option>
+                    <option value="13">Bucket with mug </option>
+                </select>	
             </li>
             <li class="ui-field-contain">
             	<label for="hw_com_date">Date of Completion </label>
@@ -965,9 +1011,9 @@
         <br/>
 		<br/>
         <a data-role="button" id="btn_wwf_submit" onClick="wwfDataSubmit();" class="ui-btn" >Submit</a>
-        <!--<a data-role="button" id="btn_new_ben_hwf" onClick="addNewBen();" class="ui-btn" >Add New Beneficiary</a> -->
-        <a data-role="button" id="btn_ben_service_hwf" onClick="services_ben();" class="ui-btn" >Services</a>      
-        <a data-role="button" id="btn_ben_home_hwf" onClick="goToHome();" class="ui-btn" >Go To Home</a> 
+        <a data-role="button" id="btn_new_ben_hwf" onClick="addNewBen();" class="ui-btn" >Add New Beneficiary</a> 
+        <a data-role="button" id="btn_ben_service_hwf" onClick="services_ben();" class="ui-btn" >Asign Services</a>      
+        <a data-role="button" id="btn_ben_home_hwf" onClick="benGoToHome();" class="ui-btn" >Go To Home</a> 
 		<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         
     </div>
@@ -1005,7 +1051,10 @@
                 </select>	
             </li>
             <li class="ui-field-contain" >
-            	<div id="clusterIDNameWP"></div>
+                <label for="clusterIDName">Select Cluster</label>
+                <select name="clusterIDName" id="clusterIDName" data-native-menu="false">
+                    <option value="0">Select Cluster</option>
+                </select>                	
         	</li>  
             <li style="background-color:#F2F2F2;" class="auto_break"><strong>Water Point Details</strong> </li>
             <li class="ui-field-contain">
@@ -1017,13 +1066,31 @@
                 <input type="text" id="wp_org_id" name="wp_org_id"/>
             </li> 
             <li class="ui-field-contain">
-            	<div id="wpActType"></div>
+                <label for="wp_act_type">Type of Activity</label>               
+                <select name="wp_act_type" id="wp_act_type" data-native-menu="false">
+                	<option value="0">Select Type of Activity</option>
+                    <option value="New">New</option>
+                    <option value="Renovation">Renovation</option>
+                </select>	
             </li>
             <li class="ui-field-contain">
-            	<div id="wpTechnology"></div>
+                <label for="wp_technology">Water Point Technology </label>               
+                <select name="wp_technology" id="wp_technology" data-native-menu="false">
+                    <option value="0">Select Water Point Technology</option>
+                    <option value="1">Deep Hand Tubewell</option>
+                    <option value="2">Deep Set Pump</option>
+                    <option value="3">Shallow Tubewell</option>
+                    <option value="4">Semi-Deep Tubewell</option>
+                    <option value="5">Rain Water Harvesting</option>
+                </select>	
             </li>
             <li class="ui-field-contain">
-            	<div id="wpSubsidized"></div>
+                <label for="wp_subsidized">Subsidized</label>               
+                <select name="wp_subsidized" id="wp_subsidized" data-native-menu="false">
+                    <option value="0">Select Subsidized</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>	
             </li>
             <li class="ui-field-contain">
             	<label for="wp_com_date">Date of Completion </label>
@@ -1032,14 +1099,26 @@
             
             <!--<li style="background-color:#F2F2F2;" class="auto_break"><strong>Water Quality</strong> </li>-->
             <li class="ui-field-contain">
-            	<div id="wpWq"></div>
+                <label for="wp_wq">Water Quality Test Type</label>               
+                <select name="wp_wq" id="wp_wq" data-native-menu="false">
+                	<option value="0">Select Water Quality Test Type</option>
+                    <option value="Arsenic">Arsenic</option>
+                    <option value="Bacterial">Bacterial</option>
+                    <option value="Both Arsenic And Bacteria">Both Arsenic & Bacteria</option>
+                </select>	
             </li>
             <li class="ui-field-contain">
             	<label for="wp_wq_date">Date of Water Quality Test</label>
                 <input type="date" id="wp_wq_date" name="wp_wq_date"/>
             </li> 
             <li class="ui-field-contain">
-            	<div id="wpWqResult"></div>
+                <label for="wp_wq_result">Result Water Quality Test</label>               
+                <select name="wp_wq_result" id="wp_wq_result" data-native-menu="false">
+                    <option value="0">Select Result Water Quality Test</option>
+                    <option value="Potable">Potable</option>
+                    <option value="Not Potable">Not Potable</option>
+                    <option value="Not Undertaken Yet">Not Undertaken Yet</option>
+                </select>	
             </li>
                                     
 		</ul>
@@ -1074,16 +1153,10 @@
                     <td ><div id="uni_san_w"></div></td>
                 </tr>
                 <tr style="background-color:#E9E9E9">
-                    <td >Ward No:</td>
+                    <td >Ward:</td>
                     <td ><div id="ward_san_w"></div></td>
                     <td >Cluster</td>
                     <td ><div id="cluster_san_w"></div></td>
-                </tr>
-                <tr style="background-color:#E9E9E9">
-                    <td >Type of Activity:</td>
-                    <td ><div id="wpActType_wp"></div></td>
-                    <td >WP Serial</td>
-                    <td ><div id="wpSerial_wp"></div></td>
                 </tr>
             </table>
             
@@ -1094,16 +1167,22 @@
                 </select>                	
         	</li>
             <li class="ui-field-contain">
-            	<div id="wpTubPre"></div>
+                <label for="wp_tub_pre">Tubewell Located on Premises</label>               
+                <select name="wp_tub_pre" id="wp_tub_pre" data-native-menu="false">
+                    <option value="0">Select TW Located on Premises</option>
+                    <option value="1">On Premises</option>
+                    <option value="2">&#8805; 30 min</option>
+                    <option value="3">&#62; 30 min</option>
+                </select>	
             </li>
-             <!--<li class="ui-field-contain">
+             <li class="ui-field-contain">
                 <label for="sps_family">Sponsorship Family</label>               
                 <select name="sps_family" id="sps_family" data-native-menu="false">
                 	<option value="0">Select Sponsorship Family</option>
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
                 </select>	
-            </li>-->
+            </li>
             <li class="ui-field-contain">
             	<input type="button" id="benAdd" value="ADD" />
             </li>
@@ -1115,6 +1194,7 @@
                   <tr>
                     <th scope="col">HH Name</th>
                     <th scope="col">TW Location</th>
+                    <th scope="col" >SP Family</th>
                     <th scope="col" ></th>
                   </tr>
                 </table>
@@ -1150,8 +1230,8 @@
         <br/>
 		<br/>
         <a data-role="button" id="btn_wp_submit" onClick="wpDataSubmit();" class="ui-btn" >Submit</a>
-        <!--<a data-role="button" id="btn_addNew_wp" onClick="addNewWP();" class="ui-btn" >Add New Water Point</a> -->
-        <a data-role="button" id="btn_home_wp" onClick="goToHome();" class="ui-btn" >Go To Home</a> 
+        <a data-role="button" id="btn_addNew_wp" onClick="addNewWP();" class="ui-btn" >Add New Water Point</a> 
+        <a data-role="button" id="btn_home_wp" onClick="benGoToHome();" class="ui-btn" >Go To Home</a> 
 		<br/>
         
         
