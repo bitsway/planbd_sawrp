@@ -53,7 +53,7 @@ function onError(error) {
    $("#ach_long").val(0);*/
    $("#ach_lat").val(localStorage.latitudeAreaWq);
    $("#ach_long").val(localStorage.longitudeAreaWq);
-   $(".errorChk").html("Failed to Confirmed Location.");
+   $(".errorChk").html("Previous Location Confirmed");
 }
 
 //=======Sanitaiton======
@@ -75,7 +75,7 @@ function onError_san(error) {
    $("#ach_long_san").val(0);*/
    $("#ach_lat_san").val(localStorage.latitudeAreaWq);
    $("#ach_long_san").val(localStorage.longitudeAreaWq);
-   $(".errorChk").html("Failed to Confirmed Location.");
+   $(".errorChk").html("Previous Location Confirmed");
 }
 
 //=======HWF======
@@ -97,7 +97,7 @@ function onError_wwf(error) {
    $("#ach_long_wwf").val(0);*/
    $("#ach_lat_wwf").val(localStorage.latitudeAreaWq);
    $("#ach_long_wwf").val(localStorage.longitudeAreaWq);
-   $(".errorChk").html("Failed to Confirmed Location.");
+   $(".errorChk").html("Previous Location Confirmed");
 }
 
 //=======WP======
@@ -119,7 +119,7 @@ function onError_wp(error) {
    $("#ach_long_wp").val(0);*/
    $("#ach_lat_wp").val(localStorage.latitudeAreaWq);
    $("#ach_long_wp").val(localStorage.longitudeAreaWq);
-   $(".errorChk").html("Failed to Confirmed Location.");
+   $(".errorChk").html("Previous Location Confirmed");
 }
 
 
