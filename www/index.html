@@ -101,9 +101,15 @@
             <ul data-role="listview" data-inset="true">
             	<li><a href="#" onclick="wp('wp')" data-transition="slide">Water Point</a></li>
             </ul>
+            <br />
+           <ul data-role="listview" data-inset="true">
+                <input name="area_lat" id="area_lat"  type="hidden">
+                <input name="area_long" id="area_long"  type="hidden">
+        		<a data-role="button" id="btn_area_lat_long" onClick="getLocationInfoAreaWq();" class="ui-btn" >Area location</a>
+           </ul> 
     </div>
     
-    <div data-theme="c" data-role="footer" data-position="fixed" style="font-size:12px;background-color:#CCC;" align="center" >mReporting 20171204</div><!------/footer 20150401-20150309 -->
+    <div data-theme="c" data-role="footer" data-position="fixed" style="font-size:12px;background-color:#CCC;" align="center" >mReporting 20171206</div><!------/footer 20150401-20150309 -->
     
     <div data-role="panel" id="leftpanel" data-position="left" data-display="overlay" data-theme="c">
         <div align="center"></div>
@@ -571,7 +577,6 @@
 </div>
 
 
-
 <div data-role="page" data-theme="c" id="ben_new_page" style="overflow:scroll;">
     <div data-theme="c" data-role="header" data-position="fixed" >
         <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
@@ -775,7 +780,7 @@
                     <td ><div id="uni_san_c"></div></td>
                 </tr>
                 <tr style="background-color:#E9E9E9">
-                    <td >Ward:</td>
+                    <td >Ward No:</td>
                     <td ><div id="ward_san_c"></div></td>
                     <td > Cluster</td>
                     <td ><div id="cluster_san_c"></div></td>
@@ -825,7 +830,7 @@
                     <td ><div id="uni_san_san"></div></td>
                 </tr>
                 <tr style="background-color:#E9E9E9">
-                    <td >Ward:</td>
+                    <td >Ward No:</td>
                     <td ><div id="ward_san_san"></div></td>
                     <td > Cluster</td>
                     <td ><div id="cluster_san_san"></div></td>
@@ -912,7 +917,7 @@
                     <td ><div id="uni_san_hwf"></div></td>
                 </tr>
                 <tr style="background-color:#E9E9E9">
-                    <td >Ward:</td>
+                    <td >Ward No:</td>
                     <td ><div id="ward_san_hwf"></div></td>
                     <td > Cluster</td>
                     <td ><div id="cluster_san_hwf"></div></td>
@@ -1009,7 +1014,7 @@
         	</li>  
             <li style="background-color:#F2F2F2;" class="auto_break"><strong>Water Point Details</strong> </li>
             <li class="ui-field-contain">
-            	<label for="wp_serial">WP Serial </label>
+            	<label for="wp_serial">WP Serial <span style="font-size:11px;">(3 digit)</span></label>
                 <input type="number" id="wp_serial" name="wp_serial"/>
             </li> 
             <li class="ui-field-contain">

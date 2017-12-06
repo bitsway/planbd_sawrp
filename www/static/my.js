@@ -36,7 +36,7 @@ var wp_latitude="";
 var wp_longitude="";
 //=============
 function getLocationInfoAch() {	
-	var options = { enableHighAccuracy: false};	
+	var options = { enableHighAccuracy: true, timeout:30000};
 	navigator.geolocation.getCurrentPosition(onSuccess, onError, options);				
 	$(".errorChk").html("Confirming location. Please wait.");
 }
@@ -48,14 +48,17 @@ function onSuccess(position) {
 }
 // onError Callback receives a PositionError object
 function onError(error) {
-   $("#ach_lat").val(0);
-   $("#ach_long").val(0);
+	//alert(localStorage.latitudeAreaWq+'-'+localStorage.longitudeAreaWq);
+   /*$("#ach_lat").val(0);
+   $("#ach_long").val(0);*/
+   $("#ach_lat").val(localStorage.latitudeAreaWq);
+   $("#ach_long").val(localStorage.longitudeAreaWq);
    $(".errorChk").html("Failed to Confirmed Location.");
 }
 
 //=======Sanitaiton======
 function getLocationInfoAch_san() {	
-	var options = { enableHighAccuracy: false};	
+	var options = { enableHighAccuracy: true, timeout:30000};	
 	navigator.geolocation.getCurrentPosition(onSuccess_san, onError_san, options);				
 	$(".errorChk").html("Confirming location. Please wait.");
 }
@@ -67,14 +70,17 @@ function onSuccess_san(position) {
 }
 // onError Callback receives a PositionError object
 function onError_san(error) {
-   $("#ach_lat_san").val(0);
-   $("#ach_long_san").val(0);
+	//alert(localStorage.latitudeAreaWq+'-'+localStorage.longitudeAreaWq);
+   /*$("#ach_lat_san").val(0);
+   $("#ach_long_san").val(0);*/
+   $("#ach_lat_san").val(localStorage.latitudeAreaWq);
+   $("#ach_long_san").val(localStorage.longitudeAreaWq);
    $(".errorChk").html("Failed to Confirmed Location.");
 }
 
 //=======HWF======
 function getLocationInfoAch_wwf() {	
-	var options = { enableHighAccuracy: false};	
+	var options = { enableHighAccuracy: true, timeout:30000};	
 	navigator.geolocation.getCurrentPosition(onSuccess_wwf, onError_wwf, options);				
 	$(".errorChk").html("Confirming location. Please wait.");
 }
@@ -86,14 +92,17 @@ function onSuccess_wwf(position) {
 }
 // onError Callback receives a PositionError object
 function onError_wwf(error) {
-   $("#ach_lat_wwf").val(0);
-   $("#ach_long_wwf").val(0);
+	//alert(localStorage.latitudeAreaWq+'-'+localStorage.longitudeAreaWq);
+  /* $("#ach_lat_wwf").val(0);
+   $("#ach_long_wwf").val(0);*/
+   $("#ach_lat_wwf").val(localStorage.latitudeAreaWq);
+   $("#ach_long_wwf").val(localStorage.longitudeAreaWq);
    $(".errorChk").html("Failed to Confirmed Location.");
 }
 
 //=======WP======
 function getLocationInfoAch_wp() {	
-	var options = { enableHighAccuracy: false};	
+	var options = { enableHighAccuracy: true, timeout:30000};	
 	navigator.geolocation.getCurrentPosition(onSuccess_wp, onError_wp, options);				
 	$(".errorChk").html("Confirming location. Please wait.");
 }
@@ -105,19 +114,53 @@ function onSuccess_wp(position) {
 }
 // onError Callback receives a PositionError object
 function onError_wp(error) {
-   $("#ach_lat_wp").val(0);
-   $("#ach_long_wp").val(0);
+	//alert(localStorage.latitudeAreaWq+'-'+localStorage.longitudeAreaWq);
+   /*$("#ach_lat_wp").val(0);
+   $("#ach_long_wp").val(0);*/
+   $("#ach_lat_wp").val(localStorage.latitudeAreaWq);
+   $("#ach_long_wp").val(localStorage.longitudeAreaWq);
    $(".errorChk").html("Failed to Confirmed Location.");
 }
+
+
+
+//=======Area
+function getLocationInfoAreaWq() {
+	var options = { enableHighAccuracy: true, timeout:30000};
+	navigator.geolocation.getCurrentPosition(onSuccessAreaWq, onErrorAreaWq, options);		
+	$(".errorChk").html("Confirming location. Please wait.");
+}
+
+// onSuccess Geolocation
+function onSuccessAreaWq(position) {
+	$("#area_lat").val(position.coords.latitude);
+	$("#area_long").val(position.coords.longitude);	
+	localStorage.latitudeAreaWq=$("#area_lat").val();
+	localStorage.longitudeAreaWq=$("#area_long").val();
+	
+	$(".errorChk").html("Location Confirmed");
+	
+}
+// onError Callback receives a PositionError object
+function onErrorAreaWq(error) {
+	$("#area_lat").val(0);
+	$("#area_long").val(0);
+	/*localStorage.latitudeAreaWq=$("#area_lat").val();
+	localStorage.longitudeAreaWq=$("#area_long").val();*/
+	//alert(localStorage.latitudeAreaWq+'-'+localStorage.longitudeAreaWq);
+	$(".errorChk").html("Failed to Confirmed Location.");
+}
+
 //---- online
-var apipath="http://w02.yeapps.com/planbd_sawrp/syncmobile_20171204/";
+var apipath="http://w02.yeapps.com/planbd_sawrp/syncmobile_20171206/";
 
 //--- local
-//var apipath="http://127.0.0.1:8000/planbd_sawrp/syncmobile_20171204/";
+//var apipath="http://127.0.0.1:8000/planbd_sawrp/syncmobile_20171206/";
 
 url ="";
-var hhIDList=''
-var benList=''
+var wpTubTreList='';
+var hhIDList='';
+var benList='';
 var benCount=1;
 $(document).ready(function(){
 	if (localStorage.synced!='YES'){
@@ -210,12 +253,14 @@ $(document).ready(function(){
 			var wpWqResult='<label for="wp_wq_result">Result Water Quality Test</label><select name="wp_wq_result" id="wp_wq_result" data-native-menu="false"><option value="0">Select Result Water Quality Test</option><option value="Potable">Potable</option><option value="Not Potable">Not Potable</option><option value="Not Undertaken Yet">Not Undertaken Yet</option></select>'	
 			$("#wpWqResult").html(wpWqResult);	
 			
-			var wpTubPre='<label for="wp_tub_pre">Tubewell Located on Premises</label><select name="wp_tub_pre" id="wp_tub_pre" data-native-menu="false"><option value="0">Select TW Located on Premises</option><option value="1">On Premises</option><option value="2">\u2266 30 min</option><option value="3">&#62; 30 min</option></select>'	
+			var wpTubPre='<label for="wp_tub_pre">Tubewell Located on Premises</label><select name="wp_tub_pre" id="wp_tub_pre" data-native-menu="false"><option value="0">Select TW Located on Premises</option><option value="1">On Premises</option><option value="2">Up to 30 min (\u2266 30)</option><option value="3">More than 30 min (&#62 30)</option></select>'	
 			$("#wpTubPre").html(wpTubPre);
 			
 			//-----------
-			$("#benAdd").click(function(){
+			var wpPreHHId='';
 			
+			$("#benAdd").click(function(){
+			$(".errorChk").text("");	
 			 wp_hhSerail=$("#wp_hhSerail").val();
 			 wp_tub_pre=$("#wp_tub_pre").val();
 			 //sps_family=$("#sps_family").val();
@@ -231,35 +276,118 @@ $(document).ready(function(){
 			/*}else if(sps_family=='' || sps_family==0){
 				$(".errorChk").text('Required Sponsorship Family');*/
 			}else{
-				tub_pre='';
-				if(wp_tub_pre==1){
-					tub_pre='On Premises'
-				}else if(wp_tub_pre==2){
-					tub_pre='\u2266 30 min'
-				}else{
-					tub_pre='&#62; 30 min'
-				}
 				
-				var i="<tr id='"+wpHHID+"'><td>"+wpHHID+"-"+wpHHName+"</td><td>"+tub_pre+"</td><td>"+'<input style="background-color:#99dfff;" type="button" onclick="rowRemove(\''+wpHHID+'\')" value="X">'+"</td></tr>"
-				
-				if( hhIDList.indexOf(wpHHID) >-1 ){
-					$(".errorChk").text("HH Name Already Exit");
+				/*if( hhIDList.indexOf(wpHHID) >-1 ){
+					$(".errorChk").text("Already Exit HH Name");			
 				}else{
-					$("#benTable").append(i);
-					benCount+=1;
-					$(".errorChk").text("");
+					if( wpTubTreList.indexOf(wp_tub_pre) >-1 ){			
+						$(".errorChk").text("Already Exit TW Located on Premises");
+						/*if( hhIDList.indexOf(wpHHID) >=0 && hhIDList.indexOf(parseInt(wpPreHHId)) >=0 ){
+							
+					}else{	*/
 					
+					
+					errorFlag=0
 					if(benList=="" ){
-						benList=wpHHID+","+wp_tub_pre//+","+sps_family;
+						benList=wpHHID+"|"+wpHHName+"|"+wp_tub_pre;
 					}else{
-						benList +="||"+wpHHID+","+wp_tub_pre//+","+sps_family;
+						h=0
+						s=0
+						benListH=benList.split('||');
+						for (m=0;m<benListH.length;m++){
+							benListS=benListH[m].split('|');
+							
+							if (benListS[0]==wpHHID){
+								h=1								
+							}															
+							
+						}
+						
+						if(wp_tub_pre==1){
+							benListH1=benList.split('||');
+							for (m=0;m<benListH1.length;m++){
+								benListS1=benListH1[m].split('|');								
+								if(benListS1[0]==wpHHID && benListS1[2]==wp_tub_pre ){
+									s=1
+								}else if(benListS1[0]!=wpHHID && benListS1[2]==wp_tub_pre ){
+									s=1
+								}														
+							}						
+						}else{
+							s=0
+						}
+														
+							
+						
+						if (h==1){
+							errorFlag=1							
+						}else {
+							if (h==0 && s==1){
+								errorFlag=2								
+							}else{
+								if (h==1 && s==1){
+									errorFlag=2
+								}else{
+									benList +="||"+wpHHID+"|"+wpHHName+"|"+wp_tub_pre;
+								}
+							}
+						}
+						
+						
 					}
-					if(hhIDList=="" ){
-						hhIDList=wpHHID;
-					}else{
-						hhIDList +="||"+wpHHID;
-					}
-				}
+					
+					
+						
+						/*if(hhIDList=="" ){
+							hhIDList=wpHHID;
+						}else{
+							hhIDList +="||"+wpHHID;
+						}
+						
+						if(wpTubTreList=="" ){
+							wpTubTreList=wp_tub_pre;
+						}else{
+							wpTubTreList +="||"+wp_tub_pre;
+						}*/
+						
+						if(errorFlag==1){
+							$(".errorChk").text("Already Exit HH Name");
+						}else{
+							if(errorFlag==2){
+								$(".errorChk").text("Already Exit TW Located on Premises");
+								}else{
+									
+									benListH=benList.split('||');
+									i="";
+									for (m=0;m<benListH.length;m++){
+										benListS=benListH[m].split('|');
+										
+																
+										tub_pre='';
+										if(benListS[2]==1){
+											tub_pre='On Premises'
+											//wpPreHHId=wpHHID
+										}else if(benListS[2]==2){
+											tub_pre='Up to 30 min (\u2266 30)'
+										}else{
+											tub_pre='More than 30 min (&#62 30)'
+										}
+									
+										 i+="<tr id='"+benListS[0]+"'><td>"+benListS[0]+"-"+benListS[1]+"</td><td>"+tub_pre+"</td><td>"+'<input style="background-color:#99dfff;" type="button" onclick="rowRemove(\''+benListS[0]+'\')" value="X">'+"</td></tr>";
+										benCount+=1;
+									
+									}
+									$("#benTable").html(i);
+																		
+									}
+							
+							}
+											
+							
+							
+				/*	}
+				}*/
+				
 			}
 			
 		 });
@@ -272,12 +400,13 @@ $(document).ready(function(){
 
 function rowRemove(wpHHID){
 	$("#"+wpHHID).remove();	
+	//alert(wpHHID);
 	benCount-=1;
 	var listS='';
 	iStrS=benList.split('||');
 	iLenS=iStrS.length
 	for(i=0;i<iLenS;i++){
-		iStrDS=iStrS[i].split(',');
+		iStrDS=iStrS[i].split('|');
 		
 		if(iStrDS[0]!=wpHHID){
 			if (listS==''){
@@ -289,9 +418,9 @@ function rowRemove(wpHHID){
 	}
 	
 	benList=listS
-	
+	//alert(benList)
 	//==========
-	var repl1='';
+	/*var repl1='';
 	iStr=hhIDList.split('||');
 	iLen=iStr.length
 	for(i=0;i<iLen;i++){
@@ -305,8 +434,27 @@ function rowRemove(wpHHID){
 			}	
 		}		
 	}
+	hhIDList=repl1*/
 	
-	hhIDList=repl1
+	//============
+	
+	
+	/*var repWpTub='';
+	iStrWp=benList.split('||');
+	iLenWp=iStrWp.length
+	for(j=0;j<iLenWp;j++){
+		iStrDwp=iStrWp[j].split(',');
+		
+		if(iStrDwp[0]!=wp_tub_pre){
+			if (repWpTub==''){
+				repWpTub=iStrWp[j]
+			}else{
+				repWpTub+='||'+iStrWp[j]
+			}	
+		}		
+	}
+	wpTubTreList=repWpTub
+	alert(wpTubTreList);*/
 }
 
 function syncBasic(){
@@ -433,9 +581,9 @@ function syncBasic(){
 					var wpWqResult='<label for="wp_wq_result">Result Water Quality Test</label><select name="wp_wq_result" id="wp_wq_result" data-native-menu="false"><option value="0">Select Result Water Quality Test</option><option value="Potable">Potable</option><option value="Not Potable">Not Potable</option><option value="Not Undertaken Yet">Not Undertaken Yet</option></select>'	
 					$("#wpWqResult").html(wpWqResult);
 					
-					var wpTubPre='<label for="wp_tub_pre">Tubewell Located on Premises</label><select name="wp_tub_pre" id="wp_tub_pre" data-native-menu="false"><option value="0">Select TW Located on Premises</option><option value="1">On Premises</option><option value="2">\u2266 30 min</option><option value="3">&#62; 30 min</option></select>'	
+					var wpTubPre='<label for="wp_tub_pre">Tubewell Located on Premises</label><select name="wp_tub_pre" id="wp_tub_pre" data-native-menu="false"><option value="0">Select TW Located on Premises</option><option value="1">On Premises</option><option value="2">Up to 30 min (\u2266 30)</option><option value="3">More than 30 min (&#62 30)</option></select>'	
 					$("#wpTubPre").html(wpTubPre);
-										
+															
 					$(".errorMsg").html("Sync Successful");
 					$('#syncBasic').show();
 											
@@ -852,6 +1000,10 @@ function dataSubmit(){
 	}else if (achPhoto_2=='' || achPhoto_2==undefined){
 		$(".errorChk").text("Please confirm Photo 2 ");
 		$("#btn_submit").show();
+	}else if((latitude==0 || longitude==0) ||(localStorage.latitudeAreaWq==0 || localStorage.longitudeAreaWq==0)||(localStorage.latitudeAreaWq==undefined || localStorage.longitudeAreaWq==undefined)){
+		$(".errorChk").text("Please confirm your location");
+		$("#btn_ach_lat_long").show();
+		$("#btn_submit").show();
 	}else{				
 		//imagePathA="test"					
 		if (imagePathA!=""){							
@@ -860,9 +1012,10 @@ function dataSubmit(){
 			uploadPhotoAch(imagePathA, imageName);	
 			//$("#btn_submit").show();					
 		}		
+		//syncData();
 	}//chk photo
 	
-//syncData();
+
 	
 }
 
@@ -968,7 +1121,11 @@ function winComInfo2(r) {
 	syncData();
 }
 
-function syncData(){				
+function syncData(){
+	if(latitude==0 || longitude==0){
+		latitude=localStorage.latitudeAreaWq;
+		longitude=localStorage.longitudeAreaWq;
+	}				
 	//alert(apipath+"submitData?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName+"&achPhoto2="+imageName2+"&latitude="+latitude+"&longitude="+longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ward="+ward+"&village="+village+"&clusID="+clusID+"&clusName="+clusName+"&socialMapID="+socialMapID+"&rich="+rich+"&middle="+middle+"&poor="+poor+"&exPoor="+exPoor+"&hyLatrine="+hyLatrine+"&unhyLatrine="+unhyLatrine+"&noLatrine="+noLatrine+"&hyTub="+hyTub+"&unhyTub="+unhyTub+"&noTub="+noTub+"&hwYes="+hwYes+"&hwNo="+hwNo+"&odfStatus="+odfStatus+"&commExit="+commExit+"&commFunc="+commFunc+"&commFemale="+commFemale+"&commMale="+commMale+"&benTotal="+benTotal+"&benG_5="+benG_5+"&benB_5="+benB_5+"&benG_5_18="+benG_5_18+"&benB_5_18="+benB_5_18+"&benF_18_plus="+benF_18_plus+"&benM_18_plus="+benM_18_plus+"&EthF="+EthF+"&EthM="+EthM+"&disG_5="+disG_5+"&disB_5="+disB_5+"&disG_5_18="+disG_5_18+"&disB_5_18="+disB_5_18+"&disF_18_plus="+disF_18_plus+"&disM_18_plus="+disM_18_plus);
 	$.ajax({
 		type: 'POST',
@@ -1258,7 +1415,8 @@ function ben_planbdData1Next(){
 					resultSearch=searchResultArray[0];
 					
 					if (resultSearch=='Success'){
-						$("#btn_ben_service").hide();								
+						
+						//$("#btn_ben_service").hide();								
 						$(".errorChk").text("");			
 						url="#ben_new_page";					
 						$.mobile.navigate(url);
@@ -1266,7 +1424,8 @@ function ben_planbdData1Next(){
 						$(".errorChk").text("");			
 						url="#ben_second_page";					
 						$.mobile.navigate(url);
-					}			
+					}
+							
 			}
 		})
 		
@@ -1280,7 +1439,16 @@ function ben_planbdData1Next(){
 }
 
 function ben_update(){
-	//alert(apipath+"update_beneficary?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_hh_serial="+localStorage.hh_serial);
+		var benGender='<label for="ben_hh_head_gender">HH Head Gender</label><select id="ben_hh_head_gender" name="ben_hh_head_gender" data-native-menu="false"><option value="0">Select HH Head Gender</option><option value="Male">Male</option><option value="Female">Female</option></select>'
+		$("#benGender").html(benGender);
+		
+		var benEcoCondition='<label for="ben_eco_condition">Economic Condition</label><select id="ben_eco_condition" name="ben_eco_condition" data-native-menu="false"><option value="0">Select Economic Condition</option><option value="Rich">A: Rich</option><option value="Middle">B: Middle Class</option><option value="Poor">C: Poor</option><option value="Exterme Poor">D: Exterme Poor</option></select>'
+		$("#benEcoCondition").html(benEcoCondition);
+		
+		var spsFamily_ben='<label for="sps_family">Sponsorship Family</label><select name="sps_family" id="sps_family" data-native-menu="false"><option value="0">Select Sponsorship Family</option><option value="Yes">Yes</option><option value="No">No</option></select>'
+		$("#spsFamily_ben").html(spsFamily_ben);
+	
+		//alert(apipath+"update_beneficary?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_hh_serial="+localStorage.hh_serial);
 		$.ajax({
 			type:'POST',
 			url:apipath+"update_beneficary?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_hh_serial="+localStorage.hh_serial,
@@ -1311,7 +1479,6 @@ function ben_update(){
 						
 						$("#ben_hh_head_name").val(ben_hh_head_name);
 						$("#ben_hh_head_gender").val(ben_hh_head_gender);
-						$("#ben_eco_condition").val(ben_eco_condition);
 						$("#ben_eco_condition").val(ben_eco_condition);
 						$("#ben_benG_5").val(ben_benG_5);
 						$("#ben_benB_5").val(ben_benB_5);
@@ -1494,37 +1661,6 @@ function benDataSubmit(){
 				//$("#btn_new_ben").show();
 				$("#btn_ben_service").show();
 				$("#btn_ben_home").show();
-			}else if(result=='updated'){
-				$("#ben_ward").val(0);
-				$("#ben_clusID").val(0);
-				$("#ben_hh_serial").val("");								
-				
-				$("#ben_hh_id").val("");
-				$("#ben_hh_head_name").val("");
-				$("#ben_hh_head_gender").val(0);
-				$("#ben_eco_condition").val(0);
-				$("#ben_benG_5").val("");
-				$("#ben_benB_5").val("");
-				$("#ben_benG_5_18").val("");
-				$("#ben_benB_5_18").val("");
-				$("#ben_benF_18_plus").val("");
-				$("#ben_benM_18_plus").val("");
-				$("#benBen_Total").val("");
-				$("#ben_EthF").val("");
-				$("#ben_EthM").val("");
-				$("#ben_disG_5").val("");
-				$("#ben_disB_5").val("");
-				$("#ben_disG_5_18").val("");
-				$("#ben_disB_5_18").val("");
-				$("#ben_disF_18_plus").val("");
-				$("#ben_disM_18_plus").val("");
-														
-				$(".sucChk").text('Successfully Updated');
-				$(".errorChk").text("");
-				$("#btn_ben_submit").hide();
-				//$("#btn_new_ben").show();
-				$("#btn_ben_service").hide();
-				$("#btn_ben_home").show();
 			}else{
 				$(".errorChk").text('Submission Failed.');																	
 				$("#btn_ben_submit").show();
@@ -1605,11 +1741,12 @@ function goToHome(){
 	var wpWqResult='<label for="wp_wq_result">Result Water Quality Test</label><select name="wp_wq_result" id="wp_wq_result" data-native-menu="false"><option value="0">Select Result Water Quality Test</option><option value="Potable">Potable</option><option value="Not Potable">Not Potable</option><option value="Not Undertaken Yet">Not Undertaken Yet</option></select>'	
 	$("#wpWqResult").html(wpWqResult).trigger('create');
 	
-	var wpTubPre='<label for="wp_tub_pre">Tubewell Located on Premises</label><select name="wp_tub_pre" id="wp_tub_pre" data-native-menu="false"><option value="0">Select TW Located on Premises</option><option value="1">On Premises</option><option value="2">\u2266 30 min</option><option value="3">&#62; 30 min</option></select>'	
+	var wpTubPre='<label for="wp_tub_pre">Tubewell Located on Premises</label><select name="wp_tub_pre" id="wp_tub_pre" data-native-menu="false"><option value="0">Select TW Located on Premises</option><option value="1">On Premises</option><option value="2">Up to 30 min (\u2266 30)</option><option value="3">More than 30 min (&#62 30)</option></select>'	
 	$("#wpTubPre").html(wpTubPre).trigger('create');
-	
+		
 	benList='';	
 	hhIDList='';	
+	wpTubTreList='';
 	$("#benTable").empty();				
 	$("#btn_wp_submit").show();
 	$("#btn_home_wp").hide();
@@ -1775,6 +1912,10 @@ function sanDataSubmit() {
 	if (achPhoto_san=='' || achPhoto_san==undefined){
 		$(".errorChk").text("Please confirm Photo 1 ");
 		$("#btn_san_submit").show();
+	}else if((san_latitude==0 || san_longitude==0) ||(localStorage.latitudeAreaWq==0 || localStorage.longitudeAreaWq==0)||(localStorage.latitudeAreaWq==undefined || localStorage.longitudeAreaWq==undefined)){
+		$(".errorChk").text("Please confirm your location");
+		$("#btn_ach_lat_long_san").show();
+		$("#btn_san_submit").show();
 	}else{				
 		//imagePathA_san="test"					
 		if (imagePathA_san != ""){							
@@ -1783,9 +1924,10 @@ function sanDataSubmit() {
             uploadPhotoAch_san(imagePathA_san, imageName_san);	
 			//$("#btn_san_submit").show();					
 		}		
+		//syncDataSan();
 	}//chk photo
 	
-//syncDataSan();                        
+                        
 	
 }
 
@@ -1839,7 +1981,12 @@ function onfail_san(r) {
 }
 
 
-function syncDataSan(){		
+function syncDataSan(){	
+	if(san_latitude==0 || san_longitude==0){
+		san_latitude=localStorage.latitudeAreaWq;
+		san_longitude=localStorage.longitudeAreaWq;
+	}	
+		
 	//alert(apipath+"submitData_san?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_san+"&latitude="+san_latitude+"&longitude="+san_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&clsId="+ben_clusID+"&clsName="+encodeURIComponent(ben_clusName)+"&sanHHserial="+localStorage.hh_serial+"&sanHHName="+encodeURIComponent(localStorage.hh_head_name)+"&san_lat_type="+san_lat_type+"&san_act_type="+san_act_type+"&san_subsidized="+san_subsidized+"&san_com_date="+san_com_date);
 	$.ajax({
 		type:'POST',
@@ -1942,6 +2089,10 @@ function wwfDataSubmit(){
 	if (achPhoto_wwf=='' || achPhoto_wwf==undefined){
 		$(".errorChk").text("Please confirm Photo 1 ");
 		$("#btn_wwf_submit").show();
+	}else if((wwf_latitude==0 || wwf_longitude==0) ||(localStorage.latitudeAreaWq==0 || localStorage.longitudeAreaWq==0)||(localStorage.latitudeAreaWq==undefined || localStorage.longitudeAreaWq==undefined)){
+		$(".errorChk").text("Please confirm your location");
+		$("#btn_ach_lat_long_wwf").show();
+		$("#btn_wwf_submit").show();
 	}else{
 		//if (achPhoto_2_wwf=='' || achPhoto_2_wwf==undefined){
 //			$(".errorChk").text("Please confirm Photo 2 ");
@@ -1958,13 +2109,13 @@ function wwfDataSubmit(){
 					uploadPhotoAch_wwf(imagePathA_wwf, imageName_wwf);	
 					//$("#btn_wwf_submit").show();					
 				}
-									
+				//syncDataHwf();					
 			//} //-end check location
 			
 		//}//Photo 2
 	}//chk photo
 	
-//syncDataHwf();
+
 	
 }
 
@@ -2078,7 +2229,12 @@ function onfail_wwf(r) {
 	$("#btn_wwf_submit").show();
 }
 
-function syncDataHwf(){		
+function syncDataHwf(){	
+	if(wwf_latitude==0 || wwf_longitude==0){
+		wwf_latitude=localStorage.latitudeAreaWq;
+		wwf_longitude=localStorage.longitudeAreaWq;
+	}
+		
 	//alert(apipath+"submitData_hwf?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wwf+"&latitude="+wwf_latitude+"&longitude="+wwf_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&clsId="+ben_clusID+"&clsName="+encodeURIComponent(ben_clusName)+"&sanHHserial="+localStorage.hh_serial+"&sanHHName="+encodeURIComponent(localStorage.hh_head_name)+"&hw_type="+hw_type+"&hw_com_date="+hw_com_date);
 	$.ajax({
 		type:'POST',
@@ -2334,7 +2490,7 @@ function clusterIDNAme(){
 
 
 function clusterData(){
-	if(hhIDList==''){
+	if(benList==''){
 		$(".errorChk").text("Required HH List");		
 	}else{
 			
@@ -2368,6 +2524,10 @@ function wpDataSubmit(){
 	if (achPhoto_wp=='' || achPhoto_wp==undefined){
 		$(".errorChk").text("Please confirm Photo 1 ");
 		$("#btn_wp_submit").show();
+	}else if((wp_latitude==0 || wp_longitude==0) ||(localStorage.latitudeAreaWq==0 || localStorage.longitudeAreaWq==0)||(localStorage.latitudeAreaWq==undefined || localStorage.longitudeAreaWq==undefined)){
+		$(".errorChk").text("Please confirm your location");
+		$("#btn_ach_lat_long_wp").show();
+		$("#btn_wp_submit").show();
 	}else{		
 		//if(latitude==0 || latitude==0){
 		//	$(".errorChk").text("Please confirm your location ");
@@ -2380,12 +2540,12 @@ function wpDataSubmit(){
 				uploadPhotoAch_wp(imagePathA_wp, imageName_wp);	
 				//$("#btn_wp_submit").show();					
 			}
-								
+			//syncDataWp();					
 		//} //-end check location
 		
 	}//chk photo
 	
-//syncDataWp();
+
 	
 }
 
@@ -2439,6 +2599,11 @@ function onfail_wp(r) {
 
 
 function syncDataWp(){
+	if(wp_latitude==0 || wp_longitude==0){
+		wp_latitude=localStorage.latitudeAreaWq;
+		wp_longitude=localStorage.longitudeAreaWq;
+	}
+	
     //alert(apipath+"submitData_wp?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wp+"&latitude="+wp_latitude+"&longitude="+wp_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&wp_ward="+wp_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&wp_serial="+wp_serial+"&wp_org_id="+wp_org_id+"&wp_act_type="+wp_act_type+"&wp_technology="+wp_technology+"&wp_subsidized="+wp_subsidized+"&wp_com_date="+wp_com_date+"&wp_wq="+wp_wq+"&wp_wq_date="+wp_wq_date+"&wp_wq_result="+wp_wq_result+"&benList="+encodeURIComponent(benList))
 	$.ajax({
 		type:'POST',
@@ -2470,6 +2635,7 @@ function syncDataWp(){
 				document.getElementById('myImageA_wp').src = '';	
 				benList='';	
 				hhIDList='';
+				wpTubTreList='';
 				$("#benTable").empty();
 				$(".sucChk").text('Successfully Submitted');
 				$(".errorChk").text("");
