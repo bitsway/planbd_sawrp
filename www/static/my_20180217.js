@@ -143,19 +143,19 @@ function onSuccessAreaWq(position) {
 }
 // onError Callback receives a PositionError object
 function onErrorAreaWq(error) {
-	$("#area_lat").val(1);
-	$("#area_long").val(1);
-	localStorage.latitudeAreaWq=$("#area_lat").val();
-	localStorage.longitudeAreaWq=$("#area_long").val();
+	$("#area_lat").val(0);
+	$("#area_long").val(0);
+	/*localStorage.latitudeAreaWq=$("#area_lat").val();
+	localStorage.longitudeAreaWq=$("#area_long").val();*/
 	//alert(localStorage.latitudeAreaWq+'-'+localStorage.longitudeAreaWq);
 	$(".errorChk").html("Failed to Confirmed Location.");
 }
 
 //---- online
-var apipath="http://w02.yeapps.com/planbd_sawrp/syncmobile_20180218/";
+var apipath="http://w02.yeapps.com/planbd_sawrp/syncmobile_20171206/";
 
 //--- local
-//var apipath="http://127.0.0.1:8000/planbd_sawrp/syncmobile_20180218/";
+//var apipath="http://127.0.0.1:8000/planbd_sawrp/syncmobile_20171206/";
 
 url ="";
 var wpTubTreList='';
@@ -222,7 +222,7 @@ $(document).ready(function(){
 			$("#spsFamily_ben").html(spsFamily_ben);
 			
 			//----------Sanation
-			var sanLatType_ben='<label for="san_lat_type">Type of Latrine Provided</label><select name="san_lat_type" id="san_lat_type" data-native-menu="false"><option value="0">Select Type of Latrine Provided</option><option value="Offset Pit">Offset Pit</option><option value="Water Seal Pit">Water Seal Pit</option><option value="Pit Latrine with Sato Pan">Pit Latrine with Sato Pan</option><option value="Shared Offset Pit">Shared-Offset Pit</option><option value="Shared Water Seal Pit">Shared-Water Seal Pit</option><option value="Shared Pit Latrine with Sato Pan">Shared-Pit Latrine with Sato Pan</option></select>'
+			var sanLatType_ben='<label for="san_lat_type">Type of Latrine Provided</label><select name="san_lat_type" id="san_lat_type" data-native-menu="false"><option value="0">Select Type of Latrine Provided</option><option value="Offset Pit">Offset Pit</option><option value="Water Sealed Pit">Water Sealed Pit</option><option value="Pit Latrine with Sato Pan">Pit Latrine with Sato Pan</option><option value="Shared">Shared</option></select>'
 			$("#sanLatType_ben").html(sanLatType_ben);
 			
 			var sanActType_ben='<label for="san_act_type">Type of Activity</label><select name="san_act_type" id="san_act_type" data-native-menu="false"><option value="0">Select Type of Activity</option><option value="New">New</option><option value="Renovation">Renovation</option></select>'	
@@ -231,8 +231,7 @@ $(document).ready(function(){
 			var sanSubsidized_ben='<label for="san_subsidized">Subsidized</label><select name="san_subsidized" id="san_subsidized" data-native-menu="false"><option value="0">Select Subsidized</option><option value="Yes">Yes</option><option value="No">No</option></select>'			
 			$("#sanSubsidized_ben").html(sanSubsidized_ben);
 			//----------hwf
-			var hwType_hwf='<label for="hw_type">Type of Handwash Facilities</label><select name="hw_type" id="hw_type" data-native-menu="false"><option value="0">Select Type of Handwash Facilities</option><option value="Water tank with tap">Water tank with tap</option><option value="Barrel Drum Bucket Jerrican with Tap">Barrel/Drum/Bucket/Jerrican with Tap</option><option value="Pitcher with Tap">Pitcher with Tap</option><option value="Tippy Tap">Tippy Tap</option><option value="Hand TubeWell">Hand TubeWell</option></select>'
-
+			var hwType_hwf='<label for="hw_type">Type of Handwash Facilities</label><select name="hw_type" id="hw_type" data-native-menu="false"><option value="0">Select Type of Handwash Facilities</option><option value="1">Water tank with tap</option><option value="2">Barrel / Drum with pipe line  to Spout / Tap</option><option value="3">Bucket with Tap</option><option value="4">30L - 50L Barrel with Tap </option><option value="5">Pitcher with Tap</option><option value="6">Jerkin/Container with Tap</option><option value="7">Tippy Tap</option><option value="8">Tube Well on Premises</option><option value="9">Sink with tap water</option><option value="10">Basins</option><option value="11">Overhead Tank</option><option value="12">Jugs </option><option value="13">Bucket with mug </option></select>'
 			$("#hwType_hwf").html(hwType_hwf);	
 			
 			//==========wp
@@ -242,7 +241,7 @@ $(document).ready(function(){
 			var wpActType='<label for="wp_act_type">Type of Activity</label><select name="wp_act_type" id="wp_act_type" data-native-menu="false"><option value="0">Select Type of Activity</option><option value="New">New</option><option value="Renovation">Renovation</option></select>'
 			$("#wpActType").html(wpActType);
 			
-			var wpTechnology='<label for="wp_technology">Water Point Technology </label><select name="wp_technology" id="wp_technology" data-native-menu="false"><option value="0">Select Water Point Technology</option><option value="Deep Hand Tubewell">Deep Hand Tubewell</option><option value="Deep Set Pump">Deep Set Pump</option><option value="Shallow Tubewell">Shallow Tubewell</option><option value="Semi Deep Tubewell">Semi-Deep Tubewell</option><option value="Rain Water Harvesting">Rain Water Harvesting</option></select>'
+			var wpTechnology='<label for="wp_technology">Water Point Technology </label><select name="wp_technology" id="wp_technology" data-native-menu="false"><option value="0">Select Water Point Technology</option><option value="1">Deep Hand Tubewell</option><option value="2">Deep Set Pump</option><option value="3">Shallow Tubewell</option><option value="4">Semi-Deep Tubewell</option><option value="5">Rain Water Harvesting</option></select>'
 			$("#wpTechnology").html(wpTechnology);
 			
 			var wpSubsidized='<label for="wp_subsidized">Subsidized</label><select name="wp_subsidized" id="wp_subsidized" data-native-menu="false"><option value="0">Select Subsidized</option><option value="Yes">Yes</option><option value="No">No</option></select>'	
@@ -550,7 +549,7 @@ function syncBasic(){
 					$("#btn_ben_home_hwf").hide();
 					
 					//----------Sanation
-					var sanLatType_ben='<label for="san_lat_type">Type of Latrine Provided</label><select name="san_lat_type" id="san_lat_type" data-native-menu="false"><option value="0">Select Type of Latrine Provided</option><option value="Offset Pit">Offset Pit</option><option value="Water Seal Pit">Water Seal Pit</option><option value="Pit Latrine with Sato Pan">Pit Latrine with Sato Pan</option><option value="Shared Offset Pit">Shared-Offset Pit</option><option value="Shared Water Seal Pit">Shared-Water Seal Pit</option><option value="Shared Pit Latrine with Sato Pan">Shared-Pit Latrine with Sato Pan</option></select>'
+					var sanLatType_ben='<label for="san_lat_type">Type of Latrine Provided</label><select name="san_lat_type" id="san_lat_type" data-native-menu="false"><option value="0">Select Type of Latrine Provided</option><option value="Offset Pit">Offset Pit</option><option value="Water Sealed Pit">Water Sealed Pit</option><option value="Pit Latrine with Sato Pan">Pit Latrine with Sato Pan</option><option value="Shared">Shared</option></select>'
 					$("#sanLatType_ben").html(sanLatType_ben);
 					
 					var sanActType_ben='<label for="san_act_type">Type of Activity</label><select name="san_act_type" id="san_act_type" data-native-menu="false"><option value="0">Select Type of Activity</option><option value="New">New</option><option value="Renovation">Renovation</option></select>'	
@@ -560,8 +559,7 @@ function syncBasic(){
 					$("#sanSubsidized_ben").html(sanSubsidized_ben);
 					
 					//----------hwf
-					var hwType_hwf='<label for="hw_type">Type of Handwash Facilities</label><select name="hw_type" id="hw_type" data-native-menu="false"><option value="0">Select Type of Handwash Facilities</option><option value="Water tank with tap">Water tank with tap</option><option value="Barrel Drum Bucket Jerrican with Tap">Barrel/Drum/Bucket/Jerrican with Tap</option><option value="Pitcher with Tap">Pitcher with Tap</option><option value="Tippy Tap">Tippy Tap</option><option value="Hand TubeWell">Hand TubeWell</option></select>'
-					
+					var hwType_hwf='<label for="hw_type">Type of Handwash Facilities</label><select name="hw_type" id="hw_type" data-native-menu="false"><option value="0">Select Type of Handwash Facilities</option><option value="1">Water tank with tap</option><option value="2">Barrel / Drum with pipe line  to Spout / Tap</option><option value="3">Bucket with Tap</option><option value="4">30L - 50L Barrel with Tap </option><option value="5">Pitcher with Tap</option><option value="6">Jerkin/Container with Tap</option><option value="7">Tippy Tap</option><option value="8">Tube Well on Premises</option><option value="9">Sink with tap water</option><option value="10">Basins</option><option value="11">Overhead Tank</option><option value="12">Jugs </option><option value="13">Bucket with mug </option></select>'
 					$("#hwType_hwf").html(hwType_hwf);
 					
 					//============wp
@@ -571,7 +569,7 @@ function syncBasic(){
 					var wpActType='<label for="wp_act_type">Type of Activity</label><select name="wp_act_type" id="wp_act_type" data-native-menu="false"><option value="0">Select Type of Activity</option><option value="New">New</option><option value="Renovation">Renovation</option></select>'
 					$("#wpActType").html(wpActType);
 					
-					var wpTechnology='<label for="wp_technology">Water Point Technology </label><select name="wp_technology" id="wp_technology" data-native-menu="false"><option value="0">Select Water Point Technology</option><option value="Deep Hand Tubewell">Deep Hand Tubewell</option><option value="Deep Set Pump">Deep Set Pump</option><option value="Shallow Tubewell">Shallow Tubewell</option><option value="Semi Deep Tubewell">Semi-Deep Tubewell</option><option value="Rain Water Harvesting">Rain Water Harvesting</option></select>'
+					var wpTechnology='<label for="wp_technology">Water Point Technology </label><select name="wp_technology" id="wp_technology" data-native-menu="false"><option value="0">Select Water Point Technology</option><option value="1">Deep Hand Tubewell</option><option value="2">Deep Set Pump</option><option value="3">Shallow Tubewell</option><option value="4">Semi-Deep Tubewell</option><option value="5">Rain Water Harvesting</option></select>'
 					$("#wpTechnology").html(wpTechnology);
 					
 					var wpSubsidized='<label for="wp_subsidized">Subsidized</label><select name="wp_subsidized" id="wp_subsidized" data-native-menu="false"><option value="0">Select Subsidized</option><option value="Yes">Yes</option><option value="No">No</option></select>'	
@@ -1701,8 +1699,7 @@ function goToHome(){
 	$("#ben_hh_serial").val("");	
 	
 	//san
-	var sanLatType_ben='<label for="san_lat_type">Type of Latrine Provided</label><select name="san_lat_type" id="san_lat_type" data-native-menu="false"><option value="0">Select Type of Latrine Provided</option><option value="Offset Pit">Offset Pit</option><option value="Water Seal Pit">Water Seal Pit</option><option value="Pit Latrine with Sato Pan">Pit Latrine with Sato Pan</option><option value="Shared Offset Pit">Shared-Offset Pit</option><option value="Shared Water Seal Pit">Shared-Water Seal Pit</option><option value="Shared Pit Latrine with Sato Pan">Shared-Pit Latrine with Sato Pan</option></select>'
-	
+	var sanLatType_ben='<label for="san_lat_type">Type of Latrine Provided</label><select name="san_lat_type" id="san_lat_type" data-native-menu="false"><option value="0">Select Type of Latrine Provided</option><option value="Offset Pit">Offset Pit</option><option value="Water Sealed Pit">Water Sealed Pit</option><option value="Pit Latrine with Sato Pan">Pit Latrine with Sato Pan</option><option value="Shared">Shared</option></select>'
 	$("#sanLatType_ben").html(sanLatType_ben).trigger('create');
 	
 	var sanActType_ben='<label for="san_act_type">Type of Activity</label><select name="san_act_type" id="san_act_type" data-native-menu="false"><option value="0">Select Type of Activity</option><option value="New">New</option><option value="Renovation">Renovation</option></select>'	
@@ -1717,8 +1714,7 @@ function goToHome(){
 	$("#btn_ben_home_san").hide();
 	
 	//hwf
-	var hwType_hwf='<label for="hw_type">Type of Handwash Facilities</label><select name="hw_type" id="hw_type" data-native-menu="false"><option value="0">Select Type of Handwash Facilities</option><option value="Water tank with tap">Water tank with tap</option><option value="Barrel Drum Bucket Jerrican with Tap">Barrel/Drum/Bucket/Jerrican with Tap</option><option value="Pitcher with Tap">Pitcher with Tap</option><option value="Tippy Tap">Tippy Tap</option><option value="Hand TubeWell">Hand TubeWell</option></select>'
-	
+	var hwType_hwf='<label for="hw_type">Type of Handwash Facilities</label><select name="hw_type" id="hw_type" data-native-menu="false"><option value="0">Select Type of Handwash Facilities</option><option value="1">Water tank with tap</option><option value="2">Barrel / Drum with pipe line  to Spout / Tap</option><option value="3">Bucket with Tap</option><option value="4">30L - 50L Barrel with Tap </option><option value="5">Pitcher with Tap</option><option value="6">Jerkin/Container with Tap</option><option value="7">Tippy Tap</option><option value="8">Tube Well on Premises</option><option value="9">Sink with tap water</option><option value="10">Basins</option><option value="11">Overhead Tank</option><option value="12">Jugs </option><option value="13">Bucket with mug </option></select>'
 	$("#hwType_hwf").html(hwType_hwf).trigger('create');
 	
 	$("#btn_wwf_submit").show();
@@ -1733,8 +1729,7 @@ function goToHome(){
 	var wpActType='<label for="wp_act_type">Type of Activity</label><select name="wp_act_type" id="wp_act_type" data-native-menu="false"><option value="0">Select Type of Activity</option><option value="New">New</option><option value="Renovation">Renovation</option></select>'
 	$("#wpActType").html(wpActType).trigger('create');
 	
-	var wpTechnology='<label for="wp_technology">Water Point Technology </label><select name="wp_technology" id="wp_technology" data-native-menu="false"><option value="0">Select Water Point Technology</option><option value="Deep Hand Tubewell">Deep Hand Tubewell</option><option value="Deep Set Pump">Deep Set Pump</option><option value="Shallow Tubewell">Shallow Tubewell</option><option value="Semi Deep Tubewell">Semi-Deep Tubewell</option><option value="Rain Water Harvesting">Rain Water Harvesting</option></select>'
-	
+	var wpTechnology='<label for="wp_technology">Water Point Technology </label><select name="wp_technology" id="wp_technology" data-native-menu="false"><option value="0">Select Water Point Technology</option><option value="1">Deep Hand Tubewell</option><option value="2">Deep Set Pump</option><option value="3">Shallow Tubewell</option><option value="4">Semi-Deep Tubewell</option><option value="5">Rain Water Harvesting</option></select>'
 	$("#wpTechnology").html(wpTechnology).trigger('create');
 	
 	var wpSubsidized='<label for="wp_subsidized">Subsidized</label><select name="wp_subsidized" id="wp_subsidized" data-native-menu="false"><option value="0">Select Subsidized</option><option value="Yes">Yes</option><option value="No">No</option></select>'	
@@ -2098,16 +2093,16 @@ function wwfDataSubmit(){
 		$(".errorChk").text("Please confirm your location");
 		$("#btn_ach_lat_long_wwf").show();
 		$("#btn_wwf_submit").show();
-	}else{ 
-		if (achPhoto_2_wwf=='' || achPhoto_2_wwf==undefined){
-			$(".errorChk").text("Please confirm Photo 2 ");
-			$("#btn_wwf_submit").show();
-		}else{		
-			if(latitude==0 || latitude==0){
-				$(".errorChk").text("Please confirm your location ");
-				$("#btn_wwf_submit").show();
-			}else{				
-				imagePathA_wwf="test"					
+	}else{
+		//if (achPhoto_2_wwf=='' || achPhoto_2_wwf==undefined){
+//			$(".errorChk").text("Please confirm Photo 2 ");
+//			$("#btn_wwf_submit").show();
+//		}else{		
+			//if(latitude==0 || latitude==0){
+			//	$(".errorChk").text("Please confirm your location ");
+			//	$("#btn_wwf_submit").show();
+			//}else{				
+				//imagePathA_wwf="test"					
 				if (imagePathA_wwf!=""){							
 					$(".errorChk").text("Syncing photo 1..");
 					imageName_wwf = localStorage.mobile_no+"_"+get_time+".jpg";										
@@ -2115,9 +2110,9 @@ function wwfDataSubmit(){
 					//$("#btn_wwf_submit").show();					
 				}
 				//syncDataHwf();					
-			} //-end check location
+			//} //-end check location
 			
-		}//Photo 2
+		//}//Photo 2
 	}//chk photo
 	
 
@@ -2534,10 +2529,10 @@ function wpDataSubmit(){
 		$("#btn_ach_lat_long_wp").show();
 		$("#btn_wp_submit").show();
 	}else{		
-		if(latitude==0 || latitude==0){
-			$(".errorChk").text("Please confirm your location ");
-			$("#btn_wp_submit").show();
-		}else{				
+		//if(latitude==0 || latitude==0){
+		//	$(".errorChk").text("Please confirm your location ");
+		//	$("#btn_wp_submit").show();
+		//}else{				
 			//imagePathA_wp="test"					
 			if (imagePathA_wp!=""){							
 				$(".errorChk").text("Syncing photo 1..");
@@ -2546,7 +2541,7 @@ function wpDataSubmit(){
 				//$("#btn_wp_submit").show();					
 			}
 			//syncDataWp();					
-		} //-end check location
+		//} //-end check location
 		
 	}//chk photo
 	
