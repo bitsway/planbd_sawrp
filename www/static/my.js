@@ -143,8 +143,8 @@ function onSuccessAreaWq(position) {
 }
 // onError Callback receives a PositionError object
 function onErrorAreaWq(error) {
-	$("#area_lat").val(1);
-	$("#area_long").val(1);
+	$("#area_lat").val(0);
+	$("#area_long").val(0);
 	localStorage.latitudeAreaWq=$("#area_lat").val();
 	localStorage.longitudeAreaWq=$("#area_long").val();
 	//alert(localStorage.latitudeAreaWq+'-'+localStorage.longitudeAreaWq);
@@ -2082,7 +2082,7 @@ function wwfDataSubmit(){
 	wwf_longitude=$("#ach_long_wwf").val();
 	
 	achPhoto_wwf=$("#achPhoto_wwf").val();
-	achPhoto_2_wwf=$("#achPhoto_2_wwf").val();
+	//achPhoto_2_wwf=$("#achPhoto_2_wwf").val();
 	
 	if (wwf_latitude==undefined || wwf_latitude==''){
 		wwf_latitude=0;
@@ -2098,16 +2098,16 @@ function wwfDataSubmit(){
 		$(".errorChk").text("Please confirm your location");
 		$("#btn_ach_lat_long_wwf").show();
 		$("#btn_wwf_submit").show();
-	}else{ 
-		if (achPhoto_2_wwf=='' || achPhoto_2_wwf==undefined){
-			$(".errorChk").text("Please confirm Photo 2 ");
-			$("#btn_wwf_submit").show();
-		}else{		
-			if(latitude==0 || latitude==0){
-				$(".errorChk").text("Please confirm your location ");
-				$("#btn_wwf_submit").show();
-			}else{				
-				imagePathA_wwf="test"					
+	}else{
+		//if (achPhoto_2_wwf=='' || achPhoto_2_wwf==undefined){
+//			$(".errorChk").text("Please confirm Photo 2 ");
+//			$("#btn_wwf_submit").show();
+//		}else{		
+			//if(latitude==0 || latitude==0){
+			//	$(".errorChk").text("Please confirm your location ");
+			//	$("#btn_wwf_submit").show();
+			//}else{				
+				//imagePathA_wwf="test"					
 				if (imagePathA_wwf!=""){							
 					$(".errorChk").text("Syncing photo 1..");
 					imageName_wwf = localStorage.mobile_no+"_"+get_time+".jpg";										
@@ -2115,9 +2115,9 @@ function wwfDataSubmit(){
 					//$("#btn_wwf_submit").show();					
 				}
 				//syncDataHwf();					
-			} //-end check location
+			//} //-end check location
 			
-		}//Photo 2
+		//}//Photo 2
 	}//chk photo
 	
 
@@ -2534,10 +2534,10 @@ function wpDataSubmit(){
 		$("#btn_ach_lat_long_wp").show();
 		$("#btn_wp_submit").show();
 	}else{		
-		if(latitude==0 || latitude==0){
-			$(".errorChk").text("Please confirm your location ");
-			$("#btn_wp_submit").show();
-		}else{				
+		//if(latitude==0 || latitude==0){
+		//	$(".errorChk").text("Please confirm your location ");
+		//	$("#btn_wp_submit").show();
+		//}else{				
 			//imagePathA_wp="test"					
 			if (imagePathA_wp!=""){							
 				$(".errorChk").text("Syncing photo 1..");
@@ -2546,7 +2546,7 @@ function wpDataSubmit(){
 				//$("#btn_wp_submit").show();					
 			}
 			//syncDataWp();					
-		} //-end check location
+		//} //-end check location
 		
 	}//chk photo
 	
