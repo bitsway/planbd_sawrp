@@ -1024,8 +1024,8 @@ function dataSubmit(){
 //------------------------------------image 1
 
 function getAchivementImage1() { 
-	navigator.camera.getPicture(onSuccessA, onFailA, { quality: 90,
-	targetWidth: 600,
+	navigator.camera.getPicture(onSuccessA, onFailA, { quality: 50,
+	targetWidth: 300,
 	destinationType: Camera.DestinationType.FILE_URI,correctOrientation: true });	
 }
 
@@ -1083,8 +1083,8 @@ function onfail(r) {
 
 //-----------------------image 2
 function getAchivementImage2() { 
-	navigator.camera.getPicture(onSuccess2A, onFail2A, { quality: 90,
-	targetWidth: 600,
+	navigator.camera.getPicture(onSuccess2A, onFail2A, { quality: 50,
+	targetWidth: 300,
 	destinationType: Camera.DestinationType.FILE_URI,correctOrientation: true });		
 }
 
