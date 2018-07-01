@@ -54,7 +54,7 @@
     </div>
     <div data-role="content">
     		
-            <div class="errorChk"></div>
+            <div class="errorChk" style="color:#cc0000;"></div>
             <ul data-role="listview" data-inset="true" data-theme="c" >
             <li class="ui-field-contain" style="background-color:#80ffff;">
             <table width="100%"  cellspacing="0" cellpadding="0" style="background-color:#b3ffff;">              
@@ -112,9 +112,13 @@
         		<a data-role="button" id="btn_area_lat_long" onClick="getLocationInfoAreaWq();" class="ui-btn" >Area location</a>
            </ul> 
            <br />
+           
+           <a data-role="button" id="btn_save_data" onClick="saveData();" class="ui-btn" style="background-color:#E38C9D">Save Data</a>
+           
+           
     </div>
     
-    <div data-theme="c" data-role="footer" data-position="fixed" style="font-size:12px;background-color:#CCC;" align="center" >mReporting 20180410</div><!------/footer 20150401-20150309 -->
+    <div data-theme="c" data-role="footer" data-position="fixed" style="font-size:12px;background-color:#CCC;" align="center" >mReporting 20180701</div><!------/footer 20150401-20150309 -->
     
     <div data-role="panel" id="leftpanel" data-position="left" data-display="overlay" data-theme="c">
         <div align="center"></div>
@@ -134,7 +138,82 @@
     </div>
 </div>
 
+<div data-role="page" data-theme="c" id="save_page" style="overflow:scroll;">
+    <div data-theme="c" data-role="header" data-position="fixed" >
+        <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
+        <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
+        <h3>Save Data</h3>
+    </div>
+    
+    <div data-role="content" >    
+    <ul data-role="listview" data-inset="true">
+        <li><a href="#" onclick="review_san()" data-transition="slide">Sanitation</a></li>
+    </ul>
+    <ul data-role="listview" data-inset="true">
+        <li><a href="#" onclick="review_hwf()" data-transition="slide">HWF</a></li>
+    </ul>
+    <ul data-role="listview" data-inset="true">
+        <li><a href="#" onclick="review_wp()" data-transition="slide">WP</a></li>
+    </ul>
+    <br />
+    <div class="errorChk" style="color:#cc0000;"></div>
+     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    </div>
+</div>
 
+<div data-role="page" data-theme="c" id="review_san" style="overflow:scroll;">
+    <div data-theme="c" data-role="header" data-position="fixed" >
+        <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
+        <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
+        <h3>Sanitation Save Data</h3>
+    </div>
+    
+    <div data-role="content" >    
+    <div>
+        <table id="sanData" width="100%" border="0" cellspacing="0" cellpadding="0"></table>
+    </div>
+ 	<br />
+           <div class="errorChk" style="color:#cc0000;"></div>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    </div>
+</div>
+
+
+<div data-role="page" data-theme="c" id="review_hwf" style="overflow:scroll;">
+    <div data-theme="c" data-role="header" data-position="fixed" >
+        <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
+        <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
+        <h3>HWF Save Data</h3>
+    </div>
+    
+    <div data-role="content" >    
+    <div>
+        <table id="hwfData" width="100%" border="0" cellspacing="0" cellpadding="0"></table>
+    </div>
+ 	<br />
+           <div class="errorChk" style="color:#cc0000;"></div>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    </div>
+</div>
+
+
+<div data-role="page" data-theme="c" id="review_wp" style="overflow:scroll;">
+    <div data-theme="c" data-role="header" data-position="fixed" >
+        <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
+        <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
+        <h3>WP Save Data</h3>
+    </div>
+    
+    <div data-role="content" >    
+    <div>
+        <table id="wpData" width="100%" border="0" cellspacing="0" cellpadding="0"></table>
+    </div>
+ 	<br />
+    <div class="errorChk" style="color:#cc0000;"></div>
+    <div class="sucChk" style="color:#00CA00;"></div>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    </div>
+</div>
 
 <!-- ------------------- sync page---------------------------------------------------------------------------------------- -->
 <div data-theme="c" data-role="page" id="pagesync" >
@@ -214,7 +293,7 @@
 		</ul>
                  
     <a data-role="button" onclick="planbdData1Next()" href="#" data-transition="slide" >Next</a>
-        <div class="errorChk"></div>
+        <div class="errorChk" style="color:#cc0000;"></div>
         <br/><br/>
     <a data-role="button" onclick="social_map_data()" href="#" data-transition="slide" >Show List</a>   
     
@@ -487,7 +566,7 @@
 		</ul>
         
         <a data-role="button" onclick="planbdData2Next()" href="#" data-transition="slide" >Next</a>
-        <div class="errorChk"></div>
+        <div class="errorChk" style="color:#cc0000;"></div>
             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
     </div>
 </div>
@@ -513,9 +592,10 @@
         <input name="ach_long" id="ach_long" value=""  type="hidden">
         <a data-role="button" id="btn_ach_lat_long" onClick="getLocationInfoAch();" class="ui-btn" >Confirm Location</a>
         
-		<div class="errorChk" style="color:#F00;"></div>
+		<div class="errorChk" style="color:#cc0000;"></div>
         <div class="sucChk" style="color:#00CA00;"></div>
         <br/>
+        <a data-role="button" id="btn_save" onClick="dataSave();" class="ui-btn" >Save</a>
 		<br/>
         <a data-role="button" id="btn_submit" onClick="dataSubmit();" class="ui-btn" >Submit</a>
         <!--<a data-role="button" id="btn_new_socialmap" onClick="addNewSocialMap();" class="ui-btn" >Add New Social Mapping</a>-->
@@ -576,7 +656,7 @@
 		</ul>
                  
     <a data-role="button" onclick="ben_planbdData1Next()" href="#" data-transition="slide" >Next</a>
-        <div class="errorChk"></div>
+        <div class="errorChk" style="color:#cc0000;"></div>
             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
     </div>
 </div>
@@ -598,7 +678,7 @@
             <li><a id="btn_ben_update"  href="#" onclick="ben_update();" data-transition="slide">Update</a></li>
         </ul>
                  
-        <div class="errorChk"></div>
+        <div class="errorChk" style="color:#cc0000;"></div>
             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
     </div>
 </div>
@@ -755,7 +835,7 @@
     <a data-role="button" id="btn_ben_service" onClick="services_ben();" class="ui-btn" >Services</a>         
     <a data-role="button" id="btn_ben_submit" onClick="benDataSubmit();" class="ui-btn" >Submit</a>
     <a data-role="button" id="btn_ben_home" onClick="goToHome();" class="ui-btn" >Go To Home</a>
-        <div class="errorChk" style="color:#F00;"></div>
+        <div class="errorChk" style="color:#cc0000;"></div>
         <div class="sucChk" style="color:#00CA00;"></div>
             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
     </div>
@@ -804,7 +884,7 @@
         <!--<a data-role="button" id="btn_new_ben_ser" onClick="addNewBen();" class="ui-btn" >Add New Beneficiary</a> -->     
         <a data-role="button" id="btn_ben_home_ser" onClick="goToHome();" class="ui-btn" >Go To Home</a>
               
-        <div class="errorChk"></div>
+        <div class="errorChk" style="color:#cc0000;"></div>
             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
     </div>
 </div>
@@ -863,7 +943,7 @@
             </li>              
 		</ul>
     <a data-role="button" onclick="san_planbdData2Next()" href="#" data-transition="slide" >Next</a>
-        <div class="errorChk"></div>
+        <div class="errorChk" style="color:#cc0000;"></div>
             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
     </div>
 </div>
@@ -885,11 +965,13 @@
         <input name="ach_long_san" id="ach_long_san" value=""  type="hidden">
         <a data-role="button" id="btn_ach_lat_long_san" onClick="getLocationInfoAch_san();" class="ui-btn" >Confirm Location</a>
         
-		<div class="errorChk" style="color:#F00;"></div>
+		<div class="errorChk" style="color:#cc0000;"></div>
         <div class="sucChk" style="color:#00CA00;"></div>
         <br/>
-		<br/>
+        <br/>
         <a data-role="button" id="btn_san_submit" onClick="sanDataSubmit();" class="ui-btn" >Submit</a> 
+        <br/>
+        <a data-role="button" id="btn_san_save" onClick="sanDataSave();" class="ui-btn" >Save</a> 
         <!--<a data-role="button" id="btn_new_ben_san" onClick="addNewBen();" class="ui-btn" >Add New Beneficiary</a> -->
         <a data-role="button" id="btn_ben_service_san" onClick="services_ben();" class="ui-btn" >Services</a>      
         <a data-role="button" id="btn_ben_home_san" onClick="goToHome();" class="ui-btn" >Go To Home</a>
@@ -944,7 +1026,7 @@
             </li>
 		</ul>
     <a data-role="button" onclick="wwf_planbdData2Next()" href="#" data-transition="slide" >Next</a>
-        <div class="errorChk"></div>
+        <div class="errorChk" style="color:#cc0000;"></div>
             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
     </div>
 </div>
@@ -970,11 +1052,13 @@
         <input name="ach_long_wwf" id="ach_long_wwf" value=""  type="hidden">
         <a data-role="button" id="btn_ach_lat_long_wwf" onClick="getLocationInfoAch_wwf();" class="ui-btn" >Confirm Location</a>
         
-		<div class="errorChk" style="color:#F00;"></div>
+		<div class="errorChk" style="color:#cc0000;"></div>
         <div class="sucChk" style="color:#00CA00;"></div>
         <br/>
 		<br/>
         <a data-role="button" id="btn_wwf_submit" onClick="wwfDataSubmit();" class="ui-btn" >Submit</a>
+        <br/>
+        <a data-role="button" id="btn_hwf_save" onClick="handWashFacaDataSave();" class="ui-btn" >Save</a> 
         <!--<a data-role="button" id="btn_new_ben_hwf" onClick="addNewBen();" class="ui-btn" >Add New Beneficiary</a> -->
         <a data-role="button" id="btn_ben_service_hwf" onClick="services_ben();" class="ui-btn" >Services</a>      
         <a data-role="button" id="btn_ben_home_hwf" onClick="goToHome();" class="ui-btn" >Go To Home</a> 
@@ -1055,7 +1139,7 @@
 		</ul>
                  
     <a data-role="button" onclick="wp1Next()" href="#" data-transition="slide" >Next</a>
-        <div class="errorChk"></div>
+        <div class="errorChk" style="color:#cc0000;"></div>
             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
     </div>
 </div>
@@ -1131,7 +1215,7 @@
             </li>
             </div>
 		</ul>   
-        <div class="errorChk"></div>
+        <div class="errorChk" style="color:#cc0000;"></div>
         <br /><br />
         <a data-role="button" onclick="clusterData()" href="#" data-transition="slide" >Next</a>
             <br/><br/><br/><br/><br/><br/><br/><br/>
@@ -1155,11 +1239,13 @@
         <input name="ach_long_wp" id="ach_long_wp" value=""  type="hidden">
         <a data-role="button" id="btn_ach_lat_long_wp" onClick="getLocationInfoAch_wp();" class="ui-btn" >Confirm Location</a>
         
-		<div class="errorChk" style="color:#F00;"></div>
+		<div class="errorChk" style="color:#cc0000;"></div>
         <div class="sucChk" style="color:#00CA00;"></div>
         <br/>
 		<br/>
         <a data-role="button" id="btn_wp_submit" onClick="wpDataSubmit();" class="ui-btn" >Submit</a>
+        <br/>
+        <a data-role="button" id="btn_wp_save" onClick="wpDataSave();" class="ui-btn" >Save</a> 
         <!--<a data-role="button" id="btn_addNew_wp" onClick="addNewWP();" class="ui-btn" >Add New Water Point</a> -->
         <a data-role="button" id="btn_home_wp" onClick="goToHome();" class="ui-btn" >Go To Home</a> 
 		<br/>

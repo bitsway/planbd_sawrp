@@ -18,11 +18,11 @@ var san_longitude="";
 
 //-----wwf--------
 var achPhoto_wwf="";
-var achPhoto_2_wwf="";
+//var achPhoto_2_wwf="";
 var imageName_wwf = "";
-var imageName2_wwf = "";
+//var imageName2_wwf = "";
 var imagePathA_wwf="";
-var imagePath2A_wwf="";
+//var imagePath2A_wwf="";
 
 var wwf_latitude="";
 var wwf_longitude="";
@@ -36,7 +36,7 @@ var wp_latitude="";
 var wp_longitude="";
 //=============
 function getLocationInfoAch() {	
-	var options = { enableHighAccuracy: false};	
+	var options = { enableHighAccuracy: true, timeout:30000};
 	navigator.geolocation.getCurrentPosition(onSuccess, onError, options);				
 	$(".errorChk").html("Confirming location. Please wait.");
 }
@@ -48,14 +48,17 @@ function onSuccess(position) {
 }
 // onError Callback receives a PositionError object
 function onError(error) {
-   $("#ach_lat").val(0);
-   $("#ach_long").val(0);
-   $(".errorChk").html("Failed to Confirmed Location.");
+	//alert(localStorage.latitudeAreaWq+'-'+localStorage.longitudeAreaWq);
+   /*$("#ach_lat").val(0);
+   $("#ach_long").val(0);*/
+   $("#ach_lat").val(localStorage.latitudeAreaWq);
+   $("#ach_long").val(localStorage.longitudeAreaWq);
+   $(".errorChk").html("Previous Location Confirmed");
 }
 
 //=======Sanitaiton======
 function getLocationInfoAch_san() {	
-	var options = { enableHighAccuracy: false};	
+	var options = { enableHighAccuracy: true, timeout:30000};	
 	navigator.geolocation.getCurrentPosition(onSuccess_san, onError_san, options);				
 	$(".errorChk").html("Confirming location. Please wait.");
 }
@@ -67,14 +70,17 @@ function onSuccess_san(position) {
 }
 // onError Callback receives a PositionError object
 function onError_san(error) {
-   $("#ach_lat_san").val(0);
-   $("#ach_long_san").val(0);
-   $(".errorChk").html("Failed to Confirmed Location.");
+	//alert(localStorage.latitudeAreaWq+'-'+localStorage.longitudeAreaWq);
+   /*$("#ach_lat_san").val(0);
+   $("#ach_long_san").val(0);*/
+   $("#ach_lat_san").val(localStorage.latitudeAreaWq);
+   $("#ach_long_san").val(localStorage.longitudeAreaWq);
+   $(".errorChk").html("Previous Location Confirmed");
 }
 
 //=======HWF======
 function getLocationInfoAch_wwf() {	
-	var options = { enableHighAccuracy: false};	
+	var options = { enableHighAccuracy: true, timeout:30000};	
 	navigator.geolocation.getCurrentPosition(onSuccess_wwf, onError_wwf, options);				
 	$(".errorChk").html("Confirming location. Please wait.");
 }
@@ -86,14 +92,17 @@ function onSuccess_wwf(position) {
 }
 // onError Callback receives a PositionError object
 function onError_wwf(error) {
-   $("#ach_lat_wwf").val(0);
-   $("#ach_long_wwf").val(0);
-   $(".errorChk").html("Failed to Confirmed Location.");
+	//alert(localStorage.latitudeAreaWq+'-'+localStorage.longitudeAreaWq);
+  /* $("#ach_lat_wwf").val(0);
+   $("#ach_long_wwf").val(0);*/
+   $("#ach_lat_wwf").val(localStorage.latitudeAreaWq);
+   $("#ach_long_wwf").val(localStorage.longitudeAreaWq);
+   $(".errorChk").html("Previous Location Confirmed");
 }
 
 //=======WP======
 function getLocationInfoAch_wp() {	
-	var options = { enableHighAccuracy: false};	
+	var options = { enableHighAccuracy: true, timeout:30000};	
 	navigator.geolocation.getCurrentPosition(onSuccess_wp, onError_wp, options);				
 	$(".errorChk").html("Confirming location. Please wait.");
 }
@@ -105,19 +114,53 @@ function onSuccess_wp(position) {
 }
 // onError Callback receives a PositionError object
 function onError_wp(error) {
-   $("#ach_lat_wp").val(0);
-   $("#ach_long_wp").val(0);
-   $(".errorChk").html("Failed to Confirmed Location.");
+	//alert(localStorage.latitudeAreaWq+'-'+localStorage.longitudeAreaWq);
+   /*$("#ach_lat_wp").val(0);
+   $("#ach_long_wp").val(0);*/
+   $("#ach_lat_wp").val(localStorage.latitudeAreaWq);
+   $("#ach_long_wp").val(localStorage.longitudeAreaWq);
+   $(".errorChk").html("Previous Location Confirmed");
 }
+
+
+
+//=======Area
+function getLocationInfoAreaWq() {
+	var options = { enableHighAccuracy: true, timeout:30000};
+	navigator.geolocation.getCurrentPosition(onSuccessAreaWq, onErrorAreaWq, options);		
+	$(".errorChk").html("Confirming location. Please wait.");
+}
+
+// onSuccess Geolocation
+function onSuccessAreaWq(position) {
+	$("#area_lat").val(position.coords.latitude);
+	$("#area_long").val(position.coords.longitude);	
+	localStorage.latitudeAreaWq=$("#area_lat").val();
+	localStorage.longitudeAreaWq=$("#area_long").val();
+	
+	$(".errorChk").html("Location Confirmed");
+	
+}
+// onError Callback receives a PositionError object
+function onErrorAreaWq(error) {
+	$("#area_lat").val(0);
+	$("#area_long").val(0);
+	localStorage.latitudeAreaWq=$("#area_lat").val();
+	localStorage.longitudeAreaWq=$("#area_long").val();
+	//alert(localStorage.latitudeAreaWq+'-'+localStorage.longitudeAreaWq);
+	$(".errorChk").html("Failed to Confirmed Location.");
+}
+
 //---- online
-var apipath="http://w02.yeapps.com/planbd_sawrp/syncmobile/";
+var apipath="http://w02.yeapps.com/planbd_sawrp/syncmobile_20180218/";
 
 //--- local
-//var apipath="http://127.0.0.1:8000/planbd_sawrp/syncmobile/";
+//var apipath="http://127.0.0.1:8000/planbd_sawrp/syncmobile_20180218/";
 
 url ="";
-var hhIDList=''
-var benList=''
+var wpTubTreList='';
+var hhIDList='';
+var benList='';
 var benCount=1;
 $(document).ready(function(){
 	if (localStorage.synced!='YES'){
@@ -133,7 +176,7 @@ $(document).ready(function(){
 			$("#unCode").val(localStorage.un_code);
 			
 			//------------
-			$("#btn_new_socialmap").hide();	
+			//$("#btn_new_socialmap").hide();	
 			$("#btn_socialmap_home").hide();
 			//ben
 			$("#btn_new_ben").hide();
@@ -148,58 +191,204 @@ $(document).ready(function(){
 			$("#btn_ben_service_hwf").hide();
 			$("#btn_ben_home_hwf").hide();
 			//wp
-			$("#btn_addNew_wp").hide();
 			$("#btn_home_wp").hide();	
 			
-			//-----------
-			$("#benAdd").click(function(){
+			//===========socialmap
+			var wardName='<label for="ward">Ward No</label><select name="ward" id="ward" data-native-menu="false" onblur="social_map_id()"><option value="0">Select Ward No</option><option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option><option value="09">09</option></select>'	
+			$("#wardName").html(wardName);
 			
+			var odfStatusName='<select id="odfStatus" name="odfStatus" data-native-menu="false"><option value="0">Select</option><option value="Yes">Yes</option><option value="No">No</option></select>'
+			$("#odfStatusName").html(odfStatusName);
+			
+			var commExitName='<select id="commExit" name="commExit" data-native-menu="false" onchange="washCommitt()"><option value="0">Select</option><option value="Yes">Yes</option><option value="No">No</option></select>'
+			$("#commExitName").html(commExitName);
+			
+			var commFuncName='<select id="commFunc" name="commFunc" data-native-menu="false"><option value="0">Select</option><option value="Yes">Yes</option><option value="No">No</option></select>'
+			$("#commFuncName").html(commFuncName);
+			//===========beneficary
+			var benWardNo='<label for="ben_ward">Ward No</label><select name="ben_ward" id="ben_ward" data-native-menu="false"  onblur="social_map_id()" onchange="cluster()" ><option value="0">Ward No</option></select>'   
+			$("#benWardNo").html(benWardNo);		
+			
+			var benClusIDName='<label for="ben_clusID">Cluster ID</label><select name="ben_clusID" id="ben_clusID" data-native-menu="false" onblur="social_map_id()"><option value="0">Select Cluster</option></select>' 
+			$("#benClusIDName").html(benClusIDName);		
+			
+			var benGender='<label for="ben_hh_head_gender">HH Head Gender</label><select id="ben_hh_head_gender" name="ben_hh_head_gender" data-native-menu="false"><option value="0">Select HH Head Gender</option><option value="Male">Male</option><option value="Female">Female</option></select>'
+			$("#benGender").html(benGender);
+			
+			var benEcoCondition='<label for="ben_eco_condition">Economic Condition</label><select id="ben_eco_condition" name="ben_eco_condition" data-native-menu="false"><option value="0">Select Economic Condition</option><option value="Rich">A: Rich</option><option value="Middle">B: Middle Class</option><option value="Poor">C: Poor</option><option value="Exterme Poor">D: Exterme Poor</option></select>'
+			$("#benEcoCondition").html(benEcoCondition);
+			
+			var spsFamily_ben='<label for="sps_family">Sponsorship Family</label><select name="sps_family" id="sps_family" data-native-menu="false"><option value="0">Select Sponsorship Family</option><option value="Yes">Yes</option><option value="No">No</option></select>'
+			$("#spsFamily_ben").html(spsFamily_ben);
+			
+			//----------Sanation
+			var sanLatType_ben='<label for="san_lat_type">Type of Latrine Provided</label><select name="san_lat_type" id="san_lat_type" data-native-menu="false"><option value="0">Select Type of Latrine Provided</option><option value="Offset Pit">Offset Pit</option><option value="Water Seal Pit">Water Seal Pit</option><option value="Pit Latrine with Sato Pan">Pit Latrine with Sato Pan</option><option value="Shared Offset Pit">Shared-Offset Pit</option><option value="Shared Water Seal Pit">Shared-Water Seal Pit</option><option value="Shared Pit Latrine with Sato Pan">Shared-Pit Latrine with Sato Pan</option></select>'
+			$("#sanLatType_ben").html(sanLatType_ben);
+			
+			var sanActType_ben='<label for="san_act_type">Type of Activity</label><select name="san_act_type" id="san_act_type" data-native-menu="false"><option value="0">Select Type of Activity</option><option value="New">New</option><option value="Renovation">Renovation</option></select>'	
+			$("#sanActType_ben").html(sanActType_ben);
+			
+			var sanSubsidized_ben='<label for="san_subsidized">Subsidized</label><select name="san_subsidized" id="san_subsidized" data-native-menu="false"><option value="0">Select Subsidized</option><option value="Yes">Yes</option><option value="No">No</option></select>'			
+			$("#sanSubsidized_ben").html(sanSubsidized_ben);
+			//----------hwf
+			var hwType_hwf='<label for="hw_type">Type of Handwash Facilities</label><select name="hw_type" id="hw_type" data-native-menu="false"><option value="0">Select Type of Handwash Facilities</option><option value="Water tank with tap">Water tank with tap</option><option value="Barrel Drum Bucket Jerrican with Tap">Barrel/Drum/Bucket/Jerrican with Tap</option><option value="Pitcher with Tap">Pitcher with Tap</option><option value="Tippy Tap">Tippy Tap</option><option value="Hand TubeWell">Hand TubeWell</option></select>'
+
+			$("#hwType_hwf").html(hwType_hwf);	
+			
+			//==========wp
+			var clusterIDNameWP='<label for="clusterIDName">Select Cluster</label><select name="clusterIDName" id="clusterIDName" data-native-menu="false"><option value="0">Select Cluster</option></select>'  
+			$("#clusterIDNameWP").html(clusterIDNameWP);
+			
+			var wpActType='<label for="wp_act_type">Type of Activity</label><select name="wp_act_type" id="wp_act_type" data-native-menu="false"><option value="0">Select Type of Activity</option><option value="New">New</option><option value="Renovation">Renovation</option></select>'
+			$("#wpActType").html(wpActType);
+			
+			var wpTechnology='<label for="wp_technology">Water Point Technology </label><select name="wp_technology" id="wp_technology" data-native-menu="false"><option value="0">Select Water Point Technology</option><option value="Deep Hand Tubewell">Deep Hand Tubewell</option><option value="Deep Set Pump">Deep Set Pump</option><option value="Shallow Tubewell">Shallow Tubewell</option><option value="Semi Deep Tubewell">Semi-Deep Tubewell</option><option value="Rain Water Harvesting">Rain Water Harvesting</option></select>'
+			$("#wpTechnology").html(wpTechnology);
+			
+			var wpSubsidized='<label for="wp_subsidized">Subsidized</label><select name="wp_subsidized" id="wp_subsidized" data-native-menu="false"><option value="0">Select Subsidized</option><option value="Yes">Yes</option><option value="No">No</option></select>'	
+			$("#wpSubsidized").html(wpSubsidized);
+			
+			var wpWq='<label for="wp_wq">Water Quality Test Type</label><select name="wp_wq" id="wp_wq" data-native-menu="false"><option value="0">Select Water Quality Test Type</option><option value="Arsenic">Arsenic</option><option value="Bacterial">Bacterial</option><option value="Both Arsenic And Bacteria">Both Arsenic & Bacteria</option></select>'
+			$("#wpWq").html(wpWq);
+			
+			var wpWqResult='<label for="wp_wq_result">Result Water Quality Test</label><select name="wp_wq_result" id="wp_wq_result" data-native-menu="false"><option value="0">Select Result Water Quality Test</option><option value="Potable">Potable</option><option value="Not Potable">Not Potable</option><option value="Not Undertaken Yet">Not Undertaken Yet</option></select>'	
+			$("#wpWqResult").html(wpWqResult);	
+			
+			var wpTubPre='<label for="wp_tub_pre">Tubewell Located on Premises</label><select name="wp_tub_pre" id="wp_tub_pre" data-native-menu="false"><option value="0">Select TW Located on Premises</option><option value="1">On Premises</option><option value="2">Up to 30 min (\u2266 30)</option><option value="3">More than 30 min (&#62 30)</option></select>'	
+			$("#wpTubPre").html(wpTubPre);
+			
+			//-----------
+			var wpPreHHId='';
+			
+			$("#benAdd").click(function(){
+			$(".errorChk").text("");	
 			 wp_hhSerail=$("#wp_hhSerail").val();
 			 wp_tub_pre=$("#wp_tub_pre").val();
-			 sps_family=$("#sps_family").val();
+			 //sps_family=$("#sps_family").val();
 			
 			wpHHserial=wp_hhSerail.split("-");
 			 wpHHID=wpHHserial[0]
-			 wpHHName=wpHHserial[1]
+			 wpHHName=wpHHserial[1].replace(/%20/g," ")
 			
 			if(wpHHID=='' || wpHHID==0){
-				$(".errorChk").text('Required HH ID');
+				$(".errorChk").text('Required HH Name');
 			}else if(wp_tub_pre=='' || wp_tub_pre==0){
 				$(".errorChk").text('Required Tubewell Located on Premises');
-			}else if(sps_family=='' || sps_family==0){
-				$(".errorChk").text('Required Sponsorship Family');
+			/*}else if(sps_family=='' || sps_family==0){
+				$(".errorChk").text('Required Sponsorship Family');*/
 			}else{
-				tub_pre='';
-				if(wp_tub_pre==1){
-					tub_pre='On Premises'
-				}else if(wp_tub_pre==2){
-					tub_pre='&#8805; 30 min'
-				}else{
-					tub_pre='&#62; 30 min'
-				}
 				
-				var i="<tr id='"+wpHHID+"'><td>"+wpHHID+"</td><td>"+tub_pre+"</td><td>"+sps_family+"</td><td>"+'<input style="background-color:#99dfff;" type="button" onclick="rowRemove(\''+wpHHID+'\')" value="X">'+"</td></tr>"
-				
-				//alert(stuList.indexOf(stu3Id) >-1);
-				//if( stuList.indexOf(stu3Id) >-1){
-				if( hhIDList.indexOf(wpHHID) >-1 ){
-					$(".errorChk").text("HH ID Already Exit");
+				/*if( hhIDList.indexOf(wpHHID) >-1 ){
+					$(".errorChk").text("Already Exit HH Name");			
 				}else{
-					$("#benTable").append(i);
-					benCount+=1;
-					$(".errorChk").text("");
+					if( wpTubTreList.indexOf(wp_tub_pre) >-1 ){			
+						$(".errorChk").text("Already Exit TW Located on Premises");
+						/*if( hhIDList.indexOf(wpHHID) >=0 && hhIDList.indexOf(parseInt(wpPreHHId)) >=0 ){
+							
+					}else{	*/
 					
+					
+					errorFlag=0
 					if(benList=="" ){
-						benList=wpHHID+","+wp_tub_pre+","+sps_family;
+						benList=wpHHID+"|"+wpHHName+"|"+wp_tub_pre;
 					}else{
-						benList +="||"+wpHHID+","+wp_tub_pre+","+sps_family;
+						h=0
+						s=0
+						benListH=benList.split('||');
+						for (m=0;m<benListH.length;m++){
+							benListS=benListH[m].split('|');
+							
+							if (benListS[0]==wpHHID){
+								h=1								
+							}															
+							
+						}
+						
+						if(wp_tub_pre==1){
+							benListH1=benList.split('||');
+							for (m=0;m<benListH1.length;m++){
+								benListS1=benListH1[m].split('|');								
+								if(benListS1[0]==wpHHID && benListS1[2]==wp_tub_pre ){
+									s=1
+								}else if(benListS1[0]!=wpHHID && benListS1[2]==wp_tub_pre ){
+									s=1
+								}														
+							}						
+						}else{
+							s=0
+						}
+														
+							
+						
+						if (h==1){
+							errorFlag=1							
+						}else {
+							if (h==0 && s==1){
+								errorFlag=2								
+							}else{
+								if (h==1 && s==1){
+									errorFlag=2
+								}else{
+									benList +="||"+wpHHID+"|"+wpHHName+"|"+wp_tub_pre;
+								}
+							}
+						}
+						
+						
 					}
-					if(hhIDList=="" ){
-						hhIDList=wpHHID;
-					}else{
-						hhIDList +="||"+wpHHID;
-					}
-				}
+					
+					
+						
+						/*if(hhIDList=="" ){
+							hhIDList=wpHHID;
+						}else{
+							hhIDList +="||"+wpHHID;
+						}
+						
+						if(wpTubTreList=="" ){
+							wpTubTreList=wp_tub_pre;
+						}else{
+							wpTubTreList +="||"+wp_tub_pre;
+						}*/
+						
+						if(errorFlag==1){
+							$(".errorChk").text("Already Exit HH Name");
+						}else{
+							if(errorFlag==2){
+								$(".errorChk").text("Already Exit TW Located on Premises");
+								}else{
+									
+									benListH=benList.split('||');
+									i="";
+									for (m=0;m<benListH.length;m++){
+										benListS=benListH[m].split('|');
+										
+																
+										tub_pre='';
+										if(benListS[2]==1){
+											tub_pre='On Premises'
+											//wpPreHHId=wpHHID
+										}else if(benListS[2]==2){
+											tub_pre='Up to 30 min (\u2266 30)'
+										}else{
+											tub_pre='More than 30 min (&#62 30)'
+										}
+									
+										 i+="<tr id='"+benListS[0]+"'><td>"+benListS[0]+"-"+benListS[1]+"</td><td>"+tub_pre+"</td><td>"+'<input style="background-color:#99dfff;" type="button" onclick="rowRemove(\''+benListS[0]+'\')" value="X">'+"</td></tr>";
+										benCount+=1;
+									
+									}
+									$("#benTable").html(i);
+																		
+									}
+							
+							}
+											
+							
+							
+				/*	}
+				}*/
+				
 			}
 			
 		 });
@@ -212,12 +401,13 @@ $(document).ready(function(){
 
 function rowRemove(wpHHID){
 	$("#"+wpHHID).remove();	
+	//alert(wpHHID);
 	benCount-=1;
 	var listS='';
 	iStrS=benList.split('||');
 	iLenS=iStrS.length
 	for(i=0;i<iLenS;i++){
-		iStrDS=iStrS[i].split(',');
+		iStrDS=iStrS[i].split('|');
 		
 		if(iStrDS[0]!=wpHHID){
 			if (listS==''){
@@ -229,9 +419,9 @@ function rowRemove(wpHHID){
 	}
 	
 	benList=listS
-	
+	//alert(benList)
 	//==========
-	var repl1='';
+	/*var repl1='';
 	iStr=hhIDList.split('||');
 	iLen=iStr.length
 	for(i=0;i<iLen;i++){
@@ -245,8 +435,27 @@ function rowRemove(wpHHID){
 			}	
 		}		
 	}
+	hhIDList=repl1*/
 	
-	hhIDList=repl1
+	//============
+	
+	
+	/*var repWpTub='';
+	iStrWp=benList.split('||');
+	iLenWp=iStrWp.length
+	for(j=0;j<iLenWp;j++){
+		iStrDwp=iStrWp[j].split(',');
+		
+		if(iStrDwp[0]!=wp_tub_pre){
+			if (repWpTub==''){
+				repWpTub=iStrWp[j]
+			}else{
+				repWpTub+='||'+iStrWp[j]
+			}	
+		}		
+	}
+	wpTubTreList=repWpTub
+	alert(wpTubTreList);*/
 }
 
 function syncBasic(){
@@ -300,7 +509,83 @@ function syncBasic(){
 					$("#upCode").val(localStorage.up_code);
 					$("#unName").val(localStorage.un_name);						
 					$("#unCode").val(localStorage.un_code);
-										
+					
+					
+					//===========socialmap
+					var wardName='<label for="ward">Ward No</label><select name="ward" id="ward" data-native-menu="false" onblur="social_map_id()"><option value="0">Select Ward No</option><option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option><option value="09">09</option></select>'	
+					$("#wardName").html(wardName);
+					
+					var odfStatusName='<select id="odfStatus" name="odfStatus" data-native-menu="false"><option value="0">Select</option><option value="Yes">Yes</option><option value="No">No</option></select>'
+					$("#odfStatusName").html(odfStatusName);
+					
+					var commExitName='<select id="commExit" name="commExit" data-native-menu="false" onchange="washCommitt()"><option value="0">Select</option><option value="Yes">Yes</option><option value="No">No</option></select>'
+					$("#commExitName").html(commExitName);
+					
+					var commFuncName='<select id="commFunc" name="commFunc" data-native-menu="false"><option value="0">Select</option><option value="Yes">Yes</option><option value="No">No</option></select>'
+					$("#commFuncName").html(commFuncName);
+					
+					$("#btn_socialmap_home").hide();
+					
+					//===========Beneficary
+					var benWardNo='<label for="ben_ward">Ward No</label><select name="ben_ward" id="ben_ward" data-native-menu="false"  onblur="social_map_id()" onchange="cluster()" ><option value="0">Ward No</option></select>'   
+					$("#benWardNo").html(benWardNo);
+					
+					var benClusIDName='<label for="ben_clusID">Cluster ID</label><select name="ben_clusID" id="ben_clusID" data-native-menu="false" onblur="social_map_id()"><option value="0">Select Cluster</option></select>' 
+					$("#benClusIDName").html(benClusIDName);
+					
+					var benGender='<label for="ben_hh_head_gender">HH Head Gender</label><select id="ben_hh_head_gender" name="ben_hh_head_gender" data-native-menu="false"><option value="0">Select HH Head Gender</option><option value="Male">Male</option><option value="Female">Female</option></select>'
+					$("#benGender").html(benGender);
+					
+					var benEcoCondition='<label for="ben_eco_condition">Economic Condition</label><select id="ben_eco_condition" name="ben_eco_condition" data-native-menu="false"><option value="0">Select Economic Condition</option><option value="Rich">A: Rich</option><option value="Middle">B: Middle Class</option><option value="Poor">C: Poor</option><option value="Exterme Poor">D: Exterme Poor</option></select>'
+					$("#benEcoCondition").html(benEcoCondition);
+					
+					var spsFamily_ben='<label for="sps_family">Sponsorship Family</label><select name="sps_family" id="sps_family" data-native-menu="false"><option value="0">Select Sponsorship Family</option><option value="Yes">Yes</option><option value="No">No</option></select>'
+					$("#spsFamily_ben").html(spsFamily_ben);
+					
+					$("#btn_ben_home").hide();
+					$("#btn_ben_service_san").hide();
+					$("#btn_ben_home_san").hide();
+					$("#btn_ben_service").hide();
+					$("#btn_ben_service_hwf").hide();
+					$("#btn_ben_home_hwf").hide();
+					
+					//----------Sanation
+					var sanLatType_ben='<label for="san_lat_type">Type of Latrine Provided</label><select name="san_lat_type" id="san_lat_type" data-native-menu="false"><option value="0">Select Type of Latrine Provided</option><option value="Offset Pit">Offset Pit</option><option value="Water Seal Pit">Water Seal Pit</option><option value="Pit Latrine with Sato Pan">Pit Latrine with Sato Pan</option><option value="Shared Offset Pit">Shared-Offset Pit</option><option value="Shared Water Seal Pit">Shared-Water Seal Pit</option><option value="Shared Pit Latrine with Sato Pan">Shared-Pit Latrine with Sato Pan</option></select>'
+					$("#sanLatType_ben").html(sanLatType_ben);
+					
+					var sanActType_ben='<label for="san_act_type">Type of Activity</label><select name="san_act_type" id="san_act_type" data-native-menu="false"><option value="0">Select Type of Activity</option><option value="New">New</option><option value="Renovation">Renovation</option></select>'	
+					$("#sanActType_ben").html(sanActType_ben);
+					
+					var sanSubsidized_ben='<label for="san_subsidized">Subsidized</label><select name="san_subsidized" id="san_subsidized" data-native-menu="false"><option value="0">Select Subsidized</option><option value="Yes">Yes</option><option value="No">No</option></select>'			
+					$("#sanSubsidized_ben").html(sanSubsidized_ben);
+					
+					//----------hwf
+					var hwType_hwf='<label for="hw_type">Type of Handwash Facilities</label><select name="hw_type" id="hw_type" data-native-menu="false"><option value="0">Select Type of Handwash Facilities</option><option value="Water tank with tap">Water tank with tap</option><option value="Barrel Drum Bucket Jerrican with Tap">Barrel/Drum/Bucket/Jerrican with Tap</option><option value="Pitcher with Tap">Pitcher with Tap</option><option value="Tippy Tap">Tippy Tap</option><option value="Hand TubeWell">Hand TubeWell</option></select>'
+					
+					$("#hwType_hwf").html(hwType_hwf);
+					
+					//============wp
+					var clusterIDNameWP='<label for="clusterIDName">Select Cluster</label><select name="clusterIDName" id="clusterIDName" data-native-menu="false"><option value="0">Select Cluster</option></select>'  
+					$("#clusterIDNameWP").html(clusterIDNameWP);
+					
+					var wpActType='<label for="wp_act_type">Type of Activity</label><select name="wp_act_type" id="wp_act_type" data-native-menu="false"><option value="0">Select Type of Activity</option><option value="New">New</option><option value="Renovation">Renovation</option></select>'
+					$("#wpActType").html(wpActType);
+					
+					var wpTechnology='<label for="wp_technology">Water Point Technology </label><select name="wp_technology" id="wp_technology" data-native-menu="false"><option value="0">Select Water Point Technology</option><option value="Deep Hand Tubewell">Deep Hand Tubewell</option><option value="Deep Set Pump">Deep Set Pump</option><option value="Shallow Tubewell">Shallow Tubewell</option><option value="Semi Deep Tubewell">Semi-Deep Tubewell</option><option value="Rain Water Harvesting">Rain Water Harvesting</option></select>'
+					$("#wpTechnology").html(wpTechnology);
+					
+					var wpSubsidized='<label for="wp_subsidized">Subsidized</label><select name="wp_subsidized" id="wp_subsidized" data-native-menu="false"><option value="0">Select Subsidized</option><option value="Yes">Yes</option><option value="No">No</option></select>'	
+					$("#wpSubsidized").html(wpSubsidized);
+					
+					var wpWq='<label for="wp_wq">Water Quality Test Type</label><select name="wp_wq" id="wp_wq" data-native-menu="false"><option value="0">Select Water Quality Test Type</option><option value="Arsenic">Arsenic</option><option value="Bacterial">Bacterial</option><option value="Both Arsenic And Bacteria">Both Arsenic & Bacteria</option></select>'
+					$("#wpWq").html(wpWq);
+					
+					var wpWqResult='<label for="wp_wq_result">Result Water Quality Test</label><select name="wp_wq_result" id="wp_wq_result" data-native-menu="false"><option value="0">Select Result Water Quality Test</option><option value="Potable">Potable</option><option value="Not Potable">Not Potable</option><option value="Not Undertaken Yet">Not Undertaken Yet</option></select>'	
+					$("#wpWqResult").html(wpWqResult);
+					
+					var wpTubPre='<label for="wp_tub_pre">Tubewell Located on Premises</label><select name="wp_tub_pre" id="wp_tub_pre" data-native-menu="false"><option value="0">Select TW Located on Premises</option><option value="1">On Premises</option><option value="2">Up to 30 min (\u2266 30)</option><option value="3">More than 30 min (&#62 30)</option></select>'	
+					$("#wpTubPre").html(wpTubPre);
+															
 					$(".errorMsg").html("Sync Successful");
 					$('#syncBasic').show();
 											
@@ -525,11 +810,24 @@ function planbdData1Next(){
 	}else if(socialMapID.length !=12){
 		$(".errorChk").text("Invalid Social Map ID");
 	}else{
-		//plan2Data="||ward="+ward+"||village="+village+"||clusID="+clusID+"||clusName="+clusName+"||socialMapID="+socialMapID;
-		//alert(plan2Data);
-		$(".errorChk").text("");		
-		url="#second_page";					
-		$.mobile.navigate(url);
+		//alert(apipath+"social_mapdata_exit?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&ward="+ward+"&clusID="+clusID+"&socialMapID="+socialMapID);
+		$.ajax({
+		type: 'POST',
+		url:apipath+"social_mapdata_exit?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&ward="+ward+"&clusID="+clusID+"&socialMapID="+socialMapID,
+																																																												
+		success: function(result) {			
+			if(result=='Success'){				
+				$(".errorChk").text("");		
+				url="#second_page";					
+				$.mobile.navigate(url);	
+			}else{
+				$(".errorChk").text('Data Already Exist');			
+				url="#first_page";					
+				$.mobile.navigate(url);		
+			}
+		}
+		})		
+		
 	}
 }
 
@@ -704,6 +1002,10 @@ function dataSubmit(){
 	}else if (achPhoto_2=='' || achPhoto_2==undefined){
 		$(".errorChk").text("Please confirm Photo 2 ");
 		$("#btn_submit").show();
+	}else if((latitude==0 || longitude==0) ||(localStorage.latitudeAreaWq==0 || localStorage.longitudeAreaWq==0)||(localStorage.latitudeAreaWq==undefined || localStorage.longitudeAreaWq==undefined)){
+		$(".errorChk").text("Please confirm your location");
+		$("#btn_ach_lat_long").show();
+		$("#btn_submit").show();
 	}else{				
 		//imagePathA="test"					
 		if (imagePathA!=""){							
@@ -712,17 +1014,18 @@ function dataSubmit(){
 			uploadPhotoAch(imagePathA, imageName);	
 			//$("#btn_submit").show();					
 		}		
+		//syncData();
 	}//chk photo
 	
-//syncData();
+
 	
 }
 
 //------------------------------------image 1
 
 function getAchivementImage1() { 
-	navigator.camera.getPicture(onSuccessA, onFailA, { quality: 50,
-	targetWidth: 300,
+	navigator.camera.getPicture(onSuccessA, onFailA, { quality: 90,
+	targetWidth: 600,
 	destinationType: Camera.DestinationType.FILE_URI,correctOrientation: true });	
 }
 
@@ -780,8 +1083,8 @@ function onfail(r) {
 
 //-----------------------image 2
 function getAchivementImage2() { 
-	navigator.camera.getPicture(onSuccess2A, onFail2A, { quality: 50,
-	targetWidth: 300,
+	navigator.camera.getPicture(onSuccess2A, onFail2A, { quality: 90,
+	targetWidth: 600,
 	destinationType: Camera.DestinationType.FILE_URI,correctOrientation: true });		
 }
 
@@ -820,7 +1123,11 @@ function winComInfo2(r) {
 	syncData();
 }
 
-function syncData(){				
+function syncData(){
+	if(latitude==0 || longitude==0){
+		latitude=localStorage.latitudeAreaWq;
+		longitude=localStorage.longitudeAreaWq;
+	}				
 	//alert(apipath+"submitData?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName+"&achPhoto2="+imageName2+"&latitude="+latitude+"&longitude="+longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ward="+ward+"&village="+village+"&clusID="+clusID+"&clusName="+clusName+"&socialMapID="+socialMapID+"&rich="+rich+"&middle="+middle+"&poor="+poor+"&exPoor="+exPoor+"&hyLatrine="+hyLatrine+"&unhyLatrine="+unhyLatrine+"&noLatrine="+noLatrine+"&hyTub="+hyTub+"&unhyTub="+unhyTub+"&noTub="+noTub+"&hwYes="+hwYes+"&hwNo="+hwNo+"&odfStatus="+odfStatus+"&commExit="+commExit+"&commFunc="+commFunc+"&commFemale="+commFemale+"&commMale="+commMale+"&benTotal="+benTotal+"&benG_5="+benG_5+"&benB_5="+benB_5+"&benG_5_18="+benG_5_18+"&benB_5_18="+benB_5_18+"&benF_18_plus="+benF_18_plus+"&benM_18_plus="+benM_18_plus+"&EthF="+EthF+"&EthM="+EthM+"&disG_5="+disG_5+"&disB_5="+disB_5+"&disG_5_18="+disG_5_18+"&disB_5_18="+disB_5_18+"&disF_18_plus="+disF_18_plus+"&disM_18_plus="+disM_18_plus);
 	$.ajax({
 		type: 'POST',
@@ -829,16 +1136,17 @@ function syncData(){
 		success: function(result) {			
 			if(result=='Success'){
 				
-				/*$("#ward").val("");
+				$("#ward").val(0);
 				$("#village").val("");
 				$("#clusID").val("");
 				$("#clusName").val("");
-				$("#socialMapID").val("");*/
+				$("#socialMapID").val("");
 				
 				$("#rich").val("");
 				$("#middle").val("");
 				$("#poor").val("");
 				$("#exPoor").val("");
+				$("#TotalHh").val("");
 				
 				$("#hyLatrine").val("");
 				$("#unhyLatrine").val("");
@@ -877,18 +1185,24 @@ function syncData(){
 				//--------------
 				$("#ach_lat").val(0);
 				$("#ach_long").val(0);
+				
+				$("#myImageA").val("");										
+				$("#myImage2A").val("");
+				
 				$("#achPhoto").val("");										
 				$("#achPhoto_2").val("");
+				document.getElementById('myImageA').src = '';
+				document.getElementById('myImage2A').src = '';
 								
 				$(".sucChk").text('Successfully Submitted');
 				$(".errorChk").text("");
 				$("#btn_submit").hide();
-				$("#btn_new_socialmap").show();	
+				//$("#btn_new_socialmap").show();	
 				$("#btn_socialmap_home").show();					
 			}else{
 				$(".errorChk").text('Cluster ID Already Exist');																	
 				$("#btn_submit").show();
-				$("#btn_new_socialmap").hide();	
+				//$("#btn_new_socialmap").hide();	
 				$("#btn_socialmap_home").hide();	
 			}
 			
@@ -896,18 +1210,35 @@ function syncData(){
 	});//end ajax
 }
 
-function addNewSocialMap(){
+/*function addNewSocialMap(){
 	$("#btn_submit").show();
-	$("#btn_new_socialmap").hide();	
+	//$("#btn_new_socialmap").hide();	
 	$("#btn_socialmap_home").hide();
 	
-	$(".errorChk").text("");			
+	$(".errorChk").text("");
+	$(".sucChk").text("");			
 	url="#first_page";					
 	$.mobile.navigate(url);
-}
+}*/
 
 function socialMapHome(){
-	$(".errorChk").text("");			
+	var wardName='<label for="ward">Ward No</label><select name="ward" id="ward" data-native-menu="false" onblur="social_map_id()"><option value="0">Select Ward No</option><option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option><option value="09">09</option></select>'	
+	$("#wardName").html(wardName).trigger('create');
+	
+	var odfStatusName='<select id="odfStatus" name="odfStatus" data-native-menu="false"><option value="0">Select</option><option value="Yes">Yes</option><option value="No">No</option></select>'
+	$("#odfStatusName").html(odfStatusName).trigger('create');
+	
+	var commExitName='<select id="commExit" name="commExit" data-native-menu="false" onchange="washCommitt()"><option value="0">Select</option><option value="Yes">Yes</option><option value="No">No</option></select>'
+	$("#commExitName").html(commExitName).trigger('create');
+	
+	var commFuncName='<select id="commFunc" name="commFunc" data-native-menu="false"><option value="0">Select</option><option value="Yes">Yes</option><option value="No">No</option></select>'
+	$("#commFuncName").html(commFuncName).trigger('create');
+	
+	$("#btn_submit").show();	
+	$("#btn_socialmap_home").hide();	
+	
+	$(".errorChk").text("");
+	$(".sucChk").text("");					
 	url="#homePage";					
 	$.mobile.navigate(url);
 }
@@ -944,6 +1275,7 @@ var ben_hh_id;
 var ben_hh_head_name;
 var ben_hh_head_gender;
 var ben_eco_condition;
+var sps_family;
 var ben_benG_5;
 var ben_benB_5;
 var ben_benG_5_18;
@@ -993,7 +1325,7 @@ function beneficiary(beneficiary){
 				success: function(resStr){					
 					wordList=resStr.split('fdfd');					
 					var woListStr="";	
-					woListStr+='<option value="">Select Ward No</option>'		        
+					woListStr+='<option value="0">Select Ward No</option>'		        
 					for(i=0; i<wordList.length; i++){						
 						woListStr+="<option value="+encodeURIComponent(wordList[i])+">"+wordList[i]+"</option>";			
 					}
@@ -1058,7 +1390,9 @@ function ben_planbdData1Next(){
 	
 	ben_socialMapID=$("#ben_socialMapID").val();
 	ben_hh_serial=$("#ben_hh_serial").val();
-	//localStorage.hh_serial=ben_hh_serial;
+	
+	localStorage.hh_serial=ben_hh_serial;
+	
 	if(ben_ward=='' || ben_ward==0){
 		$(".errorChk").text("Required ward no");
 	}else if(ben_clusID=='' || ben_clusID==0){
@@ -1073,12 +1407,53 @@ function ben_planbdData1Next(){
 		$(".errorChk").text("Maximum 3 digit HH Serial");		
 	}else{
 		
-		//"&ben_ward="+ben_ward+&ben_village="+ben_village"+&ben_clusID="+ben_clusID+"&ben_clusName="+ben_clusName+"&ben_socialMapID="+ben_socialMapID+"&ben_hh_serial="+ben_hh_serial
-		
-		//alert(apipath+"search_benData?div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_hh_serial="+ben_hh_serial);
+		//alert(apipath+"search_benData?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_hh_serial="+localStorage.hh_serial);
 		$.ajax({
 			type:'POST',
-			url:apipath+"search_benData?div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_hh_serial="+ben_hh_serial,
+			url:apipath+"search_benData?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_hh_serial="+localStorage.hh_serial,
+			success: function(result){				
+				searchResult=result;			
+				var searchResultArray = searchResult.split('||');
+					resultSearch=searchResultArray[0];
+					
+					if (resultSearch=='Success'){
+						
+						//$("#btn_ben_service").hide();								
+						$(".errorChk").text("");			
+						url="#ben_new_page";					
+						$.mobile.navigate(url);
+					}else{	
+						$(".errorChk").text("");			
+						url="#ben_second_page";					
+						$.mobile.navigate(url);
+					}
+							
+			}
+		})
+		
+		$("#divi_ben_2").text(localStorage.div_name);
+		$("#dis_ben_2").text(localStorage.dis_name);
+		$("#upaz_ben_2").text(localStorage.up_name);
+		$("#uni_ben_2").text(localStorage.un_name);
+		$("#wardNo_ben_2").text(ben_ward);
+		$("#cLuster_ben_2").text(ben_clusID+"-"+(ben_clusName).replace(/%20/g," "));
+	}
+}
+
+function ben_update(){
+		var benGender='<label for="ben_hh_head_gender">HH Head Gender</label><select id="ben_hh_head_gender" name="ben_hh_head_gender" data-native-menu="false"><option value="0">Select HH Head Gender</option><option value="Male">Male</option><option value="Female">Female</option></select>'
+		$("#benGender").html(benGender);
+		
+		var benEcoCondition='<label for="ben_eco_condition">Economic Condition</label><select id="ben_eco_condition" name="ben_eco_condition" data-native-menu="false"><option value="0">Select Economic Condition</option><option value="Rich">A: Rich</option><option value="Middle">B: Middle Class</option><option value="Poor">C: Poor</option><option value="Exterme Poor">D: Exterme Poor</option></select>'
+		$("#benEcoCondition").html(benEcoCondition);
+		
+		var spsFamily_ben='<label for="sps_family">Sponsorship Family</label><select name="sps_family" id="sps_family" data-native-menu="false"><option value="0">Select Sponsorship Family</option><option value="Yes">Yes</option><option value="No">No</option></select>'
+		$("#spsFamily_ben").html(spsFamily_ben);
+	
+		//alert(apipath+"update_beneficary?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_hh_serial="+localStorage.hh_serial);
+		$.ajax({
+			type:'POST',
+			url:apipath+"update_beneficary?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_hh_serial="+localStorage.hh_serial,
 			success: function(result){				
 				searchResult=result;			
 				var searchResultArray = searchResult.split('||');
@@ -1101,7 +1476,8 @@ function ben_planbdData1Next(){
 						ben_disG_5_18=searchResultArray[14];	
 						ben_disB_5_18=searchResultArray[15];	
 						ben_disF_18_plus=searchResultArray[16];	
-						ben_disM_18_plus=searchResultArray[17];					
+						ben_disM_18_plus=searchResultArray[17];
+						sps_family=searchResultArray[18];					
 						
 						$("#ben_hh_head_name").val(ben_hh_head_name);
 						$("#ben_hh_head_gender").val(ben_hh_head_gender);
@@ -1120,7 +1496,9 @@ function ben_planbdData1Next(){
 						$("#ben_disB_5_18").val(ben_disB_5_18);
 						$("#ben_disF_18_plus").val(ben_disF_18_plus);
 						$("#ben_disM_18_plus").val(ben_disM_18_plus);				
-				
+						$("#sps_family").val(sps_family);
+						
+						$("#btn_ben_submit").show();
 						$(".errorChk").text("");			
 						url="#ben_second_page";					
 						$.mobile.navigate(url);
@@ -1132,15 +1510,7 @@ function ben_planbdData1Next(){
 			}
 		})
 		
-		$("#divi_ben_2").text(localStorage.div_name);
-		$("#dis_ben_2").text(localStorage.dis_name);
-		$("#upaz_ben_2").text(localStorage.up_name);
-		$("#uni_ben_2").text(localStorage.un_name);
-		$("#wardNo_ben_2").text(ben_ward);
-		$("#cLuster_ben_2").text(ben_clusID+"-"+(ben_clusName).replace(/%20/g," "));
-	}
 }
-
 
 function joinSocialID(){
 	ben_socialMapID=$("#ben_socialMapID").val();
@@ -1188,6 +1558,7 @@ function benDataSubmit(){
 	ben_hh_head_name=$("#ben_hh_head_name").val();
 	ben_hh_head_gender=$("#ben_hh_head_gender").val();
 	ben_eco_condition=$("#ben_eco_condition").val();
+	sps_family=$("#sps_family").val();
 	ben_benG_5=$("#ben_benG_5").val();
 	ben_benB_5=$("#ben_benB_5").val();
 	ben_benG_5_18=$("#ben_benG_5_18").val();
@@ -1204,6 +1575,8 @@ function benDataSubmit(){
 	ben_disF_18_plus=$("#ben_disF_18_plus").val();
 	ben_disM_18_plus=$("#ben_disM_18_plus").val();
 	
+	localStorage.hh_head_name=ben_hh_head_name;
+	
 	benBenGtotal=eval(ben_benG_5)+eval(ben_benG_5_18)+eval(ben_benF_18_plus);
 	benBenBtotal=eval(ben_benB_5)+eval(ben_benB_5_18)+eval(ben_benM_18_plus);
 	
@@ -1211,10 +1584,12 @@ function benDataSubmit(){
 		$(".errorChk").text("Required HH ID");
 	}else if(ben_hh_head_name==''){
 		$(".errorChk").text("Required HH Head Name");
-	}else if(ben_hh_head_gender=='' || ben_hh_head_gender==0){
+	}else if(ben_hh_head_gender=='' || ben_hh_head_gender==0 || ben_hh_head_gender==null){
 		$(".errorChk").text("Required Gender");	
-	}else if(ben_eco_condition=='' || ben_eco_condition==0){
+	}else if(ben_eco_condition=='' || ben_eco_condition==0 || ben_eco_condition==null){
 		$(".errorChk").text("Required Economic Condition");	
+	}else if(sps_family=='' || sps_family==0 || sps_family==null){
+		$(".errorChk").text("Required Sponsorship Family");		
 	/*}else if(ben_benG_5==''){
 		$(".errorChk").text("Required Girl (<=5)");
 	}else if(ben_benB_5==''){
@@ -1247,24 +1622,25 @@ function benDataSubmit(){
 		$(".errorChk").text("Disabilities < Beneficiaries  Male (18+)");
 	}else{
 			
-		//alert(apipath+"submitData_ben?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_clusName="+ben_clusName+"&ben_hh_serial="+ben_hh_serial+"&ben_hh_id="+ben_hh_id+"&ben_hh_head_name="+ben_hh_head_name+"&ben_hh_head_gender="+ben_hh_head_gender+"&ben_eco_condition="+ben_eco_condition+"&ben_benG_5="+ben_benG_5+"&ben_benB_5="+ben_benB_5+"&ben_benG_5_18="+ben_benG_5_18+"&ben_benB_5_18="+ben_benB_5_18+"&ben_benF_18_plus="+ben_benF_18_plus+"&ben_benM_18_plus="+ben_benM_18_plus+"&ben_EthF="+ben_EthF+"&ben_EthM="+ben_EthM+"&ben_disG_5="+ben_disG_5+"&ben_disB_5="+ben_disB_5+"&ben_disG_5_18="+ben_disG_5_18+"&ben_disB_5_18="+ben_disB_5_18+"&ben_disF_18_plus="+ben_disF_18_plus+"&ben_disM_18_plus="+ben_disM_18_plus);
+		//alert(apipath+"submitData_ben?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_clusName="+ben_clusName+"&ben_hh_serial="+ben_hh_serial+"&ben_hh_id="+ben_hh_id+"&ben_hh_head_name="+ben_hh_head_name+"&ben_hh_head_gender="+ben_hh_head_gender+"&ben_eco_condition="+ben_eco_condition+"&ben_benG_5="+ben_benG_5+"&ben_benB_5="+ben_benB_5+"&ben_benG_5_18="+ben_benG_5_18+"&ben_benB_5_18="+ben_benB_5_18+"&ben_benF_18_plus="+ben_benF_18_plus+"&ben_benM_18_plus="+ben_benM_18_plus+"&ben_EthF="+ben_EthF+"&ben_EthM="+ben_EthM+"&ben_disG_5="+ben_disG_5+"&ben_disB_5="+ben_disB_5+"&ben_disG_5_18="+ben_disG_5_18+"&ben_disB_5_18="+ben_disB_5_18+"&ben_disF_18_plus="+ben_disF_18_plus+"&ben_disM_18_plus="+ben_disM_18_plus+"&sps_family="+sps_family);
 		$.ajax({
 		type: 'POST',
-		url:apipath+"submitData_ben?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_clusName="+ben_clusName+"&ben_hh_serial="+ben_hh_serial+"&ben_hh_id="+ben_hh_id+"&ben_hh_head_name="+ben_hh_head_name+"&ben_hh_head_gender="+ben_hh_head_gender+"&ben_eco_condition="+ben_eco_condition+"&ben_benG_5="+ben_benG_5+"&ben_benB_5="+ben_benB_5+"&ben_benG_5_18="+ben_benG_5_18+"&ben_benB_5_18="+ben_benB_5_18+"&ben_benF_18_plus="+ben_benF_18_plus+"&ben_benM_18_plus="+ben_benM_18_plus+"&ben_EthF="+ben_EthF+"&ben_EthM="+ben_EthM+"&ben_disG_5="+ben_disG_5+"&ben_disB_5="+ben_disB_5+"&ben_disG_5_18="+ben_disG_5_18+"&ben_disB_5_18="+ben_disB_5_18+"&ben_disF_18_plus="+ben_disF_18_plus+"&ben_disM_18_plus="+ben_disM_18_plus,
+		url:apipath+"submitData_ben?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&ben_clusID="+ben_clusID+"&ben_clusName="+ben_clusName+"&ben_hh_serial="+ben_hh_serial+"&ben_hh_id="+ben_hh_id+"&ben_hh_head_name="+ben_hh_head_name+"&ben_hh_head_gender="+ben_hh_head_gender+"&ben_eco_condition="+ben_eco_condition+"&ben_benG_5="+ben_benG_5+"&ben_benB_5="+ben_benB_5+"&ben_benG_5_18="+ben_benG_5_18+"&ben_benB_5_18="+ben_benB_5_18+"&ben_benF_18_plus="+ben_benF_18_plus+"&ben_benM_18_plus="+ben_benM_18_plus+"&ben_EthF="+ben_EthF+"&ben_EthM="+ben_EthM+"&ben_disG_5="+ben_disG_5+"&ben_disB_5="+ben_disB_5+"&ben_disG_5_18="+ben_disG_5_18+"&ben_disB_5_18="+ben_disB_5_18+"&ben_disF_18_plus="+ben_disF_18_plus+"&ben_disM_18_plus="+ben_disM_18_plus+"&sps_family="+sps_family,
 																																																											
 		success: function(result) {			
 			if(result=='Success'){
-				localStorage.hh_serial=ben_hh_serial;
-				localStorage.hh_head_name=ben_hh_head_name;
+				/*localStorage.hh_serial=ben_hh_serial;
+				localStorage.hh_head_name=ben_hh_head_name;*/
 				
-				/*$("#ben_ward").val("");
-				$("#ben_clusID").val("");*/
+				$("#ben_ward").val(0);
+				$("#ben_clusID").val(0);
 				$("#ben_hh_serial").val("");								
 				
 				$("#ben_hh_id").val("");
 				$("#ben_hh_head_name").val("");
-				$("#ben_hh_head_gender").val("");
-				$("#ben_eco_condition").val("");
+				$("#ben_hh_head_gender").val(0);
+				$("#ben_eco_condition").val(0);
+				$("#sps_family").val(0);
 				$("#ben_benG_5").val("");
 				$("#ben_benB_5").val("");
 				$("#ben_benG_5_18").val("");
@@ -1284,13 +1660,13 @@ function benDataSubmit(){
 				$(".sucChk").text('Successfully Submitted');
 				$(".errorChk").text("");
 				$("#btn_ben_submit").hide();
-				$("#btn_new_ben").show();
+				//$("#btn_new_ben").show();
 				$("#btn_ben_service").show();
-				$("#btn_ben_home").show();						
+				$("#btn_ben_home").show();
 			}else{
 				$(".errorChk").text('Submission Failed.');																	
 				$("#btn_ben_submit").show();
-				$("#btn_new_ben").hide();
+				//$("#btn_new_ben").hide();
 				$("#btn_ben_service").hide();
 				$("#btn_ben_home").hide();
 			}
@@ -1301,13 +1677,103 @@ function benDataSubmit(){
 	}
 }
 
-function benGoToHome(){
+
+function goToHome(){
+	var benWardNo='<label for="ben_ward">Ward No</label><select name="ben_ward" id="ben_ward" data-native-menu="false"  onblur="social_map_id()" onchange="cluster()" ><option value="0">Ward No</option></select>'   
+	$("#benWardNo").html(benWardNo).trigger('create');
 	
+	var benClusIDName='<label for="ben_clusID">Cluster ID</label><select name="ben_clusID" id="ben_clusID" data-native-menu="false" onblur="social_map_id()"><option value="0">Select Cluster</option></select>' 
+	$("#benClusIDName").html(benClusIDName).trigger('create');
+	
+	var benGender='<label for="ben_hh_head_gender">HH Head Gender</label><select id="ben_hh_head_gender" name="ben_hh_head_gender" data-native-menu="false"><option value="0">Select HH Head Gender</option><option value="Male">Male</option><option value="Female">Female</option></select>'
+	$("#benGender").html(benGender).trigger('create');
+	
+	var benEcoCondition='<label for="ben_eco_condition">Economic Condition</label><select id="ben_eco_condition" name="ben_eco_condition" data-native-menu="false"><option value="0">Select Economic Condition</option><option value="Rich">A: Rich</option><option value="Middle">B: Middle Class</option><option value="Poor">C: Poor</option><option value="Exterme Poor">D: Exterme Poor</option></select>'
+	$("#benEcoCondition").html(benEcoCondition).trigger('create');
+	
+	var spsFamily_ben='<label for="sps_family">Sponsorship Family</label><select name="sps_family" id="sps_family" data-native-menu="false"><option value="0">Select Sponsorship Family</option><option value="Yes">Yes</option><option value="No">No</option></select>'
+	$("#spsFamily_ben").html(spsFamily_ben).trigger('create');
+	
+	$("#btn_ben_submit").show();
+	//$("#btn_new_ben").hide();
+	$("#btn_ben_service").hide();	
+	$("#btn_ben_home").hide();
+	$("#ben_hh_serial").val("");	
+	
+	//san
+	var sanLatType_ben='<label for="san_lat_type">Type of Latrine Provided</label><select name="san_lat_type" id="san_lat_type" data-native-menu="false"><option value="0">Select Type of Latrine Provided</option><option value="Offset Pit">Offset Pit</option><option value="Water Seal Pit">Water Seal Pit</option><option value="Pit Latrine with Sato Pan">Pit Latrine with Sato Pan</option><option value="Shared Offset Pit">Shared-Offset Pit</option><option value="Shared Water Seal Pit">Shared-Water Seal Pit</option><option value="Shared Pit Latrine with Sato Pan">Shared-Pit Latrine with Sato Pan</option></select>'
+	
+	$("#sanLatType_ben").html(sanLatType_ben).trigger('create');
+	
+	var sanActType_ben='<label for="san_act_type">Type of Activity</label><select name="san_act_type" id="san_act_type" data-native-menu="false"><option value="0">Select Type of Activity</option><option value="New">New</option><option value="Renovation">Renovation</option></select>'	
+	$("#sanActType_ben").html(sanActType_ben).trigger('create');
+	
+	var sanSubsidized_ben='<label for="san_subsidized">Subsidized</label><select name="san_subsidized" id="san_subsidized" data-native-menu="false"><option value="0">Select Subsidized</option><option value="Yes">Yes</option><option value="No">No</option></select>'			
+	$("#sanSubsidized_ben").html(sanSubsidized_ben).trigger('create');
+				
+	$("#btn_san_submit").show();
+	$("#btn_new_ben_san").hide();
+	$("#btn_ben_service_san").hide();
+	$("#btn_ben_home_san").hide();
+	
+	//hwf
+	var hwType_hwf='<label for="hw_type">Type of Handwash Facilities</label><select name="hw_type" id="hw_type" data-native-menu="false"><option value="0">Select Type of Handwash Facilities</option><option value="Water tank with tap">Water tank with tap</option><option value="Barrel Drum Bucket Jerrican with Tap">Barrel/Drum/Bucket/Jerrican with Tap</option><option value="Pitcher with Tap">Pitcher with Tap</option><option value="Tippy Tap">Tippy Tap</option><option value="Hand TubeWell">Hand TubeWell</option></select>'
+	
+	$("#hwType_hwf").html(hwType_hwf).trigger('create');
+	
+	$("#btn_wwf_submit").show();
+	$("#btn_new_ben_hwf").hide();	
+	$("#btn_ben_service_hwf").hide();
+	$("#btn_ben_home_hwf").hide();	
+	
+	//wp
+	var clusterIDNameWP='<label for="clusterIDName">Select Cluster</label><select name="clusterIDName" id="clusterIDName" data-native-menu="false"><option value="0">Select Cluster</option></select>'  
+	$("#clusterIDNameWP").html(clusterIDNameWP).trigger('create');
+	
+	var wpActType='<label for="wp_act_type">Type of Activity</label><select name="wp_act_type" id="wp_act_type" data-native-menu="false"><option value="0">Select Type of Activity</option><option value="New">New</option><option value="Renovation">Renovation</option></select>'
+	$("#wpActType").html(wpActType).trigger('create');
+	
+	var wpTechnology='<label for="wp_technology">Water Point Technology </label><select name="wp_technology" id="wp_technology" data-native-menu="false"><option value="0">Select Water Point Technology</option><option value="Deep Hand Tubewell">Deep Hand Tubewell</option><option value="Deep Set Pump">Deep Set Pump</option><option value="Shallow Tubewell">Shallow Tubewell</option><option value="Semi Deep Tubewell">Semi-Deep Tubewell</option><option value="Rain Water Harvesting">Rain Water Harvesting</option></select>'
+	
+	$("#wpTechnology").html(wpTechnology).trigger('create');
+	
+	var wpSubsidized='<label for="wp_subsidized">Subsidized</label><select name="wp_subsidized" id="wp_subsidized" data-native-menu="false"><option value="0">Select Subsidized</option><option value="Yes">Yes</option><option value="No">No</option></select>'	
+	$("#wpSubsidized").html(wpSubsidized).trigger('create');
+	
+	var wpWq='<label for="wp_wq">Water Quality Test Type</label><select name="wp_wq" id="wp_wq" data-native-menu="false"><option value="0">Select Water Quality Test Type</option><option value="Arsenic">Arsenic</option><option value="Bacterial">Bacterial</option><option value="Both Arsenic And Bacteria">Both Arsenic & Bacteria</option></select>'
+	$("#wpWq").html(wpWq).trigger('create');
+	
+	var wpWqResult='<label for="wp_wq_result">Result Water Quality Test</label><select name="wp_wq_result" id="wp_wq_result" data-native-menu="false"><option value="0">Select Result Water Quality Test</option><option value="Potable">Potable</option><option value="Not Potable">Not Potable</option><option value="Not Undertaken Yet">Not Undertaken Yet</option></select>'	
+	$("#wpWqResult").html(wpWqResult).trigger('create');
+	
+	var wpTubPre='<label for="wp_tub_pre">Tubewell Located on Premises</label><select name="wp_tub_pre" id="wp_tub_pre" data-native-menu="false"><option value="0">Select TW Located on Premises</option><option value="1">On Premises</option><option value="2">Up to 30 min (\u2266 30)</option><option value="3">More than 30 min (&#62 30)</option></select>'	
+	$("#wpTubPre").html(wpTubPre).trigger('create');
+		
+	benList='';	
+	hhIDList='';	
+	wpTubTreList='';
+	$("#benTable").empty();				
+	$("#btn_wp_submit").show();
+	$("#btn_home_wp").hide();
+	
+	$(".sucChk").text("");		
 	$(".errorChk").text("");			
 	url="#homePage";					
 	$.mobile.navigate(url);	
 }
-function addNewBen(){
+/*function addNewBen(){
+	var benWardNo='<label for="ben_ward">Ward No</label><select name="ben_ward" id="ben_ward" data-native-menu="false"  onblur="social_map_id()" onchange="cluster()" ><option value="0">Ward No</option></select>'   
+	$("#benWardNo").html(benWardNo).trigger('create');
+	
+	var benClusIDName='<label for="ben_clusID">Cluster ID</label><select name="ben_clusID" id="ben_clusID" data-native-menu="false" onblur="social_map_id()"><option value="0">Select Cluster</option></select>' 
+	$("#benClusIDName").html(benClusIDName).trigger('create');
+	
+	var benGender='<label for="ben_hh_head_gender">HH Head Gender</label><select id="ben_hh_head_gender" name="ben_hh_head_gender" data-native-menu="false"><option value="0">Select HH Head Gender</option><option value="Male">Male</option><option value="Female">Female</option></select>'
+	$("#benGender").html(benGender).trigger('create');
+	
+	var benEcoCondition='<label for="ben_eco_condition">Economic Condition</label><select id="ben_eco_condition" name="ben_eco_condition" data-native-menu="false"><option value="0">Select Economic Condition</option><option value="Rich">A: Rich</option><option value="Middle">B: Middle Class</option><option value="Poor">C: Poor</option><option value="Exterme Poor">D: Exterme Poor</option></select>'
+	$("#benEcoCondition").html(benEcoCondition).trigger('create');
+	
 	$("#btn_ben_submit").show();
 	$("#btn_new_ben").hide();
 	$("#btn_ben_service").hide();	
@@ -1325,10 +1791,11 @@ function addNewBen(){
 	$("#btn_ben_service_hwf").hide();
 	$("#btn_ben_home_hwf").hide();	
 	
-	$(".errorChk").text("");			
+	$(".errorChk").text("");
+	$(".sucChk").text("");					
 	url="#ben_first_page";					
 	$.mobile.navigate(url);	
-}
+}*/
 
 var div_name;
 var div_code;
@@ -1341,7 +1808,7 @@ var un_code;
 
 function services_ben(){
 	var hhSerial=localStorage.hh_serial;
-	//alert(apipath+"searchSanitation?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&hhSerial="+hhSerial);
+	//alert(apipath+"searchSanitation?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&ward="+ben_ward+"&cluster_id="+ben_clusID+"&hhSerial="+hhSerial);
 	$.ajax({
 		type:'POST',
 		url:apipath+"searchSanitation?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&ward="+ben_ward+"&cluster_id="+ben_clusID+"&hhSerial="+hhSerial,
@@ -1377,7 +1844,8 @@ function services_ben(){
 	$("#ward_san_c").text(ben_ward);
 	$("#cluster_san_c").text(ben_clusID+"-"+(ben_clusName).replace(/%20/g," "));
 	
-	$(".errorChk").text("");			
+	$(".errorChk").text("");
+	$(".sucChk").text("");					
 	url="#service_page";					
 	$.mobile.navigate(url);		
 }
@@ -1449,6 +1917,10 @@ function sanDataSubmit() {
 	if (achPhoto_san=='' || achPhoto_san==undefined){
 		$(".errorChk").text("Please confirm Photo 1 ");
 		$("#btn_san_submit").show();
+	}else if((san_latitude==0 || san_longitude==0) ||(localStorage.latitudeAreaWq==0 || localStorage.longitudeAreaWq==0)||(localStorage.latitudeAreaWq==undefined || localStorage.longitudeAreaWq==undefined)){
+		$(".errorChk").text("Please confirm your location");
+		$("#btn_ach_lat_long_san").show();
+		$("#btn_san_submit").show();
 	}else{				
 		//imagePathA_san="test"					
 		if (imagePathA_san != ""){							
@@ -1457,9 +1929,10 @@ function sanDataSubmit() {
             uploadPhotoAch_san(imagePathA_san, imageName_san);	
 			//$("#btn_san_submit").show();					
 		}		
+		//syncDataSan();
 	}//chk photo
 	
-//syncDataSan();                        
+                        
 	
 }
 
@@ -1513,30 +1986,30 @@ function onfail_san(r) {
 }
 
 
-function syncDataSan(){		
+function syncDataSan(){	
+	if(san_latitude==0 || san_longitude==0){
+		san_latitude=localStorage.latitudeAreaWq;
+		san_longitude=localStorage.longitudeAreaWq;
+	}	
+		
 	//alert(apipath+"submitData_san?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_san+"&latitude="+san_latitude+"&longitude="+san_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&clsId="+ben_clusID+"&clsName="+encodeURIComponent(ben_clusName)+"&sanHHserial="+localStorage.hh_serial+"&sanHHName="+encodeURIComponent(localStorage.hh_head_name)+"&san_lat_type="+san_lat_type+"&san_act_type="+san_act_type+"&san_subsidized="+san_subsidized+"&san_com_date="+san_com_date);
 	$.ajax({
 		type:'POST',
 		url:apipath+"submitData_san?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_san+"&latitude="+san_latitude+"&longitude="+san_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&clsId="+ben_clusID+"&clsName="+encodeURIComponent(ben_clusName)+"&sanHHserial="+localStorage.hh_serial+"&sanHHName="+encodeURIComponent(localStorage.hh_head_name)+"&san_lat_type="+san_lat_type+"&san_act_type="+san_act_type+"&san_subsidized="+san_subsidized+"&san_com_date="+san_com_date,
 		success: function(result) {			
-			if(result=='Success'){
+			if(result=='Success'){				
+				$("#ben_hh_serial").val("");
 				
-				/*$("#ward").val("");
-				$("#village").val("");
-				$("#clusID").val("");
-				$("#clusName").val("");
-				$("#socialMapID").val("");*/
-				
-				//$("#san_hhSerail").val(0);
 				$("#san_lat_type").val(0);
-				$("#san_act_type").val("");
-				$("#san_subsidized").val("");
+				$("#san_act_type").val(0);
+				$("#san_subsidized").val(0);
 				$("#san_com_date").val("");							
 				//--------------
 				$("#ach_lat_san").val(0);
 				$("#ach_long_san").val(0);
-				$("#achPhoto_sanitation").val("");		
-								
+				$("#achPhoto_sanitation").val("");	
+				$("#myImageA_san").val("");		
+				document.getElementById('myImageA_san').src = '';				
 				$(".sucChk").text('Successfully Submitted');
 				$(".errorChk").text("");
 				$("#btn_san_submit").hide();
@@ -1609,7 +2082,7 @@ function wwfDataSubmit(){
 	wwf_longitude=$("#ach_long_wwf").val();
 	
 	achPhoto_wwf=$("#achPhoto_wwf").val();
-	achPhoto_2_wwf=$("#achPhoto_2_wwf").val();
+	//achPhoto_2_wwf=$("#achPhoto_2_wwf").val();
 	
 	if (wwf_latitude==undefined || wwf_latitude==''){
 		wwf_latitude=0;
@@ -1621,11 +2094,15 @@ function wwfDataSubmit(){
 	if (achPhoto_wwf=='' || achPhoto_wwf==undefined){
 		$(".errorChk").text("Please confirm Photo 1 ");
 		$("#btn_wwf_submit").show();
+	}else if((wwf_latitude==0 || wwf_longitude==0) ||(localStorage.latitudeAreaWq==0 || localStorage.longitudeAreaWq==0)||(localStorage.latitudeAreaWq==undefined || localStorage.longitudeAreaWq==undefined)){
+		$(".errorChk").text("Please confirm your location");
+		$("#btn_ach_lat_long_wwf").show();
+		$("#btn_wwf_submit").show();
 	}else{
-		if (achPhoto_2_wwf=='' || achPhoto_2_wwf==undefined){
-			$(".errorChk").text("Please confirm Photo 2 ");
-			$("#btn_wwf_submit").show();
-		}else{		
+		//if (achPhoto_2_wwf=='' || achPhoto_2_wwf==undefined){
+//			$(".errorChk").text("Please confirm Photo 2 ");
+//			$("#btn_wwf_submit").show();
+//		}else{		
 			//if(latitude==0 || latitude==0){
 			//	$(".errorChk").text("Please confirm your location ");
 			//	$("#btn_wwf_submit").show();
@@ -1637,13 +2114,13 @@ function wwfDataSubmit(){
 					uploadPhotoAch_wwf(imagePathA_wwf, imageName_wwf);	
 					//$("#btn_wwf_submit").show();					
 				}
-									
+				//syncDataHwf();					
 			//} //-end check location
 			
-		}//Photo 2
+		//}//Photo 2
 	}//chk photo
 	
-//syncDataHwf();
+
 	
 }
 
@@ -1685,7 +2162,7 @@ function uploadPhotoAch_wwf(imageURI, imageName_wwf) {
 	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winAchInfo_wwf,onfail_wwf,options);
 }
 
-function winAchInfo_wwf(r) {	
+/*function winAchInfo_wwf(r) {	
 	$(".errorChk").text('Image 1 upload Successful. Syncing image 2...');
 	
 	var d = new Date();	
@@ -1746,6 +2223,10 @@ function uploadPhoto2Ach_wwf(imageURI, imageName2_wwf) { // second step
 function winComInfo2_wwf(r) {
 	$(".errorChk").text('Image 2 upload successfull. Syncing Data ...');
 	syncDataHwf();
+}*/
+function winAchInfo_wwf(r) {	
+	$(".errorChk").text('Image upload Successful. Syncing Data...');
+	syncDataHwf();	
 }
 
 function onfail_wwf(r) {
@@ -1753,26 +2234,28 @@ function onfail_wwf(r) {
 	$("#btn_wwf_submit").show();
 }
 
-function syncDataHwf(){		
-	//alert(apipath+"submitData_hwf?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wwf+"&achPhoto2="+imageName2_wwf+"&latitude="+wwf_latitude+"&longitude="+wwf_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&clsId="+ben_clusID+"&clsName="+encodeURIComponent(ben_clusName)+"&sanHHserial="+localStorage.hh_serial+"&sanHHName="+encodeURIComponent(localStorage.hh_head_name)+"&hw_type="+hw_type+"&hw_com_date="+hw_com_date);
+function syncDataHwf(){	
+	if(wwf_latitude==0 || wwf_longitude==0){
+		wwf_latitude=localStorage.latitudeAreaWq;
+		wwf_longitude=localStorage.longitudeAreaWq;
+	}
+		
+	//alert(apipath+"submitData_hwf?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wwf+"&latitude="+wwf_latitude+"&longitude="+wwf_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&clsId="+ben_clusID+"&clsName="+encodeURIComponent(ben_clusName)+"&sanHHserial="+localStorage.hh_serial+"&sanHHName="+encodeURIComponent(localStorage.hh_head_name)+"&hw_type="+hw_type+"&hw_com_date="+hw_com_date);
 	$.ajax({
 		type:'POST',
-		url:apipath+"submitData_hwf?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wwf+"&achPhoto2="+imageName2_wwf+"&latitude="+wwf_latitude+"&longitude="+wwf_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&clsId="+ben_clusID+"&clsName="+encodeURIComponent(ben_clusName)+"&sanHHserial="+localStorage.hh_serial+"&sanHHName="+encodeURIComponent(localStorage.hh_head_name)+"&hw_type="+hw_type+"&hw_com_date="+hw_com_date,																																																							
+		url:apipath+"submitData_hwf?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wwf+"&latitude="+wwf_latitude+"&longitude="+wwf_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&clsId="+ben_clusID+"&clsName="+encodeURIComponent(ben_clusName)+"&sanHHserial="+localStorage.hh_serial+"&sanHHName="+encodeURIComponent(localStorage.hh_head_name)+"&hw_type="+hw_type+"&hw_com_date="+hw_com_date,																																																							
 		success: function(result) {			
-			if(result=='Success'){
+			if(result=='Success'){				
+				$("#ben_hh_serial").val("");
 				
-				$("#ward").val("");
-				$("#village").val("");
-				$("#clusID").val("");
-				$("#clusName").val("");
-				$("#socialMapID").val("");
-											
+				$("#hw_type").val(0);							
 				//--------------
 				$("#ach_lat_wwf").val(0);
 				$("#ach_long_wwf").val(0);
-				$("#achPhoto_wwf").val("");										
-				$("#achPhoto_2_wwf").val("");
-								
+				$("#achPhoto_wwf").val("");
+				$("#myImageA_wwf").val("");										
+				//$("#achPhoto_2_wwf").val("");
+				document.getElementById('myImageA_wwf').src = '';				
 				$(".sucChk").text('Successfully Submitted');
 				$(".errorChk").text("");
 				$("#btn_wwf_submit").hide();
@@ -1838,7 +2321,7 @@ function wp(wp){
 					sanWordList=resStr.split('fdfd');
 										
 					var sanWoListStr="";
-					sanWoListStr+='<option value="">Select Ward</option>'					        
+					sanWoListStr+='<option value="0">Select Ward No</option>'					        
 					for(i=0; i<sanWordList.length; i++){						
 						sanWoListStr+="<option value="+encodeURIComponent(sanWordList[i])+">"+sanWordList[i]+"</option>";			
 					}
@@ -1899,7 +2382,7 @@ function wp1Next(){
 	
 	
 	if(wp_ward=='' || wp_ward==0){
-		$(".errorChk").text('Required ward');	
+		$(".errorChk").text('Required ward no');	
 	}else if (clsId=="" || clsId==0){
 		$(".errorChk").text("Required cluster");
 	}else if(wp_serial==''){
@@ -1929,37 +2412,55 @@ function wp1Next(){
 	}else if(wp_wq_result=='' || wp_wq_result==0){
 		$(".errorChk").text("Required result water quality test");		
 	}else{
-		var clusterList="";
+		//alert(apipath+"wp_serial_check?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&wp_ward="+wp_ward+"&clsId="+clsId+"&wp_serial="+wp_serial);
 		$.ajax({
 		type:'POST',
-		url:apipath+"seatchHH?&clsId="+clsId+"&clsName="+clsName,
-		success: function(resStr){
-			houseHList=resStr.split('fdfd')
-			
-			var hhListStr="";	
-			hhListStr +='<option value="0">Select HH Name</option>'		        
-			for(i=0; i<houseHList.length; i++){
-				hhList=houseHList[i];
-				hhListStr +="<option value="+encodeURIComponent(hhList)+"><a>"+hhList+"</a></option>"
+		url:apipath+"wp_serial_check?&div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&wp_ward="+wp_ward+"&clsId="+clsId+"&wp_serial="+wp_serial,
+																																																										
+		success: function(result) {			
+			if(result=='Success'){
+				
+				//========
+				var clusterList="";
+				//alert(apipath+"seatchHH?div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&wp_ward="+wp_ward+"&clsId="+clsId+"&clsName="+clsName);
+				$.ajax({
+				type:'POST',
+				url:apipath+"seatchHH?div_code="+div_code+"&dis_code="+dis_code+"&up_code="+up_code+"&un_code="+un_code+"&wp_ward="+wp_ward+"&clsId="+clsId+"&clsName="+clsName,
+				success: function(resStr){
+					houseHList=resStr.split('fdfd')
+					
+					var hhListStr="";	
+					hhListStr +='<option value="0">Select HH Name</option>'		        
+					for(i=0; i<houseHList.length; i++){
+						hhList=houseHList[i];
+						hhListStr +='<option value='+encodeURIComponent(hhList)+'><a>'+hhList+'</a></option>'
+					}
+									
+					var rpt_rep_ob_wp=$("#wp_hhSerail");					
+					rpt_rep_ob_wp.empty();					
+					rpt_rep_ob_wp.append(hhListStr);					
+					rpt_rep_ob_wp.selectmenu("refresh");	
+					}
+				})				
+				$("#divi_san_w").text(localStorage.div_name);
+				$("#dis_san_w").text(localStorage.dis_name);
+				$("#upaz_san_w").text(localStorage.up_name);
+				$("#uni_san_w").text(localStorage.un_name);
+				$("#ward_san_w").text(san_ward);
+				$("#cluster_san_w").text(clsId+"-"+clsName);
+				$("#wpActType_wp").text(wp_act_type).slice(3);
+				$("#wpSerial_wp").text(wp_serial);
+				
+				$(".errorChk").text("");
+				url="#san_second_page";
+				$.mobile.navigate(url);				
+			}else{
+				$(".errorChk").text("Already exits wp serial");
+				url="#san_first_page";				
 			}
-							
-			var rpt_rep_ob_wp=$("#wp_hhSerail");					
-			rpt_rep_ob_wp.empty();					
-			rpt_rep_ob_wp.append(hhListStr);					
-			rpt_rep_ob_wp.selectmenu("refresh");	
-			}
-		})
+		}
+		});
 		
-		$("#divi_san_w").text(localStorage.div_name);
-		$("#dis_san_w").text(localStorage.dis_name);
-		$("#upaz_san_w").text(localStorage.up_name);
-		$("#uni_san_w").text(localStorage.un_name);
-		$("#ward_san_w").text(san_ward);
-		$("#cluster_san_w").text(clsId+"-"+clsName);
-		
-		$(".errorChk").text("");
-		url="#san_second_page";
-		$.mobile.navigate(url);
 	}	
 }
 	
@@ -1994,7 +2495,7 @@ function clusterIDNAme(){
 
 
 function clusterData(){
-	if(hhIDList==''){
+	if(benList==''){
 		$(".errorChk").text("Required HH List");		
 	}else{
 			
@@ -2028,6 +2529,10 @@ function wpDataSubmit(){
 	if (achPhoto_wp=='' || achPhoto_wp==undefined){
 		$(".errorChk").text("Please confirm Photo 1 ");
 		$("#btn_wp_submit").show();
+	}else if((wp_latitude==0 || wp_longitude==0) ||(localStorage.latitudeAreaWq==0 || localStorage.longitudeAreaWq==0)||(localStorage.latitudeAreaWq==undefined || localStorage.longitudeAreaWq==undefined)){
+		$(".errorChk").text("Please confirm your location");
+		$("#btn_ach_lat_long_wp").show();
+		$("#btn_wp_submit").show();
 	}else{		
 		//if(latitude==0 || latitude==0){
 		//	$(".errorChk").text("Please confirm your location ");
@@ -2040,12 +2545,12 @@ function wpDataSubmit(){
 				uploadPhotoAch_wp(imagePathA_wp, imageName_wp);	
 				//$("#btn_wp_submit").show();					
 			}
-								
+			//syncDataWp();					
 		//} //-end check location
 		
 	}//chk photo
 	
-//syncDataWp();
+
 	
 }
 
@@ -2098,15 +2603,22 @@ function onfail_wp(r) {
 }
 
 
-function syncDataWp() {
-
-   //alert(apipath+"submitData_wp?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wp+"&latitude="+wp_latitude+"&longitude="+wp_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&wp_ward="+wp_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&wp_serial="+wp_serial+"&wp_org_id="+wp_org_id+"&wp_act_type="+wp_act_type+"&wp_technology="+wp_technology+"&wp_subsidized="+wp_subsidized+"&wp_com_date="+wp_com_date+"&wp_wq="+wp_wq+"&wp_wq_date="+wp_wq_date+"&wp_wq_result="+wp_wq_result+"&benList="+encodeURIComponent(benList))
+function syncDataWp(){
+	if(wp_latitude==0 || wp_longitude==0){
+		wp_latitude=localStorage.latitudeAreaWq;
+		wp_longitude=localStorage.longitudeAreaWq;
+	}
+	
+    //alert(apipath+"submitData_wp?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wp+"&latitude="+wp_latitude+"&longitude="+wp_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&wp_ward="+wp_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&wp_serial="+wp_serial+"&wp_org_id="+wp_org_id+"&wp_act_type="+wp_act_type+"&wp_technology="+wp_technology+"&wp_subsidized="+wp_subsidized+"&wp_com_date="+wp_com_date+"&wp_wq="+wp_wq+"&wp_wq_date="+wp_wq_date+"&wp_wq_result="+wp_wq_result+"&benList="+encodeURIComponent(benList))
 	$.ajax({
 		type:'POST',
 		url:apipath+"submitData_wp?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wp+"&latitude="+wp_latitude+"&longitude="+wp_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&wp_ward="+wp_ward+"&clsId="+clsId+"&clsName="+encodeURIComponent(clsName)+"&wp_serial="+wp_serial+"&wp_org_id="+wp_org_id+"&wp_act_type="+wp_act_type+"&wp_technology="+wp_technology+"&wp_subsidized="+wp_subsidized+"&wp_com_date="+wp_com_date+"&wp_wq="+wp_wq+"&wp_wq_date="+wp_wq_date+"&wp_wq_result="+wp_wq_result+"&benList="+encodeURIComponent(benList),
 																																																										
 		success: function(result) {			
 			if(result=='Success'){
+				$("#san_ward").val(0);
+				$("#clusterIDName").val(0);
+				
 				$("#wp_serial").val("");
 				$("#wp_org_id").val("");
 				$("#wp_act_type").val(0);
@@ -2119,22 +2631,24 @@ function syncDataWp() {
 				$("#wp_wq_result").val(0);
 				
 				$("#wp_hhSerail").val(0);
-				$("#wp_tub_pre").val(0);
-				$("#sps_family").val(0);											
+				$("#wp_tub_pre").val(0);											
 				//--------------
 				$("#ach_lat_wp").val(0);
 				$("#ach_long_wp").val(0);
-				$("#achPhoto_wp").val("");	
-				benList='';				
+				$("#achPhoto_wp").val("");
+				$("#myImageA_wp").val("");
+				document.getElementById('myImageA_wp').src = '';	
+				benList='';	
+				hhIDList='';
+				wpTubTreList='';
+				$("#benTable").empty();
 				$(".sucChk").text('Successfully Submitted');
 				$(".errorChk").text("");
 				$("#btn_wp_submit").hide();
-				$("#btn_addNew_wp").show();
 				$("#btn_home_wp").show();	
 			}else{
 				$(".errorChk").text('Already Submitted WP Serial');																	
 				$("#btn_wp_submit").show();
-				$("#btn_addNew_wp").hide();
 				$("#btn_home_wp").hide();	
 			}
 			
@@ -2142,16 +2656,14 @@ function syncDataWp() {
 	});//end ajax
 }
 
-function addNewWP(){
+/*function addNewWP(){
 	
-	$("#btn_wp_submit").show();
-	$("#btn_addNew_wp").hide();
-	$("#btn_home_wp").hide();
-		
+	
+	$(".sucChk").text("");			
 	$(".errorChk").text("");			
 	url="#homePage";					
 	$.mobile.navigate(url);		
-}
+}*/
 
 //======================
 

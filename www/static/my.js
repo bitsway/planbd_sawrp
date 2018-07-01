@@ -13,6 +13,10 @@ var achPhoto_san ="";
 var imageName_san = "";
 var imagePathA_san ="";
 
+var imageName_san_save = "";
+var imageName_wwf_save = "";
+var imageName_wp_save = "";
+
 var san_latitude="";
 var san_longitude="";
 
@@ -145,17 +149,17 @@ function onSuccessAreaWq(position) {
 function onErrorAreaWq(error) {
 	$("#area_lat").val(0);
 	$("#area_long").val(0);
-	localStorage.latitudeAreaWq=$("#area_lat").val();
-	localStorage.longitudeAreaWq=$("#area_long").val();
+	//localStorage.latitudeAreaWq=$("#area_lat").val();
+	//localStorage.longitudeAreaWq=$("#area_long").val();
 	//alert(localStorage.latitudeAreaWq+'-'+localStorage.longitudeAreaWq);
 	$(".errorChk").html("Failed to Confirmed Location.");
 }
 
 //---- online
-var apipath="http://w02.yeapps.com/planbd_sawrp/syncmobile_20180218/";
+var apipath="http://w02.yeapps.com/planbd_sawrp/syncmobile_20180701/";
 
 //--- local
-//var apipath="http://127.0.0.1:8000/planbd_sawrp/syncmobile_20180218/";
+//var apipath="http://127.0.0.1:8000/planbd_sawrp/syncmobile_20180701/";
 
 url ="";
 var wpTubTreList='';
@@ -978,6 +982,7 @@ function planbdData2Next(){
 }
 
 
+
 function dataSubmit(){
 	$("#btn_submit").hide();
 	
@@ -1575,7 +1580,7 @@ function benDataSubmit(){
 	ben_disF_18_plus=$("#ben_disF_18_plus").val();
 	ben_disM_18_plus=$("#ben_disM_18_plus").val();
 	
-	localStorage.hh_head_name=ben_hh_head_name;
+	//localStorage.hh_head_name=ben_hh_head_name;
 	
 	benBenGtotal=eval(ben_benG_5)+eval(ben_benG_5_18)+eval(ben_benF_18_plus);
 	benBenBtotal=eval(ben_benB_5)+eval(ben_benB_5_18)+eval(ben_benM_18_plus);
@@ -1629,8 +1634,6 @@ function benDataSubmit(){
 																																																											
 		success: function(result) {			
 			if(result=='Success'){
-				/*localStorage.hh_serial=ben_hh_serial;
-				localStorage.hh_head_name=ben_hh_head_name;*/
 				
 				$("#ben_ward").val(0);
 				$("#ben_clusID").val(0);
@@ -1694,11 +1697,15 @@ function goToHome(){
 	var spsFamily_ben='<label for="sps_family">Sponsorship Family</label><select name="sps_family" id="sps_family" data-native-menu="false"><option value="0">Select Sponsorship Family</option><option value="Yes">Yes</option><option value="No">No</option></select>'
 	$("#spsFamily_ben").html(spsFamily_ben).trigger('create');
 	
+	$("#btn_san_save").show();
 	$("#btn_ben_submit").show();
+	$("#btn_hwf_save").show();	
+	$("#btn_wp_save").show();	
 	//$("#btn_new_ben").hide();
 	$("#btn_ben_service").hide();	
 	$("#btn_ben_home").hide();
 	$("#ben_hh_serial").val("");	
+	
 	
 	//san
 	var sanLatType_ben='<label for="san_lat_type">Type of Latrine Provided</label><select name="san_lat_type" id="san_lat_type" data-native-menu="false"><option value="0">Select Type of Latrine Provided</option><option value="Offset Pit">Offset Pit</option><option value="Water Seal Pit">Water Seal Pit</option><option value="Pit Latrine with Sato Pan">Pit Latrine with Sato Pan</option><option value="Shared Offset Pit">Shared-Offset Pit</option><option value="Shared Water Seal Pit">Shared-Water Seal Pit</option><option value="Shared Pit Latrine with Sato Pan">Shared-Pit Latrine with Sato Pan</option></select>'
@@ -1992,10 +1999,10 @@ function syncDataSan(){
 		san_longitude=localStorage.longitudeAreaWq;
 	}	
 		
-	//alert(apipath+"submitData_san?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_san+"&latitude="+san_latitude+"&longitude="+san_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&clsId="+ben_clusID+"&clsName="+encodeURIComponent(ben_clusName)+"&sanHHserial="+localStorage.hh_serial+"&sanHHName="+encodeURIComponent(localStorage.hh_head_name)+"&san_lat_type="+san_lat_type+"&san_act_type="+san_act_type+"&san_subsidized="+san_subsidized+"&san_com_date="+san_com_date);
+	
 	$.ajax({
 		type:'POST',
-		url:apipath+"submitData_san?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_san+"&latitude="+san_latitude+"&longitude="+san_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&clsId="+ben_clusID+"&clsName="+encodeURIComponent(ben_clusName)+"&sanHHserial="+localStorage.hh_serial+"&sanHHName="+encodeURIComponent(localStorage.hh_head_name)+"&san_lat_type="+san_lat_type+"&san_act_type="+san_act_type+"&san_subsidized="+san_subsidized+"&san_com_date="+san_com_date,
+		url:apipath+"submitData_san?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_san+"&latitude="+san_latitude+"&longitude="+san_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&clsId="+ben_clusID+"&clsName="+encodeURIComponent(ben_clusName)+"&sanHHserial="+localStorage.hh_serial+"&san_lat_type="+san_lat_type+"&san_act_type="+san_act_type+"&san_subsidized="+san_subsidized+"&san_com_date="+san_com_date,
 		success: function(result) {			
 			if(result=='Success'){				
 				$("#ben_hh_serial").val("");
@@ -2015,17 +2022,253 @@ function syncDataSan(){
 				$("#btn_san_submit").hide();
 				$("#btn_new_ben_san").show();
 				$("#btn_ben_service_san").show();
-				$("#btn_ben_home_san").show();						
+				$("#btn_ben_home_san").show();	
+				$("#btn_san_save").hide();						
 			}else{
 				$(".errorChk").text('Already Submitted');																	
 				$("#btn_san_submit").show();
 				$("#btn_new_ben_san").hide();
 				$("#btn_ben_service_san").hide();
 				$("#btn_ben_home_san").hide();
+				$("#btn_san_save").show();	
 			}
 			
 		}//end result
 	});//end ajax
+}
+
+
+function sanDataSave(){
+	$(".sucChk").text("");
+    $(".errorChk").text("");	
+	$("#btn_san_save").hide();
+	
+	san_latitude=$("#ach_lat_san").val();
+	san_longitude=$("#ach_long_san").val();
+	
+	achPhoto_san=$("#achPhoto_sanitation").val();
+	
+	if (san_latitude==undefined || san_latitude==''){
+		san_latitude=0;
+	}
+	if (san_longitude==undefined || san_longitude==''){
+		san_longitude=0;
+	}
+	
+	if (achPhoto_san=='' || achPhoto_san==undefined){
+		$(".errorChk").text("Please confirm Photo 1 ");
+		$("#btn_san_save").show();
+	}else if((san_latitude==0 || san_longitude==0) ||(localStorage.latitudeAreaWq==0 || localStorage.longitudeAreaWq==0)||(localStorage.latitudeAreaWq==undefined || localStorage.longitudeAreaWq==undefined)){
+		$(".errorChk").text("Please confirm your location");
+		$("#btn_ach_lat_long_san").show();
+		$("#btn_san_save").show();	
+	}else{
+	
+		if(localStorage.sanitationDataSave==undefined){
+			
+			localStorage.sanitationDataSave +="<rd>"+localStorage.ffID+"<fdfd>"+localStorage.ffName+"<fdfd>"+localStorage.mobile_no+"<fdfd>"+localStorage.pnGO+"<fdfd>"+achPhoto_san+"<fdfd>"+san_latitude+"<fdfd>"+san_longitude+"<fdfd>"+div_name+"<fdfd>"+div_code+"<fdfd>"+dis_name+"<fdfd>"+dis_code+"<fdfd>"+up_name+"<fdfd>"+up_code+"<fdfd>"+un_name+"<fdfd>"+un_code+"<fdfd>"+ben_ward+"<fdfd>"+ben_clusID+"<fdfd>"+encodeURIComponent(ben_clusName)+"<fdfd>"+localStorage.hh_serial+"<fdfd>"+san_lat_type+"<fdfd>"+san_act_type+"<fdfd>"+san_subsidized+"<fdfd>"+san_com_date;
+		
+			$("#ben_hh_serial").val("");				
+			$("#san_lat_type").val(0);
+			$("#san_act_type").val(0);
+			$("#san_subsidized").val(0);
+			$("#san_com_date").val("");							
+			//--------------
+			$("#ach_lat_san").val(0);
+			$("#ach_long_san").val(0);
+			$("#achPhoto_sanitation").val("");	
+			$("#myImageA_san").val("");		
+			document.getElementById('myImageA_san').src = '';		
+			$(".errorChk").text("");
+			$(".sucChk").text('Successfully Saved');
+			$("#btn_ben_service_san").show();
+			$("#btn_ben_home_san").show();
+			$("#btn_san_save").hide();	
+		}else{
+			sanDatachk=localStorage.sanitationDataSave.split('<rd>');
+			sanChk=sanDatachk.length
+			
+			if(sanChk<21){
+				localStorage.sanitationDataSave +="<rd>"+localStorage.ffID+"<fdfd>"+localStorage.ffName+"<fdfd>"+localStorage.mobile_no+"<fdfd>"+localStorage.pnGO+"<fdfd>"+achPhoto_san+"<fdfd>"+san_latitude+"<fdfd>"+san_longitude+"<fdfd>"+div_name+"<fdfd>"+div_code+"<fdfd>"+dis_name+"<fdfd>"+dis_code+"<fdfd>"+up_name+"<fdfd>"+up_code+"<fdfd>"+un_name+"<fdfd>"+un_code+"<fdfd>"+ben_ward+"<fdfd>"+ben_clusID+"<fdfd>"+encodeURIComponent(ben_clusName)+"<fdfd>"+localStorage.hh_serial+"<fdfd>"+san_lat_type+"<fdfd>"+san_act_type+"<fdfd>"+san_subsidized+"<fdfd>"+san_com_date;
+				
+				$("#ben_hh_serial").val("");				
+				$("#san_lat_type").val(0);
+				$("#san_act_type").val(0);
+				$("#san_subsidized").val(0);
+				$("#san_com_date").val("");							
+				//--------------
+				$("#ach_lat_san").val(0);
+				$("#ach_long_san").val(0);
+				$("#achPhoto_sanitation").val("");	
+				$("#myImageA_san").val("");		
+				document.getElementById('myImageA_san').src = '';		
+				$(".errorChk").text("");
+				$(".sucChk").text('Successfully Saved');
+				$("#btn_ben_service_san").show();
+				$("#btn_ben_home_san").show();
+				$("#btn_san_save").hide();	
+			}else{
+				$(".errorChk").text('Maximum 20 Data Saved');
+			}
+		}
+	}
+}
+
+function review_san(){	
+	$(".errorChk").text("");
+	
+	//if (localStorage.sanitationDataSave!='undefined'){
+		
+		var sanStr=localStorage.sanitationDataSave.split('<rd>');
+		sanDataList='';
+		for (i=1;i<sanStr.length;i++){
+			sanLi=sanStr[i].split('<fdfd>');
+			sanDataList+='<tr><td><a>'+sanLi[8]+''+sanLi[10]+''+sanLi[12]+''+sanLi[14]+''+sanLi[15]+''+sanLi[16]+'-'+sanLi[18]+'</a></td><td><input class="ui-btn ui-input-btn ui-corner-all ui-shadow" type="submit" id="" name="" value="Submit" onclick="saveDataSubmit_san(\''+sanLi[8]+''+sanLi[10]+''+sanLi[12]+''+sanLi[14]+''+sanLi[15]+''+sanLi[16]+'-'+sanLi[18]+'\')" /></td><td><input class="ui-btn ui-input-btn ui-corner-all ui-shadow" type="Submit" id="" name="" value="X" onclick="saveDataSubmit_san_remove(\''+sanLi[8]+''+sanLi[10]+''+sanLi[12]+''+sanLi[14]+''+sanLi[15]+''+sanLi[16]+'-'+sanLi[18]+'\')" /></td></tr>' 
+		}
+		
+		$("#sanData").empty();
+		$("#sanData").append(sanDataList);
+		
+		url="#review_san";
+		$.mobile.navigate(url);
+	/*}else{
+		$(".errorChk").text("Records not available");
+	}*/
+}
+var ffID_s;ffName_s;mobileNo_s;pngo_s;san_latitude_s;san_longitude_s;div_name_s;div_code_s;up_name_s;up_code_s;un_name_s;un_code_s;ben_ward_s;ben_clusID_s;ben_clusName_s;hh_serial_s;san_lat_type_s;san_act_type_s;san_subsidized_s;san_com_date_s;san_hh_id;
+
+function saveDataSubmit_san(sanLi){	
+	san_hh_id=sanLi;
+	
+	$(".sucChk").text("");					
+	$(".errorChk").text("");	
+	
+	sanStr=localStorage.sanitationDataSave.split('<rd>');
+	
+	iLen=sanStr.length
+	for(i=0;i<iLen;i++){
+		sanStrD=sanStr[i].split('<fdfd>');
+		if(sanStrD[8]+''+sanStrD[10]+''+sanStrD[12]+''+sanStrD[14]+''+sanStrD[15]+''+sanStrD[16]+'-'+sanStrD[18]==sanLi){
+			ffID_s=sanStrD[0]
+			ffName_s=sanStrD[1]
+			mobileNo_s=sanStrD[2]
+			pngo_s=sanStrD[3]
+			imagePathA_san=sanStrD[4]
+			san_latitude_s=sanStrD[5]
+			san_longitude_s=sanStrD[6]
+			div_name_s=sanStrD[7]
+			div_code_s=sanStrD[8]
+			dis_name_s=sanStrD[9]
+			dis_code_s=sanStrD[10]
+			up_name_s=sanStrD[11]
+			up_code_s=sanStrD[12]
+			un_name_s=sanStrD[13]
+			un_code_s=sanStrD[14]
+			ben_ward_s=sanStrD[15]
+			ben_clusID_s=sanStrD[16]
+			ben_clusName_s=sanStrD[17]
+			hh_serial_s=sanStrD[18]
+			san_lat_type_s=sanStrD[19]
+			san_act_type_s=sanStrD[20]
+			san_subsidized_s=sanStrD[21]
+			san_com_date_s=sanStrD[22]
+			
+			//get_hh_id=div_code_s+''+dis_code_s+''+up_code_s+''+un_code_s+''+ben_ward_s+''+ben_clusID_s+'-'+hh_serial_s;
+			//alert(get_hh_id);
+			
+			var d = new Date();	
+			var get_time=d.getTime();	
+			//imagePathA_san="test"					
+			if (imagePathA_san != ""){							
+				$(".errorChk").text("Syncing photo 1..");
+				imageName_san_save = localStorage.mobile_no + "_" + get_time + ".jpg";								
+				uploadPhotoAch_san_save(imagePathA_san, imageName_san_save);					
+			}	
+			
+			//syncSaveDataSan();
+		}
+	}
+}
+
+
+function uploadPhotoAch_san_save(imageURI, imageName_san_save) { 	
+	//winAchInfo();
+	var options = new FileUploadOptions();
+    options.fileKey="upload";
+    options.fileName = imageName_san_save;
+    options.mimeType="image/jpeg";
+
+    var params = {};
+    params.value1 = "test";
+    params.value2 = "param";
+    options.params = params;
+	
+	options.chunkedMode = false;
+
+    var ft = new FileTransfer();
+	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winAchInfo_san_save,onfail_san_save,options);
+}
+
+function winAchInfo_san_save(r) {	
+	$(".errorChk").text('Image upload Successful. Syncing Data...');
+	syncSaveDataSan();	
+}
+
+function onfail_san_save(r) {
+	$(".errorChk").text('File upload Failed. Please check internet connection.');
+}
+
+function syncSaveDataSan(){
+		//alert(apipath+"submitData_san?&ffID="+ffID_s+"&ffName="+ffName_s+"&ffMobile="+mobileNo_s+"&pnGo="+pngo_s+"&achPhoto="+imageName_san_save+"&latitude="+san_latitude_s+"&longitude="+san_longitude_s+"&div_name="+div_name_s+"&div_code="+div_code_s+"&dis_name="+dis_name_s+"&dis_code="+dis_code_s+"&up_name="+up_name_s+"&up_code="+up_code_s+"&un_name="+un_name_s+"&un_code="+un_code_s+"&ben_ward="+ben_ward_s+"&clsId="+ben_clusID_s+"&clsName="+encodeURIComponent(ben_clusName_s)+"&sanHHserial="+hh_serial_s+"&san_lat_type="+san_lat_type_s+"&san_act_type="+san_act_type_s+"&san_subsidized="+san_subsidized_s+"&san_com_date="+san_com_date_s);	
+		$.ajax({
+			type:'POST',
+			url:apipath+"submitData_san?&ffID="+ffID_s+"&ffName="+ffName_s+"&ffMobile="+mobileNo_s+"&pnGo="+pngo_s+"&achPhoto="+imageName_san_save+"&latitude="+san_latitude_s+"&longitude="+san_longitude_s+"&div_name="+div_name_s+"&div_code="+div_code_s+"&dis_name="+dis_name_s+"&dis_code="+dis_code_s+"&up_name="+up_name_s+"&up_code="+up_code_s+"&un_name="+un_name_s+"&un_code="+un_code_s+"&ben_ward="+ben_ward_s+"&clsId="+ben_clusID_s+"&clsName="+encodeURIComponent(ben_clusName_s)+"&sanHHserial="+hh_serial_s+"&san_lat_type="+san_lat_type_s+"&san_act_type="+san_act_type_s+"&san_subsidized="+san_subsidized_s+"&san_com_date="+san_com_date_s,
+			success: function(result) {			
+				if(result=='Success'){	
+					sanS=localStorage.sanitationDataSave.split('<rd>');
+					
+					iLenS=sanS.length
+					var rSsch='';
+					for(i=0;i<iLenS;i++){
+						sStrDS=sanS[i].split('<fdfd>');
+						if(parseInt(sStrDS[8]+''+sStrDS[10]+''+sStrDS[12]+''+sStrDS[14]+''+sStrDS[15]+''+sStrDS[16]+'-'+sStrDS[18])!=parseInt(san_hh_id)){
+							if (rSsch==''){
+								rSsch=sanS[i]
+							}else{
+								rSsch+='<rd>'+sanS[i]
+							}				
+						}
+					}
+					localStorage.sanitationDataSave=rSsch;
+					
+					review_san();
+					$(".sucChk").text('Successfully Submitted');					
+					$(".errorChk").text("");	
+				}else{
+					$(".errorChk").text("Already Submitted");	
+				}
+			}
+		})
+}
+
+
+
+function saveDataSubmit_san_remove(sanLi){	
+	sanS=localStorage.sanitationDataSave.split('<rd>');
+	iLenS=sanS.length
+	var rSsch='';
+	for(i=0;i<iLenS;i++){
+		sStrDS=sanS[i].split('<fdfd>');
+		if(parseInt(sStrDS[8]+''+sStrDS[10]+''+sStrDS[12]+''+sStrDS[14]+''+sStrDS[15]+''+sStrDS[16]+'-'+sStrDS[18])!=parseInt(sanLi)){
+			if (rSsch==''){
+				rSsch=sanS[i]
+			}else{
+				rSsch+='<rd>'+sanS[i]
+			}		
+		}
+	}
+	localStorage.sanitationDataSave=rSsch;
+	review_san()
 }
 
 
@@ -2240,10 +2483,10 @@ function syncDataHwf(){
 		wwf_longitude=localStorage.longitudeAreaWq;
 	}
 		
-	//alert(apipath+"submitData_hwf?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wwf+"&latitude="+wwf_latitude+"&longitude="+wwf_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&clsId="+ben_clusID+"&clsName="+encodeURIComponent(ben_clusName)+"&sanHHserial="+localStorage.hh_serial+"&sanHHName="+encodeURIComponent(localStorage.hh_head_name)+"&hw_type="+hw_type+"&hw_com_date="+hw_com_date);
+	
 	$.ajax({
 		type:'POST',
-		url:apipath+"submitData_hwf?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wwf+"&latitude="+wwf_latitude+"&longitude="+wwf_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&clsId="+ben_clusID+"&clsName="+encodeURIComponent(ben_clusName)+"&sanHHserial="+localStorage.hh_serial+"&sanHHName="+encodeURIComponent(localStorage.hh_head_name)+"&hw_type="+hw_type+"&hw_com_date="+hw_com_date,																																																							
+		url:apipath+"submitData_hwf?&syncCode="+localStorage.sync_code+"&ffID="+localStorage.ffID+"&ffName="+localStorage.ffName+"&ffMobile="+localStorage.mobile_no+"&pnGo="+localStorage.pnGO+"&achPhoto="+imageName_wwf+"&latitude="+wwf_latitude+"&longitude="+wwf_longitude+"&div_name="+div_name+"&div_code="+div_code+"&dis_name="+dis_name+"&dis_code="+dis_code+"&up_name="+up_name+"&up_code="+up_code+"&un_name="+un_name+"&un_code="+un_code+"&ben_ward="+ben_ward+"&clsId="+ben_clusID+"&clsName="+encodeURIComponent(ben_clusName)+"&sanHHserial="+localStorage.hh_serial+"&hw_type="+hw_type+"&hw_com_date="+hw_com_date,																																																							
 		success: function(result) {			
 			if(result=='Success'){				
 				$("#ben_hh_serial").val("");
@@ -2261,13 +2504,15 @@ function syncDataHwf(){
 				$("#btn_wwf_submit").hide();
 				$("#btn_new_ben_hwf").show();	
 				$("#btn_ben_service_hwf").show();
-				$("#btn_ben_home_hwf").show();					
+				$("#btn_ben_home_hwf").show();	
+				$("#btn_hwf_save").hide();				
 			}else{
 				$(".errorChk").text('Already Submitted');																	
 				$("#btn_wwf_submit").show();
 				$("#btn_new_ben_hwf").hide();	
 				$("#btn_ben_service_hwf").hide();
 				$("#btn_ben_home_hwf").hide();
+				$("#btn_hwf_save").show();
 			}
 			
 		}//end result
@@ -2275,8 +2520,229 @@ function syncDataHwf(){
 }
 
 
+function handWashFacaDataSave(){
+	$(".sucChk").text("");
+	$(".errorChk").text("");	
+	$("#btn_hwf_save").hide();
+	
+	wwf_latitude=$("#ach_lat_wwf").val();
+	wwf_longitude=$("#ach_long_wwf").val();
+	
+	achPhoto_wwf=$("#achPhoto_wwf").val();
+	//achPhoto_2_wwf=$("#achPhoto_2_wwf").val();
+	
+	if (wwf_latitude==undefined || wwf_latitude==''){
+		wwf_latitude=0;
+	}
+	if (wwf_longitude==undefined || wwf_longitude==''){
+		wwf_longitude=0;
+	}
+	
+	if (achPhoto_wwf=='' || achPhoto_wwf==undefined){
+		$(".errorChk").text("Please confirm Photo 1 ");
+		$("#btn_hwf_save").show();
+	}else if((wwf_latitude==0 || wwf_longitude==0) ||(localStorage.latitudeAreaWq==0 || localStorage.longitudeAreaWq==0)||(localStorage.latitudeAreaWq==undefined || localStorage.longitudeAreaWq==undefined)){
+		$(".errorChk").text("Please confirm your location");
+		$("#btn_ach_lat_long_wwf").show();
+		$("#btn_hwf_save").show();
+	}else{
+	
+		if(localStorage.hwfDataSave==undefined){
+			
+			localStorage.hwfDataSave +="<rd>"+localStorage.ffID+"<fdfd>"+localStorage.ffName+"<fdfd>"+localStorage.mobile_no+"<fdfd>"+localStorage.pnGO+"<fdfd>"+achPhoto_wwf+"<fdfd>"+wwf_latitude+"<fdfd>"+wwf_longitude+"<fdfd>"+div_name+"<fdfd>"+div_code+"<fdfd>"+dis_name+"<fdfd>"+dis_code+"<fdfd>"+up_name+"<fdfd>"+up_code+"<fdfd>"+un_name+"<fdfd>"+un_code+"<fdfd>"+ben_ward+"<fdfd>"+ben_clusID+"<fdfd>"+encodeURIComponent(ben_clusName)+"<fdfd>"+localStorage.hh_serial+"<fdfd>"+hw_type+"<fdfd>"+hw_com_date;
+			
+			
+			$("#ben_hh_serial").val("");				
+			$("#hw_type").val(0);							
+			//--------------
+			$("#ach_lat_wwf").val(0);
+			$("#ach_long_wwf").val(0);
+			$("#achPhoto_wwf").val("");
+			$("#myImageA_wwf").val("");										
+			//$("#achPhoto_2_wwf").val("");
+			document.getElementById('myImageA_wwf').src = '';	
+			$(".errorChk").text("");
+			$(".sucChk").text('Successfully Saved');
+			$("#btn_ben_service_hwf").show();
+			$("#btn_ben_home_hwf").show();
+			$("#btn_hwf_save").hide();
+			$("#btn_wwf_submit").hide();
+		}else{
+			
+			hwfDatachk=localStorage.hwfDataSave.split('<rd>');
+			hwfChk=hwfDatachk.length;
+			
+			if(hwfChk<21){
+				localStorage.hwfDataSave +="<rd>"+localStorage.ffID+"<fdfd>"+localStorage.ffName+"<fdfd>"+localStorage.mobile_no+"<fdfd>"+localStorage.pnGO+"<fdfd>"+achPhoto_wwf+"<fdfd>"+wwf_latitude+"<fdfd>"+wwf_longitude+"<fdfd>"+div_name+"<fdfd>"+div_code+"<fdfd>"+dis_name+"<fdfd>"+dis_code+"<fdfd>"+up_name+"<fdfd>"+up_code+"<fdfd>"+un_name+"<fdfd>"+un_code+"<fdfd>"+ben_ward+"<fdfd>"+ben_clusID+"<fdfd>"+encodeURIComponent(ben_clusName)+"<fdfd>"+localStorage.hh_serial+"<fdfd>"+hw_type+"<fdfd>"+hw_com_date;
+				
+				$("#ben_hh_serial").val("");				
+				$("#hw_type").val(0);							
+				//--------------
+				$("#ach_lat_wwf").val(0);
+				$("#ach_long_wwf").val(0);
+				$("#achPhoto_wwf").val("");
+				$("#myImageA_wwf").val("");										
+				//$("#achPhoto_2_wwf").val("");
+				document.getElementById('myImageA_wwf').src = '';	
+				$(".errorChk").text("");
+				$(".sucChk").text('Successfully Saved');
+				$("#btn_ben_service_hwf").show();
+				$("#btn_ben_home_hwf").show();
+				$("#btn_hwf_save").hide();
+				$("#btn_wwf_submit").hide();		
+			}else{
+				$(".errorChk").text('Maximum 20 Data Saved');
+			}
+		}
+	}
+}
+
+function review_hwf(){	
+	$(".errorChk").text("");
+			
+		var hwfStr=localStorage.hwfDataSave.split('<rd>');
+		hwfDataList='';
+		for (i=1;i<hwfStr.length;i++){
+			hwfLi=hwfStr[i].split('<fdfd>');
+			hwfDataList+='<tr><td><a>'+hwfLi[8]+''+hwfLi[10]+''+hwfLi[12]+''+hwfLi[14]+''+hwfLi[15]+''+hwfLi[16]+'-'+hwfLi[18]+'</a></td><td><input class="ui-btn ui-input-btn ui-corner-all ui-shadow" type="submit" id="" name="" value="Submit" onclick="saveDataSubmit_hwf(\''+hwfLi[8]+''+hwfLi[10]+''+hwfLi[12]+''+hwfLi[14]+''+hwfLi[15]+''+hwfLi[16]+'-'+hwfLi[18]+'\')" /></td><td><input class="ui-btn ui-input-btn ui-corner-all ui-shadow" type="Submit" id="" name="" value="X" onclick="saveDataSubmit_hwf_remove(\''+hwfLi[8]+''+hwfLi[10]+''+hwfLi[12]+''+hwfLi[14]+''+hwfLi[15]+''+hwfLi[16]+'-'+hwfLi[18]+'\')" /></td></tr>' 
+		}
+		
+		$("#hwfData").empty();
+		$("#hwfData").append(hwfDataList);
+		
+		url="#review_hwf";
+		$.mobile.navigate(url);
+	/*}else{
+		$(".errorChk").text("Records not available");
+	}*/
+}
+
+var ffID_h;ffName_h;mobileNo_h;pngo_h;wwf_latitude_h;wwf_longitude_h;div_name_h;div_code_h;dis_name_h;dis_code_h;up_name_h;up_code_h;un_name_h;un_code_h;ben_ward_h;ben_clusID_h;ben_clusName_h;hh_serial_h;hw_type_h;hw_com_date_h;hwf_hh_id;
+function saveDataSubmit_hwf(hwfLi){	
+	$(".sucChk").text("");					
+	$(".errorChk").text("");
+	hwf_hh_id=hwfLi;
+	hwfStr=localStorage.hwfDataSave.split('<rd>');
+	
+	iLen=hwfStr.length
+	for(i=0;i<iLen;i++){
+		hwfStrD=hwfStr[i].split('<fdfd>');
+		
+		if(hwfStrD[8]+''+hwfStrD[10]+''+hwfStrD[12]+''+hwfStrD[14]+''+hwfStrD[15]+''+hwfStrD[16]+'-'+hwfStrD[18]==hwf_hh_id){
+			ffID_h=hwfStrD[0]
+			ffName_h=hwfStrD[1]
+			mobileNo_h=hwfStrD[2]			
+			pngo_h=hwfStrD[3]
+			imagePathA_wwf=hwfStrD[4]
+			wwf_latitude_h=hwfStrD[5]
+			wwf_longitude_h=hwfStrD[6]
+			div_name_h=hwfStrD[7]
+			div_code_h=hwfStrD[8]
+			dis_name_h=hwfStrD[9]
+			dis_code_h=hwfStrD[10]
+			up_name_h=hwfStrD[11]
+			up_code_h=hwfStrD[12]
+			un_name_h=hwfStrD[13]
+			un_code_h=hwfStrD[14]
+			ben_ward_h=hwfStrD[15]			
+			ben_clusID_h=hwfStrD[16]
+			ben_clusName_h=hwfStrD[17]
+			hh_serial_h=hwfStrD[18]				
+			hw_type_h=hwfStrD[19]			
+			hw_com_date_h=hwfStrD[20]
+			
+			var d = new Date();	
+			var get_time=d.getTime();	
+			//imagePathA_wwf="test"					
+			if (imagePathA_wwf!=""){							
+				$(".errorChk").text("Syncing photo 1..");
+				imageName_wwf_save = localStorage.mobile_no+"_"+get_time+".jpg";										
+				uploadPhotoAch_wwf_save(imagePathA_wwf, imageName_wwf_save);
+			}
+			//syncSaveDataHwf();
+		}
+	}
+}
+
+function uploadPhotoAch_wwf_save(imageURI, imageName_wwf_save) { 
+	var options = new FileUploadOptions();
+    options.fileKey="upload";
+    options.fileName=imageName_wwf_save;
+    options.mimeType="image/jpeg";
+
+    var params = {};
+    params.value1 = "test";
+    params.value2 = "param";
+    options.params = params;
+	
+	options.chunkedMode = false;
+
+    var ft = new FileTransfer();
+	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winAchInfo_wwf_save,onfail_wwf_save,options);
+}
+
+function winAchInfo_wwf_save(r) {	
+	$(".errorChk").text('Image upload Successful. Syncing Data...');
+	syncSaveDataHwf();	
+}
+
+function onfail_wwf_save(r) {
+	$(".errorChk").text('File upload Failed. Please check internet connection.');
+}
+
+function syncSaveDataHwf(){
+	//alert(apipath+"submitData_hwf?&ffID="+ffID_h+"&ffName="+ffName_h+"&ffMobile="+mobileNo_h+"&pnGo="+pngo_h+"&achPhoto="+imageName_wwf_save+"&latitude="+wwf_latitude_h+"&longitude="+wwf_longitude_h+"&div_name="+div_name_h+"&div_code="+div_code_h+"&dis_name="+dis_name_h+"&dis_code="+dis_code_h+"&up_name="+up_name_h+"&up_code="+up_code_h+"&un_name="+un_name_h+"&un_code="+un_code_h+"&ben_ward="+ben_ward_h+"&clsId="+ben_clusID_h+"&clsName="+encodeURIComponent(ben_clusName_h)+"&sanHHserial="+hh_serial_h+"&hw_type="+hw_type_h+"&hw_com_date="+hw_com_date_h);
+	$.ajax({
+		type:'POST',
+		url:apipath+"submitData_hwf?&ffID="+ffID_h+"&ffName="+ffName_h+"&ffMobile="+mobileNo_h+"&pnGo="+pngo_h+"&achPhoto="+imageName_wwf_save+"&latitude="+wwf_latitude_h+"&longitude="+wwf_longitude_h+"&div_name="+div_name_h+"&div_code="+div_code_h+"&dis_name="+dis_name_h+"&dis_code="+dis_code_h+"&up_name="+up_name_h+"&up_code="+up_code_h+"&un_name="+un_name_h+"&un_code="+un_code_h+"&ben_ward="+ben_ward_h+"&clsId="+ben_clusID_h+"&clsName="+encodeURIComponent(ben_clusName_h)+"&sanHHserial="+hh_serial_h+"&hw_type="+hw_type_h+"&hw_com_date="+hw_com_date_h,	
+		success: function(result) {			
+			if(result=='Success'){	
+				hwfS=localStorage.hwfDataSave.split('<rd>');
+				
+				iLenS=hwfS.length
+				var rSsch='';
+				for(i=0;i<iLenS;i++){
+					sStrDS=hwfS[i].split('<fdfd>');
+					if(parseInt(sStrDS[8]+''+sStrDS[10]+''+sStrDS[12]+''+sStrDS[14]+''+sStrDS[15]+''+sStrDS[16]+'-'+sStrDS[18])!=parseInt(hwf_hh_id)){
+						if (rSsch==''){
+							rSsch=hwfS[i]
+						}else{
+							rSsch+='<rd>'+hwfS[i]
+						}				
+					}
+				}
+				localStorage.hwfDataSave=rSsch;
+				
+				review_hwf();
+				$(".sucChk").text('Successfully Submitted');					
+				$(".errorChk").text("");
+			}else{
+				$(".errorChk").text("Already Submitted");
+			}
+		}
+	})	
+}
+
+function saveDataSubmit_hwf_remove(hwfLi){				
+	hwfS=localStorage.hwfDataSave.split('<rd>');
+	iLenS=hwfS.length
+	var rSsch='';
+	for(i=0;i<iLenS;i++){
+		sStrDS=hwfS[i].split('<fdfd>');
+		if(parseInt(sStrDS[8]+''+sStrDS[10]+''+sStrDS[12]+''+sStrDS[14]+''+sStrDS[15]+''+sStrDS[16]+'-'+sStrDS[18])!=parseInt(hwfLi)){
+			if (rSsch==''){
+				rSsch=hwfS[i]
+			}else{
+				rSsch+='<rd>'+hwfS[i]
+			}		
+		}
+	}
+	localStorage.hwfDataSave=rSsch;
+	review_hwf()
+}
 
 
+//======================
 var san_ward;
 var clsId;
 var clsName;
@@ -2645,25 +3111,291 @@ function syncDataWp(){
 				$(".sucChk").text('Successfully Submitted');
 				$(".errorChk").text("");
 				$("#btn_wp_submit").hide();
-				$("#btn_home_wp").show();	
+				$("#btn_home_wp").show();
+				$("#btn_wp_save").hide();	
 			}else{
 				$(".errorChk").text('Already Submitted WP Serial');																	
 				$("#btn_wp_submit").show();
 				$("#btn_home_wp").hide();	
+				$("#btn_wp_save").show();	
 			}
 			
 		}//end result
 	});//end ajax
 }
 
-/*function addNewWP(){
+
+
+function wpDataSave(){
+	$(".sucChk").text("");
+	$(".errorChk").text("");	
 	
+	wp_latitude=$("#ach_lat_wp").val();
+	wp_longitude=$("#ach_long_wp").val();
 	
-	$(".sucChk").text("");			
-	$(".errorChk").text("");			
-	url="#homePage";					
-	$.mobile.navigate(url);		
+	achPhoto_wp=$("#achPhoto_wp").val();
+	
+	if (wp_latitude==undefined || wp_latitude==''){
+		wp_latitude=0;
+	}
+	if (wp_longitude==undefined || wp_longitude==''){
+		wp_longitude=0;
+	}
+	
+	if (achPhoto_wp=='' || achPhoto_wp==undefined){
+		$(".errorChk").text("Please confirm Photo 1 ");
+		$("#btn_wp_save").show();	
+	}else if((wp_latitude==0 || wp_longitude==0) ||(localStorage.latitudeAreaWq==0 || localStorage.longitudeAreaWq==0)||(localStorage.latitudeAreaWq==undefined || localStorage.longitudeAreaWq==undefined)){
+		$(".errorChk").text("Please confirm your location");
+		$("#btn_ach_lat_long_wp").show();
+		$("#btn_wp_save").show();	
+	}else{	
+
+		if(localStorage.wpDataSave==undefined){
+			
+			localStorage.wpDataSave +="<rd>"+localStorage.ffID+"<fdfd>"+localStorage.ffName+"<fdfd>"+localStorage.mobile_no+"<fdfd>"+localStorage.pnGO+"<fdfd>"+achPhoto_wp+"<fdfd>"+wp_latitude+"<fdfd>"+wp_longitude+"<fdfd>"+div_name+"<fdfd>"+div_code+"<fdfd>"+dis_name+"<fdfd>"+dis_code+"<fdfd>"+up_name+"<fdfd>"+up_code+"<fdfd>"+un_name+"<fdfd>"+un_code+"<fdfd>"+wp_ward+"<fdfd>"+clsId+"<fdfd>"+encodeURIComponent(clsName)+"<fdfd>"+wp_serial+"<fdfd>"+wp_org_id+"<fdfd>"+wp_act_type+"<fdfd>"+wp_technology+"<fdfd>"+wp_subsidized+"<fdfd>"+wp_com_date+"<fdfd>"+wp_wq+"<fdfd>"+wp_wq_date+"<fdfd>"+wp_wq_result+"<fdfd>"+encodeURIComponent(benList);
+			
+			$("#san_ward").val(0);
+			$("#clusterIDName").val(0);
+			
+			$("#wp_serial").val("");
+			$("#wp_org_id").val("");
+			$("#wp_act_type").val(0);
+			$("#wp_technology").val(0);
+			$("#wp_subsidized").val(0);
+			$("#wp_com_date").val("");
+			
+			$("#wp_wq").val(0);
+			$("#wp_wq_date").val("");
+			$("#wp_wq_result").val(0);
+			
+			$("#wp_hhSerail").val(0);
+			$("#wp_tub_pre").val(0);											
+			//--------------
+			$("#ach_lat_wp").val(0);
+			$("#ach_long_wp").val(0);
+			$("#achPhoto_wp").val("");
+			$("#myImageA_wp").val("");
+			document.getElementById('myImageA_wp').src = '';	
+			benList='';	
+			hhIDList='';
+			wpTubTreList='';
+			$("#benTable").empty();
+			$(".errorChk").text("");
+			$(".sucChk").text('Successfully Saved');
+			$("#btn_wp_submit").hide();
+			$("#btn_home_wp").show();	
+			$("#btn_wp_save").hide();		
+		}else{
+			
+			wpDatachk=localStorage.wpDataSave.split('<rd>');
+			wpChk=wpDatachk.length;
+			
+			if(wpChk<21){
+				localStorage.wpDataSave +="<rd>"+localStorage.ffID+"<fdfd>"+localStorage.ffName+"<fdfd>"+localStorage.mobile_no+"<fdfd>"+localStorage.pnGO+"<fdfd>"+achPhoto_wp+"<fdfd>"+wp_latitude+"<fdfd>"+wp_longitude+"<fdfd>"+div_name+"<fdfd>"+div_code+"<fdfd>"+dis_name+"<fdfd>"+dis_code+"<fdfd>"+up_name+"<fdfd>"+up_code+"<fdfd>"+un_name+"<fdfd>"+un_code+"<fdfd>"+wp_ward+"<fdfd>"+clsId+"<fdfd>"+encodeURIComponent(clsName)+"<fdfd>"+wp_serial+"<fdfd>"+wp_org_id+"<fdfd>"+wp_act_type+"<fdfd>"+wp_technology+"<fdfd>"+wp_subsidized+"<fdfd>"+wp_com_date+"<fdfd>"+wp_wq+"<fdfd>"+wp_wq_date+"<fdfd>"+wp_wq_result+"<fdfd>"+encodeURIComponent(benList);
+				
+				$("#san_ward").val(0);
+				$("#clusterIDName").val(0);
+				
+				$("#wp_serial").val("");
+				$("#wp_org_id").val("");
+				$("#wp_act_type").val(0);
+				$("#wp_technology").val(0);
+				$("#wp_subsidized").val(0);
+				$("#wp_com_date").val("");
+				
+				$("#wp_wq").val(0);
+				$("#wp_wq_date").val("");
+				$("#wp_wq_result").val(0);
+				
+				$("#wp_hhSerail").val(0);
+				$("#wp_tub_pre").val(0);											
+				//--------------
+				$("#ach_lat_wp").val(0);
+				$("#ach_long_wp").val(0);
+				$("#achPhoto_wp").val("");
+				$("#myImageA_wp").val("");
+				document.getElementById('myImageA_wp').src = '';	
+				benList='';	
+				hhIDList='';
+				wpTubTreList='';
+				$("#benTable").empty();
+				$(".errorChk").text("");
+				$(".sucChk").text('Successfully Saved');
+				$("#btn_wp_submit").hide();
+				$("#btn_home_wp").show();	
+				$("#btn_wp_save").hide();			
+			}else{
+				$(".errorChk").text('Maximum 20 Data Saved');
+			}
+		}
+	}
+}
+
+
+
+function review_wp(){	
+	$(".errorChk").text("");
+		
+	var wpStr=localStorage.wpDataSave.split('<rd>');
+	wpDataList='';
+	for (i=1;i<wpStr.length;i++){
+		wpLi=wpStr[i].split('<fdfd>');
+		wpDataList+='<tr><td><a>'+wpLi[8]+''+wpLi[10]+''+wpLi[12]+''+wpLi[14]+''+wpLi[15]+''+wpLi[16]+'-'+wpLi[18]+'</a></td><td><input class="ui-btn ui-input-btn ui-corner-all ui-shadow" type="submit" id="" name="" value="Submit" onclick="saveDataSubmit_wp(\''+wpLi[8]+''+wpLi[10]+''+wpLi[12]+''+wpLi[14]+''+wpLi[15]+''+wpLi[16]+'-'+wpLi[18]+'\')" /></td><td><input class="ui-btn ui-input-btn ui-corner-all ui-shadow" type="Submit" id="" name="" value="X" onclick="saveDataSubmit_wp_remove(\''+wpLi[8]+''+wpLi[10]+''+wpLi[12]+''+wpLi[14]+''+wpLi[15]+''+wpLi[16]+'-'+wpLi[18]+'\')" /></td></tr>' 
+	}
+	
+	$("#wpData").empty();
+	$("#wpData").append(wpDataList);
+	
+	url="#review_wp";
+	$.mobile.navigate(url);
+/*}else{
+	$(".errorChk").text("Records not available");
 }*/
+}
+
+var ffID_w;ffName_w;mobileNo_w;pngo_w;wp_latitude_w;wp_longitude_w;div_name_w;div_code_w;dis_name_w;dis_code_w;up_name_w;up_code_w;un_name_w;un_code_w;wp_ward_w;clsId_w;clsName_w;wp_serial_w;wp_org_id_w;wp_act_type_w;wp_technology_w;wp_subsidized_w;wp_com_date_w;wp_wq_w;wp_wq_date_w;wp_wq_result_w;benList_w;wp_hh_id;
+function saveDataSubmit_wp(wpLi){
+	$(".sucChk").text("");					
+	$(".errorChk").text("");
+	wp_hh_id=wpLi;	
+	wpStr=localStorage.wpDataSave.split('<rd>');
+	
+	iLen=wpStr.length
+	for(i=0;i<iLen;i++){
+		wpStrD=wpStr[i].split('<fdfd>');
+		if(wpStrD[8]+''+wpStrD[10]+''+wpStrD[12]+''+wpStrD[14]+''+wpStrD[15]+''+wpStrD[16]+'-'+wpStrD[18]==wpLi){
+			ffID_w=wpStrD[0]
+			ffName_w=wpStrD[1]
+			mobileNo_w=wpStrD[2]			
+			pngo_w=wpStrD[3]
+			imagePathA_wp=wpStrD[4]
+			wp_latitude_w=wpStrD[5]
+			wp_longitude_w=wpStrD[6]
+			div_name_w=wpStrD[7]
+			div_code_w=wpStrD[8]
+			dis_name_w=wpStrD[9]
+			dis_code_w=wpStrD[10]
+			up_name_w=wpStrD[11]
+			up_code_w=wpStrD[12]
+			un_name_w=wpStrD[13]
+			un_code_w=wpStrD[14]
+			wp_ward_w=wpStrD[15]			
+			clsId_w=wpStrD[16]
+			clsName_w=wpStrD[17]
+			wp_serial_w=wpStrD[18]			
+			wp_org_id_w=wpStrD[19]		
+			wp_act_type_w=wpStrD[20]
+			wp_technology_w=wpStrD[21]			
+			wp_subsidized_w=wpStrD[22]
+			wp_com_date_w=wpStrD[23]		
+			wp_wq_w=wpStrD[24]
+			wp_wq_date_w=wpStrD[25]			
+			wp_wq_result_w=wpStrD[26]
+			benList_w=wpStrD[27]
+			
+			var d = new Date();	
+			var get_time=d.getTime();
+			//imagePathA_wp="test"					
+			if (imagePathA_wp!=""){							
+				$(".errorChk").text("Syncing photo 1..");
+				imageName_wp_save = localStorage.mobile_no+"_"+get_time+".jpg";										
+				uploadPhotoAch_wp_save(imagePathA_wp, imageName_wp_save);					
+			}
+			//syncSaveDataWp();
+		}
+	}
+}
+
+function uploadPhotoAch_wp_save(imageURI, imageName_wp_save) { 	
+	//winAchInfo();
+	var options = new FileUploadOptions();
+    options.fileKey="upload";
+    options.fileName=imageName_wp_save;
+    options.mimeType="image/jpeg";
+
+    var params = {};
+    params.value1 = "test";
+    params.value2 = "param";
+    options.params = params;
+	
+	options.chunkedMode = false;
+
+    var ft = new FileTransfer();
+	ft.upload(imageURI, encodeURI("http://i001.yeapps.com/image_hub/planbd_image/planbd_image/"),winAchInfo_wp_save,onfail_wp_save,options);
+}
+
+function winAchInfo_wp_save(r) {	
+	$(".errorChk").text('Image upload Successful. Syncing Data...');
+	syncSaveDataWp();	
+}
+
+function onfail_wp_save(r) {
+	$(".errorChk").text('File upload Failed. Please check internet connection.');
+}
+
+function syncSaveDataWp(){
+	$.ajax({
+		type:'POST',
+		url:apipath+"submitData_wp?&ffID="+ffID_w+"&ffName="+ffName_w+"&ffMobile="+mobileNo_w+"&pnGo="+pngo_w+"&achPhoto="+imageName_wp+"&latitude="+wp_latitude_w+"&longitude="+wp_longitude_w+"&div_name="+div_name_w+"&div_code="+div_code_w+"&dis_name="+dis_name_w+"&dis_code="+dis_code_w+"&up_name="+up_name_w+"&up_code="+up_code_w+"&un_name="+un_name_w+"&un_code="+un_code_w+"&wp_ward="+wp_ward_w+"&clsId="+clsId_w+"&clsName="+encodeURIComponent(clsName_w)+"&wp_serial="+wp_serial_w+"&wp_org_id="+wp_org_id_w+"&wp_act_type="+wp_act_type_w+"&wp_technology="+wp_technology_w+"&wp_subsidized="+wp_subsidized_w+"&wp_com_date="+wp_com_date_w+"&wp_wq="+wp_wq_w+"&wp_wq_date="+wp_wq_date_w+"&wp_wq_result="+wp_wq_result_w+"&benList="+encodeURIComponent(benList_w),	
+		success: function(result) {			
+			if(result=='Success'){	
+				wpS=localStorage.wpDataSave.split('<rd>');
+				
+				iLenS=wpS.length
+				var rSsch='';
+				for(i=0;i<iLenS;i++){
+					sStrDS=wpS[i].split('<fdfd>');
+					if(parseInt(sStrDS[8]+''+sStrDS[10]+''+sStrDS[12]+''+sStrDS[14]+''+sStrDS[15]+''+sStrDS[16]+'-'+sStrDS[18])!=parseInt(wp_hh_id)){
+						if (rSsch==''){
+							rSsch=wpS[i]
+						}else{
+							rSsch+='<rd>'+wpS[i]
+						}				
+					}
+				}
+				localStorage.wpDataSave=rSsch;
+				
+				review_wp();
+				$(".sucChk").text('Successfully Submitted');					
+				$(".errorChk").text("");
+			}else{
+				$(".errorChk").text("Already Submitted");
+			}
+		}
+	})	
+}
+
+
+function saveDataSubmit_wp_remove(wpLi){			
+	wpS=localStorage.wpDataSave.split('<rd>');
+	iLenS=wpS.length
+	var rSsch='';
+	for(i=0;i<iLenS;i++){
+		sStrDS=wpS[i].split('<fdfd>');
+		if(parseInt(sStrDS[8]+''+sStrDS[10]+''+sStrDS[12]+''+sStrDS[14]+''+sStrDS[15]+''+sStrDS[16]+'-'+sStrDS[18])!=parseInt(wpLi)){
+			if (rSsch==''){
+				rSsch=wpS[i]
+			}else{
+				rSsch+='<rd>'+wpS[i]
+			}		
+		}
+	}
+	localStorage.wpDataSave=rSsch;
+	review_wp()
+}
+
+
+
+
+
+function saveData(){
+	$(".sucChk").text("");					
+	$(".errorChk").text("");
+	
+	url="#save_page";
+	$.mobile.navigate(url);	
+}
 
 //======================
 
